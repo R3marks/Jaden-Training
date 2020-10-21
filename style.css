@@ -137,6 +137,8 @@ span {
     font-size: 32px;
     position: sticky;
     left: 0;
+    display: inline-block;
+    padding: 0 20px
 }
 
 button {
@@ -193,6 +195,7 @@ body {
 
 .youtube-logo {
     width: 20%;
+    mix-blend-mode: multiply;
 }
 
 @media only screen and (min-width: 768px) {
@@ -251,6 +254,44 @@ ul li a {
 
 ul li a:hover {
     color: rgb(70, 43, 226);
+}
+
+input {
+    width: 100px;
+    display: inline-block;
+    padding: 5px 10px;
+    border-color: black;
+    border-radius: 4px;
+    color: black;
+    margin: 10px 5px 20px auto;
+}
+
+input:focus {
+    background-color: lightblue;
+    border-color: black;
+    border-radius: 4px;
+    display: inline-block;
+    width: 100px;
+    padding: 5px 10px;
+}
+
+#Total {
+    padding-top: 20px;
+    display: flex;
+}
+
+h3 {
+    /* display: inline-block; */
+    padding-top: 100px;
+    font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 40px;
+    font-style: oblique;
+    font-weight: 700;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    /* text-decoration: none; [useful for removing underline in hyperlinks]*/
+    color: blueviolet
 }
 
 .video-wrapper {
