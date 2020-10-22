@@ -225,7 +225,7 @@ hr {
 
 nav {
     width: 100%;
-    height: 80px;
+    height: 100px;
     background-color: rgba(0, 0, 255, 0.1);
     background-image: url("Images - Jaden/sunset.jpg");
     background-blend-mode: multiply;
@@ -243,8 +243,8 @@ ul {
 ul li {
     list-style: none;
     display: inline-block;
-    float: left;
-    line-height: 80px;
+    /* float: left; */
+    line-height: 100px;
 }
 
 ul li a {
@@ -262,14 +262,75 @@ ul li a:hover {
     background-color: rgba(0, 255, 255, 0.3);
 }
 
+#item {
+    margin-right: 1.5em;
+    font-weight: bold;
+    font-size: 1.25em;
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+}
+
+#price {
+    margin-right: 1.5em;
+    font-weight: bold;
+    font-size: 1.25em;
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+}
+
+#quantity {
+    margin-right: 1.5em;
+    font-weight: bold;
+    font-size: 1.25em;
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+}
+
+#cart-header {
+    margin: 0 auto 0 auto;
+    padding: 0px;
+    display: flex;
+}
+
+#cart-row {
+    margin: 10px auto;
+    display: flex;
+    align-items: center;
+}
+
+.cart-picture {
+    width: 10%
+}
+
+#cart-tshirt {
+    font-size: 20px;
+    display: block;
+}
+
+#cart-price {
+    font-size: 20px;
+}
+
+#cart-remove {
+    font-size: 12px;
+    padding: 5px 10px;
+    background-color: rgba(255, 0, 0, 0.7);
+    border-color: black;
+    border-radius: 5px;
+}
+
 input {
-    width: 100px;
-    display: inline-block;
+    width: 30px;
+    /* display: inline-block; */
     padding: 5px 10px;
     border-color: black;
     border-radius: 4px;
     color: black;
-    margin: 10px 5px 20px auto;
+    margin: 5px 5px 5px 5px;
+}
+
+.cart-quantity {
+    width: 20%
 }
 
 input:focus {
