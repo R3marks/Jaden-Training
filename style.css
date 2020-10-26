@@ -141,20 +141,6 @@ span {
     padding: 0 0px
 }
 
-button {
-    font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 20px;
-    position: absolute;
-    right: 10%;
-}
-
 * {
     margin: 0;
     padding: 0;
@@ -336,7 +322,7 @@ ul li a:hover {
 #cart-quantity {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     width: 35%
 }
 
@@ -346,6 +332,20 @@ ul li a:hover {
     background-color: rgba(255, 0, 0, 0.7);
     border-color: black;
     border-radius: 5px;
+}
+
+button {
+    font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    /* display: inline-block; */
+    font-size: 20px;
+    /* position: absolute; */
+    right: 10%;
 }
 
 input {
@@ -359,9 +359,9 @@ input {
     margin: 5px 10px 5px 5px;
 }
 
-.cart-number {
+#cart-number {
+    align-self: auto;
     align-items: left;
-    height: 30%;
 }
 
 input:focus {
@@ -373,9 +373,16 @@ input:focus {
     padding: 5px 10px;
 }
 
+#cart-total {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+}
+
 #Total {
     padding-top: 20px;
     display: flex;
+    justify-content: space-between;
 }
 
 h3 {
@@ -395,7 +402,7 @@ h3 {
 .video-wrapper {
     position: relative;
     padding-bottom: 56.25%;
-    padding-top: 25px;
+    padding-top: 50px;
     height: 0px;
 }
 
