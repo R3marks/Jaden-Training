@@ -1,0 +1,417 @@
+/* html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section {
+    display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+/* ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+/* mark {
+    background-color:#ff9;
+    color:#000;
+    font-style:italic;
+    font-weight:bold;
+} */
+
+/* del {
+    text-decoration: line-through;
+} */
+
+/* abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+} */
+
+/* table {
+    border-collapse:collapse;
+    border-spacing:0;
+} */
+
+/* change border colour to suit your needs */
+/* hr {
+    display:block;
+    height:1px;
+    border:0;  
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+} */
+
+/* input, select {
+    vertical-align:middle;
+} */ 
+
+/* =================================== */
+/* All my work from here on out */
+/* ===================================*/
+
+.jaden-text {
+    font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    letter-spacing: 1px;
+}
+
+h1 {
+    font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 40px;
+    font-style: oblique;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    /* text-decoration: none; [useful for removing underline in hyperlinks]*/
+    color: blueviolet
+}
+
+h2 {
+    font-size: 36px;
+    position: static;
+    display: block;
+    margin: 0 auto 0 auto;
+    text-align: center;
+    padding: 40px 0;
+}
+
+strong {
+    font-size: 32px;
+    color: yellow;
+    /* -webkit-text-stroke: 0.01px black; */
+    text-shadow: -1px 0 black, 0 2px black, 3px 0 black, 0 -1px black;
+    text-align: 12px;
+    position: sticky;
+}
+
+span {
+    font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 32px;
+    position: sticky;
+    left: 0;
+    display: inline-block;
+    padding: 0 0px
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
+    background-color: wheat;
+}
+
+.wrapper {
+    margin: 0 auto 0 auto;
+    max-width: 80%;
+    /* background-color: black; */
+}
+
+.album-picture {
+    width: 100%;
+    /* background-image: url("Images - Jaden/we.jpg") */
+    background-size: 50%;
+    padding: 10px 0;
+}
+
+.merch-picture {
+    display: block;
+    clip: rect(20px,60px,20px,20px);
+    width: 100%;
+    background-size: 50%;
+    padding: 10px 0 10px 0;
+    mix-blend-mode: multiply;
+    width: 70%;
+    margin: 0 auto;
+}
+
+.youtube-logo {
+    width: 20%;
+    mix-blend-mode: multiply;
+}
+
+@media only screen and (min-width: 768px) {
+    /* ipad */
+
+    .wrapper {
+        margin: 0 auto 0 auto;
+        width: 80%
+    }
+    .album-picture {
+        width: 500px;
+        display: block;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (min-width: 1000px) {
+    /* Desktop */
+}
+
+hr {
+    color: black;
+    padding: 1px;
+    background-color: black;
+}
+
+nav {
+    width: 100%;
+    height: 100px;
+    background-color: rgba(0, 0, 255, 0.1);
+    background-image: url("Images - Jaden/sunset.jpg");
+    background-blend-mode: multiply;
+    background-size: cover;
+    border-bottom: 2px solid rgba(0, 0, 255, 0.5);
+}
+
+ul {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    width: fit-content;
+}
+
+ul li {
+    list-style: none;
+    display: inline-block;
+    /* float: left; */
+    line-height: 100px;
+}
+
+ul li a {
+    text-decoration: none;
+    font-size: 32px;
+    font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: black;
+    padding: 0 10px;
+    display: inline-block;
+    /* float: left; Removes itself from the flow and sits on the left hand size of the screen*/
+}
+
+ul li a:hover {
+    color: rgb(70, 43, 226);
+    background-color: rgba(0, 255, 255, 0.3);
+}
+
+#cart-header {
+    margin: 0 auto;
+    padding: 0px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#item {
+    width: 40%;
+    font-weight: bold;
+    font-size: 1.25em;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+#price {
+    width: 25%;
+    font-weight: bold;
+    font-size: 1.25em;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    bottom: 80%;
+    text-align: center;
+}
+
+#quantity {
+    width: 35%;
+    bottom: 80%;
+    font-weight: bold;
+    font-size: 1.25em;
+    border-bottom: 1px solid black;
+    text-align: center;
+}
+
+#cart-row {
+    margin: 10px auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+#cart-item {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    width: 40%;
+    justify-content: center;
+}
+
+.cart-picture {
+    width: 70%;
+    height: auto;
+}
+
+#cart-tshirt {
+    /* flex-grow: 1; */
+    /* align-self: flex-end; */
+    font-size: 20px;
+    display: block;
+    padding: 0 18px;
+}
+
+#cart-price {
+    align-items: center;
+    width: 25%;
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
+}
+
+#cart-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 35%
+}
+
+#cart-remove {
+    font-size: 16px;
+    padding: 5px 10px;
+    background-color: rgba(255, 0, 0, 0.7);
+    border-color: black;
+    border-radius: 5px;
+}
+
+button {
+    font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    /* display: inline-block; */
+    font-size: 20px;
+    /* position: absolute; */
+    right: 10%;
+}
+
+input {
+    width: 30px;
+    height: 30px;
+    /* display: inline-block; */
+    padding: 5px 10px;
+    border-color: black;
+    border-radius: 4px;
+    color: black;
+    margin: 5px 10px 5px 5px;
+}
+
+#cart-number {
+    align-self: auto;
+    align-items: left;
+}
+
+input:focus {
+    background-color: lightblue;
+    border-color: black;
+    border-radius: 4px;
+    display: inline-block;
+    width: 100px;
+    padding: 5px 10px;
+}
+
+#cart-total {
+    display: flex;
+    justify-content: space-between;
+    width: 200px;
+}
+
+#Total {
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+h3 {
+    /* display: inline-block; */
+    padding-top: 100px;
+    font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 40px;
+    font-style: oblique;
+    font-weight: 700;
+    text-align: left;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    /* text-decoration: none; [useful for removing underline in hyperlinks]*/
+    color: blueviolet
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 50px;
+    height: 0px;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    height: 100%;
+    width: 100%;
+}
