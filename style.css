@@ -221,10 +221,63 @@
     padding: 5px 10px;
 }
 
-.cart-row-quantity-remove {
+.button-cart-row-quantity-remove {
     font-size: 16px;
     padding: 5px 10px;
     background-color: rgba(255, 0, 0, 0.7);
     border-color: black;
     border-radius: 5px;
+}
+
+.cart-total {
+    padding-top: 20px;
+    padding-bottom: 100px;
+}
+
+.cart-total-summary {
+    display: flex;
+    justify-content: center;
+}
+
+.cart-total-title {
+    font-weight: bold;
+    font-size: 1.75em;
+    text-align: center;
+    padding-right: 20px;;
+}
+
+.cart-total-price {
+    font-size: 1.50em;
+    text-align: center;
+}
+
+.button-purchase {
+    font-size: 16px;
+    padding: 5px 10px;
+    background-color: rgb(251, 255, 4, 0.9);
+    border-color: black;
+    border-radius: 5px;
+    align-self: flex-end;
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 50px;
+    height: 0px;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    height: 100%;
+    width: 100%;
+}
+
+.youtube-logo {
+    width: 20%;
+    mix-blend-mode: multiply;
 }
