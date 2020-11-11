@@ -292,22 +292,30 @@
 
 .nav-footer-elements {
     padding-inline-start: 0px;
+    margin: 0;
     display: flex;
     justify-content: space-between;
 }
 
 .nav-footer-element {
     list-style: none;
-    display: flex;
-    justify-content: space-between;
+    display: inline-block;
 }
 
-.nav-media {
-    align-items: center;
-}
+/* .nav-media {
+    display: inline-block;
+} */
 
 .youtube-logo {
     width: 100px;
-    height: auto;
+    /* height: auto; */
     /* mix-blend-mode: multiply; */
+}
+
+.twitter-logo {
+    width: 100px;
+    position: relative;
+    padding-top: 35px;
+    /* height: auto; */
+    /* margin: 0 auto 0 auto; */
 }
