@@ -1,11 +1,23 @@
 /* Refactored style sheet */
+* {
+    font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
+    background-color: wheat;
+}
+
 .wrapper {
     margin: 0 auto 0 auto;
     max-width: 80%;
-}
-
-.jaden-font {
-    font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .flex-space-between {
@@ -86,22 +98,18 @@
 
 .product-price {
     font-size: 28px;
-    position: sticky;
-    left: 0;
-    display: inline-block;
-    padding: 0 0px
-    /* Align items to the center */
+    display: flex;
+    align-items: center;
 }
 
 .button-add-to-cart {
     background-color: #4CAF50; /* Green */
-    border: none;
     color: white;
     padding: 10px 20px;
     text-align: center;
-    text-decoration: none;
     font-size: 20px;
-    right: 10%;
+    border-color: black;
+    border-radius: 5px;
 }
 
 .title-merch {
@@ -119,7 +127,7 @@
     width: 100%;
     background-size: 50%;
     padding: 10px 0 10px 0;
-    mix-blend-mode: multiply;
+    /* mix-blend-mode: multiply; */
     width: 70%;
     margin: 0 auto;
 }
@@ -198,33 +206,30 @@
 .cart-row-quantity {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-around;
     width: 35%
 }
 
 .cart-row-quantity-number {
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 37.5px;
     padding: 5px 10px;
     border-color: black;
     border-radius: 4px;
     color: black;
-    margin: 5px 10px 5px 5px;
+    margin: 5px 5px 5px 5px;
+    text-align: center;
 }
 
 .cart-row-quantity-number:focus {
     background-color: lightblue;
-    border-color: black;
-    border-radius: 4px;
-    display: inline-block;
-    width: 100px;
-    padding: 5px 10px;
 }
 
 .button-cart-row-quantity-remove {
     font-size: 16px;
+    color: rgba(255, 255, 255);
     padding: 5px 10px;
-    background-color: rgba(255, 0, 0, 0.7);
+    background-color: rgba(255, 0, 0, 0.9);
     border-color: black;
     border-radius: 5px;
 }
@@ -255,8 +260,8 @@
 }
 
 .button-purchase {
-    font-size: 16px;
-    padding: 5px 10px;
+    font-size: 20px;
+    padding: 10px 20px;
     background-color: rgb(251, 255, 4, 0.9);
     border-color: black;
     border-radius: 5px;
@@ -302,20 +307,12 @@
     display: inline-block;
 }
 
-/* .nav-media {
-    display: inline-block;
-} */
-
 .youtube-logo {
     width: 100px;
-    /* height: auto; */
-    /* mix-blend-mode: multiply; */
 }
 
 .twitter-logo {
     width: 100px;
     position: relative;
     padding-top: 35px;
-    /* height: auto; */
-    /* margin: 0 auto 0 auto; */
 }
