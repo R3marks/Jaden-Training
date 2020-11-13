@@ -3,23 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
     <title>Document</title>
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li>HOME</li>
-                <li>STORE</li>
-                <li>ABOUT</li>
-            </ul>
+        <nav class="nav-header">
+            <div class="wrapper">
+                <ul class="nav-header-elements">
+                    <li class="nav-header-element"><a class="nav-link "href="index.html">HOME</a></li>
+                    <li class="nav-header-element"><a class="nav-link "href="store.html">STORE</a></li>
+                    <li class="nav-header-element"><a class="nav-link " href="about.html">ABOUT</a></li>
+                </ul>
+            </div>
         </nav>
-        <hr>
-        <h1>Jaden</h1>
-        <button type="button">Get my latest album</button>
+        <h1 class="jaden-text">Jaden</h1>
+        <button class="button" type="button">Get my latest album</button>
         <br>
         <br>
-        <button type="button">&#9658;</button>
+        <button class="button" type="button">&#9658;</button>
     </header>
     <section>
         <h2>TOURS</h2>
@@ -34,10 +37,23 @@
         </div>
     </section>
     <footer>
-        <h3>Jaden</h3>
-        <ul>
-            <li><img src=""></li>
-        </ul>
+        <h3 class="jaden-text">Jaden</h3>
+        <div class="nav-footer">
+            <div class="wrapper">
+                <ul class="nav-footer-elements">
+                    <li class="nav-footer-element">
+                        <a href="https://www.youtube.com" target="_blank">
+                            <img class="logo-youtube" src="Images - Jaden/youtube.png"> 
+                        </a>
+                    </li>
+                    <li class="nav-footer-element">
+                        <a href="https://www.twitter.com" target="_blank">
+                            <img class="logo-twitter" src="Images - Jaden/Twitter-Emblem.png"> 
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </footer>
 </body>
 </html>
