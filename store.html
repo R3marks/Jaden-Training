@@ -9,12 +9,12 @@
 </head>
 <body>
     <header>
-        <nav>
+        <nav class="nav-header">
             <div class="wrapper">
-                <ul>
-                    <li><a href="index.html">HOME</a></li>
-                    <li><a href="store.html">STORE</a></li>
-                    <li><a href="about.html">ABOUT</a></li>
+                <ul class="nav-header-elements">
+                    <li class="nav-header-element"><a class="nav-link "href="index.html">HOME</a></li>
+                    <li class="nav-header-element"><a class="nav-link "href="store.html">STORE</a></li>
+                    <li class="nav-header-element"><a class="nav-link " href="about.html">ABOUT</a></li>
                 </ul>
             </div>
         </nav>
@@ -22,98 +22,109 @@
     </header>
     <section>
         <div class="wrapper">
-            <h2 class="jaden-text">MUSIC</h2>
+            <h2 class="title-header">MUSIC</h2>
             <div>
                 <div>
-                    <strong class="jaden-text">SYRE</strong>
+                    <strong class="title-art">SYRE</strong>
                 </div>
-                <img class="album-picture" src="Images - Jaden/syre.jpg">
-                <div>
-                    <span>£12.99</span>
-                    <button role="button">ADD TO CART</button>
+                <img class="picture-album" src="Images - Jaden/syre.jpg">
+                <div class="flex-space-between">
+                    <span class="product-price">£12.99</span>
+                    <button class="button button-add-to-cart" role="button">ADD TO CART</button>
                 </div>
             </div>
             <div>
                 <div>
-                    <strong class="jaden-text">EYRS</strong>
+                    <strong class=" title-art">EYRS</strong>
                 </div>
-                <img class="album-picture" src="Images - Jaden/erys.jpg">
-                <div>
-                    <span>£13.99</span>
-                    <button role="button">ADD TO CART</button>
+                <img class="picture-album" src="Images - Jaden/erys.jpg">
+                <div class="flex-space-between">
+                    <span class="product-price">£13.99</span>
+                    <button class="button button-add-to-cart" role="button">ADD TO CART</button>
                 </div>
             </div>
         </div>
     </section>
     <section>
         <div class="wrapper">
-            <h2 class="jaden-text">MERCH</h2>
+            <h2 class="title-header">MERCH</h2>
             <div>
                 <div>
-                    <strong class="jaden-text">T-Shirt</strong>
+                    <strong class="title-merch">T-Shirt</strong>
                 </div>
-                <img class="merch-picture" src="Images - Jaden/ctv3_tshirt.png">
-                <div>
-                    <span class="jaden-text">£19.99</span>
-                    <button role="button">ADD TO CART</button>
+                <img class="picture-merch" src="Images - Jaden/ctv3_tshirt.png">
+                <div class="flex-space-between">
+                    <span class="product-price">£19.99</span>
+                    <button class="button button-add-to-cart" role="button">ADD TO CART</button>
                 </div>
             </div>
             <div>
                 <div>
-                    <strong class="jaden-text">Hoodie</strong>
+                    <strong class="title-merch">Hoodie</strong>
                 </div>
-                <img class="merch-picture" src="Images - Jaden/ctv3_hoodie.png">
-                <div>
-                    <span>£29.99</span>
-                    <button role="button">ADD TO CART</button>
+                <img class="picture-merch" src="Images - Jaden/ctv3_hoodie.png">
+                <div class="flex-space-between">
+                    <span class="product-price">£29.99</span>
+                    <button class="button button-add-to-cart" role="button">ADD TO CART</button>
                 </div>
             </div>
         <div>
     </section>
     <section>
         <div class="wrapper">
-            <h2>CART</h2>
-            <div id="cart-header">
-                <strong id="item">ITEM</strong>
-                <strong id="price">PRICE</strong>
-                <strong id="quantity">QUANTITY</strong>
+            <h2 class=" title-header">CART</h2>
+            <div class="cart-header">
+                <strong class="cart-header-item">ITEM</strong>
+                <strong class="cart-header-price">PRICE</strong>
+                <strong class="cart-header-quantity">QUANTITY</strong>
             </div>
-            <div id="cart-row">
-                <div id="cart-item">
-                    <img class="cart-picture" src="Images - Jaden/ctv3_tshirt.png">
-                    <span id="cart-tshirt">T-Shirt</span>
+            <div class="cart-row">
+                <div class="cart-row-item">
+                    <img class="cart-row-item-picture" src="Images - Jaden/ctv3_tshirt.png">
+                    <span class="cart-row-item-name">T-Shirt</span>
                 </div>
-                <span id="cart-price">£19.99</span>
-                <div id="cart-quantity">
-                    <input type="number" value="1" id="cart-number">
-                    <button id="cart-remove" role="button">REMOVE</button>
+                <span class="cart-row-price">£19.99</span>
+                <div class="cart-row-quantity">
+                    <input type="number" value="1" class="cart-row-quantity-number">
+                    <button class="button button-remove" role="button">REMOVE</button>
                 </div>
             </div>
         </div>
-        <div id="Total" class="wrapper">
-            <div id="cart-total">
-                <strong>Total</strong>
-                <span>£19.99</span>
-            </div>
-            <div>
-                <button role="button">PURCHASE</button>
+        <div class="wrapper">
+            <div class="cart-total flex-space-between">
+                <div>
+                    <strong class="cart-total-title">Total</strong>
+                    <span class="cart-total-price">£19.99</span>
+                </div>
+                <button class="button button-purchase" role="button">PURCHASE</button>
             </div>
         <div>
+    </section>
+    <section>
+        <div class="wrapper">
+            <div class="video-wrapper">
+                <iframe width="893" height="502" src="https://www.youtube.com/embed/82UsnbunJUs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
     </section>
     <footer>
-        <div class="wrapper">
-            <h3 class="outro">Jaden</h3>
-            <div class="video-wrapper">
-                <iframe width="560" height="315" src="https://www.youtube.com/embed/82UsnbunJUs" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        <h3 class="jaden-text">Jaden</h3>
+        <div class="nav-footer">
+            <div class="wrapper">
+                <ul class="nav-footer-elements">
+                    <li class="nav-footer-element">
+                        <a href="https://www.youtube.com" target="_blank">
+                            <img class="logo-youtube" src="Images - Jaden/youtube.png"> 
+                        </a>
+                    </li>
+                    <li class="nav-footer-element">
+                        <a href="https://www.twitter.com" target="_blank">
+                            <img class="logo-twitter" src="Images - Jaden/Twitter-Emblem.png"> 
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <ul>
-                <li>
-                    <a href="https://www.youtube.com" target="_blank">
-                        <img class="youtube-logo" src="Images - Jaden/youtube.png"> 
-                    </a>
-                </li>
-            </ul>
-        <div>
+        </div>
     </footer>
 </body>
 </html>
