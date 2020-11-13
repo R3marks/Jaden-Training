@@ -1,4 +1,7 @@
-/* Refactored style sheet */
+/* =================================== */
+/* Refactored Style Sheet */
+/* ===================================*/
+
 * {
     font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin: 0;
@@ -25,6 +28,17 @@ body {
     justify-content: space-between;
 }
 
+.button {
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 20px;
+    border-color: black;
+    border-radius: 5px;
+}
+
+/* =================================== */
+/* Navigation Header */
+/* ===================================*/
 .nav-header {
     width: 100%;
     height: 100px;
@@ -35,14 +49,14 @@ body {
     border-bottom: 2px solid rgba(0, 0, 255, 0.5);
 }
 
-.nav-elements {
+.nav-header-elements {
     display: block;
     margin: 0 auto;
     text-align: center;
     width: fit-content;
 }
 
-.nav-element {
+.nav-header-element {
     list-style: none;
     display: inline-block;
     line-height: 100px;
@@ -61,6 +75,10 @@ body {
     color: rgb(70, 43, 226);
     background-color: rgba(0, 255, 255, 0.3);
 }
+
+/* =================================== */
+/* Store Page */
+/* ===================================*/
 
 .jaden-text {
     font-size: 40px;
@@ -90,7 +108,7 @@ body {
     position: sticky;
 }
 
-.album-picture {
+.picture-album {
     width: 100%;
     background-size: 50%;
     padding: 10px 0;
@@ -105,11 +123,6 @@ body {
 .button-add-to-cart {
     background-color: #4CAF50; /* Green */
     color: white;
-    padding: 10px 20px;
-    text-align: center;
-    font-size: 20px;
-    border-color: black;
-    border-radius: 5px;
 }
 
 .title-merch {
@@ -121,7 +134,7 @@ body {
     padding: 10px 0;
 }
 
-.merch-picture {
+.picture-merch {
     display: block;
     clip: rect(20px,60px,20px,20px);
     width: 100%;
@@ -225,24 +238,16 @@ body {
     background-color: lightblue;
 }
 
-.button-cart-row-quantity-remove {
+.button-remove {
     font-size: 16px;
     color: rgba(255, 255, 255);
     padding: 5px 10px;
     background-color: rgba(255, 0, 0, 0.9);
-    border-color: black;
-    border-radius: 5px;
 }
 
 .cart-total {
     padding-top: 20px;
     padding-bottom: 100px;
-}
-
-.cart-total-summary {
-    /* display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap; */
 }
 
 .cart-total-title {
@@ -260,13 +265,13 @@ body {
 }
 
 .button-purchase {
-    font-size: 20px;
-    padding: 10px 20px;
     background-color: rgb(251, 255, 4, 0.9);
-    border-color: black;
-    border-radius: 5px;
     align-self: flex-end;
 }
+
+/* =================================== */
+/* Embedded Youtube Videos */
+/* ===================================*/
 
 .video-wrapper {
     position: relative;
@@ -284,6 +289,10 @@ body {
     height: 100%;
     width: 100%;
 }
+
+/* =================================== */
+/* Navigation Footer */
+/* ===================================*/
 
 .nav-footer {
     width: 100%;
@@ -307,11 +316,11 @@ body {
     display: inline-block;
 }
 
-.youtube-logo {
+.logo-youtube {
     width: 100px;
 }
 
-.twitter-logo {
+.logo-twitter {
     width: 100px;
     position: relative;
     padding-top: 35px;
