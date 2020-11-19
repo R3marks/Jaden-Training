@@ -65,6 +65,7 @@ footer {
 /* =================================== */
 /* Navigation Header */
 /* ===================================*/
+
 .nav-header {
     width: 100%;
     height: 100px;
@@ -76,25 +77,25 @@ footer {
 }
 
 .nav-header-elements {
-    display: block;
+    display: flex;
+    justify-content: space-around;
     margin: 0 auto;
     text-align: center;
-    width: fit-content;
+    /* width: fit-content; */
 }
 
 .nav-header-element {
     list-style: none;
     display: inline-block;
-    line-height: 100px;
+    line-height: 100px; 
 }
 
 .nav-link {
     text-decoration: none;
     font-size: 32px;
     color: black;
-    padding: 0 10px;
+    padding: 0 5px;
     display: inline-block;
-    /* float: left; Removes itself from the flow and sits on the left hand size of the screen*/
 }
 
 .nav-link:hover {
@@ -390,8 +391,6 @@ footer {
 }
 
 .cart-row-item-name {
-    /* flex-grow: 1; */
-    /* align-self: flex-end; */
     font-size: 20px;
     display: block;
     padding: 0 18px;
@@ -409,11 +408,12 @@ footer {
     display: flex;
     align-items: center;
     justify-content: space-around;
+    flex-wrap: wrap;
     width: 35%
 }
 
 .cart-row-quantity-number {
-    width: 40px;
+    width: 72.59px;
     height: 37.5px;
     padding: 5px 10px;
     border-color: black;
@@ -464,7 +464,7 @@ footer {
 
 .button-purchase {
     background-color: rgb(250, 255, 5, 0.9);
-    align-self: flex-end;
+    align-self: center;
 }
 
 .button-purchase:hover {
@@ -484,6 +484,7 @@ footer {
     position: relative;
     padding-bottom: 56.25%;
     padding-top: 50px;
+    margin-bottom: 50px;
     height: 0px;
 }
 
@@ -503,8 +504,8 @@ footer {
 
 .about-jaden-picture {
     float: right;
-    height: 200px;
-    width: 300px;
+    height: 150px;
+    width: 225px;
     margin: 15px;
     border-radius: 100%;
 }
