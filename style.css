@@ -1,4 +1,103 @@
 /* =================================== */
+/* Reset Style Sheet */
+/* ===================================*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section {
+    display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color:#ff9;
+    color:#000;
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display:block;
+    height:1px;
+    border:0;  
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+
+/* =================================== */
 /* Refactored Style Sheet */
 /* ===================================*/
 
@@ -21,6 +120,7 @@ body {
     min-height: 100vh;
     margin: 0px;
     padding: 0px;
+    line-height: 1.25;
     overflow-x: hidden; 
     background-color: wheat;
     position: relative;
@@ -29,19 +129,20 @@ body {
 body::after {
     content: '';
     display: block;
-    height: 159px; /* Set same as footer's height */
+    height: 150px; /* Set same as footer's height */
   }
 
 footer {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 159px;
+    height: 150px;
 }
 
 .wrapper {
     margin: 0 auto 0 auto;
-    max-width: 80%;
+    width: 80%;
+    max-width: 900px;
 }
 
 .flex-space-between {
@@ -52,6 +153,18 @@ footer {
 .flex-center {
     display: flex;
     justify-content: center;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-items: stretch;
+}
+
+.flex-end {
+    align-self: flex-end;
 }
 
 .button {
@@ -78,7 +191,7 @@ footer {
 
 .nav-header-elements {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     margin: 0 auto;
     text-align: center;
     /* width: fit-content; */
@@ -211,6 +324,7 @@ footer {
 
 .tour-row:last-child {
     border: none;
+    margin-bottom: 40px; 
 }
 
 .tour-row-items {
@@ -476,10 +590,7 @@ footer {
     transform: translateY(4px);
 }
 
-/* =================================== */
 /* Embedded Youtube Videos */
-/* ===================================*/
-
 .video-wrapper {
     position: relative;
     padding-bottom: 56.25%;
@@ -498,6 +609,72 @@ footer {
     width: 100%;
 }
 
+@media only screen and (min-width: 768px) {
+    /* ipad */
+
+    .picture-album {
+        max-width: 350px;
+        height: auto;
+    }
+
+    .container-item {
+        /* width: 350px; */
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .picture-merch {
+        margin: auto;
+    }
+
+    .product-details {
+        margin-top: auto;
+    }
+
+    .cart-header {
+        border-right: none;
+    }
+
+    .cart-header-item {
+        font-size: 32px;
+    }
+
+    .cart-header-price {
+        font-size: 32px;
+    }
+
+    .cart-header-quantity {
+        font-size: 32px;
+    }
+
+    .cart-row-item-picture{
+        padding: 20px;
+        max-width: 250px;
+    }
+
+    .cart-row-item-name {
+        font-size: 28px;
+    }
+
+    .cart-row-price {
+        font-size: 28px;
+    }
+
+    .cart-row-quantity-number {
+        font-size: 22px;
+    }
+
+    .cart-row-quantity-number {
+        height: 55.5px;
+    }
+
+    .button-remove {
+        font-size: 28px;
+    }
+
+}
+
 /* =================================== */
 /* About Page */
 /* ===================================*/
@@ -512,4 +689,14 @@ footer {
 
 .bottom-paragraph {
     padding-bottom: 50px;
+}
+
+@media only screen and (min-width: 768px) {
+    /* ipad */
+
+    .about-jaden-picture {
+        height: 300px;
+        width: 450px;
+    }
+
 }
