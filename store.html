@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <script src="store.js" async></script>
     <title>Document</title>
 </head>
 <body>
@@ -24,9 +25,9 @@
         <div class="wrapper">
             <h2 class="title-header">MUSIC</h2>
             <div class="flex-wrap">
-                <div class="container-item">
+                <div class="shop-item">
                     <div>
-                        <strong class="title-art">SYRE</strong>
+                        <strong class="title-merch">SYRE</strong>
                     </div>
                     <img class="picture-album" src="Images - Jaden/syre.jpg">
                     <div class="flex-space-between">
@@ -34,9 +35,9 @@
                         <button class="button button-add-to-cart" role="button">ADD TO CART</button>
                     </div>
                 </div>
-                <div class="container-item">
+                <div class="shop-item">
                     <div>
-                        <strong class=" title-art">EYRS</strong>
+                        <strong class="title-merch">EYRS</strong>
                     </div>
                     <img class="picture-album" src="Images - Jaden/erys.jpg">
                     <div class="flex-space-between">
@@ -51,7 +52,7 @@
         <div class="wrapper">
             <h2 class="title-header">MERCH</h2>
             <div class="flex-wrap">
-                <div class="container-item">
+                <div class="shop-item">
                     <div>
                         <strong class="title-merch">T-Shirt</strong>
                     </div>
@@ -61,7 +62,7 @@
                         <button class="button button-add-to-cart" role="button">ADD TO CART</button>
                     </div>
                 </div>
-                <div class="container-item">
+                <div class="shop-item">
                     <div>
                         <strong class="title-merch">Hoodie</strong>
                     </div>
@@ -82,15 +83,28 @@
                 <strong class="cart-header-price">PRICE</strong>
                 <strong class="cart-header-quantity">QUANTITY</strong>
             </div>
-            <div class="cart-row">
-                <div class="cart-row-item">
-                    <img class="cart-row-item-picture" src="Images - Jaden/ctv3_tshirt.png">
-                    <span class="cart-row-item-name">T-Shirt</span>
+            <div class="cart-rows">
+                <div class="cart-row">
+                    <div class="cart-row-item">
+                        <img class="cart-row-item-picture" src="Images - Jaden/ctv3_tshirt.png">
+                        <span class="cart-row-item-name">T-Shirt</span>
+                    </div>
+                    <span class="cart-row-price">£19.99</span>
+                    <div class="cart-row-quantity">
+                        <input type="number" value="1" class="cart-row-quantity-number">
+                        <button class="button button-remove" role="button">REMOVE</button>
+                    </div>
                 </div>
-                <span class="cart-row-price">£19.99</span>
-                <div class="cart-row-quantity">
-                    <input type="number" value="1" class="cart-row-quantity-number">
-                    <button class="button button-remove" role="button">REMOVE</button>
+                <div class="cart-row">
+                    <div class="cart-row-item">
+                        <img class="cart-row-item-picture" src="Images - Jaden/ctv3_hoodie.png">
+                        <span class="cart-row-item-name">Hoodie</span>
+                    </div>
+                    <span class="cart-row-price">£29.99</span>
+                    <div class="cart-row-quantity">
+                        <input type="number" value="1" class="cart-row-quantity-number">
+                        <button class="button button-remove" role="button">REMOVE</button>
+                    </div>
                 </div>
             </div>
         </div>
