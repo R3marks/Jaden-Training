@@ -23,6 +23,17 @@ function ready() {
         var button = addToCartButtons[i]
         button.addEventListener('click', addToCartClicked)
     }
+
+    document.getElementsByClassName('button-purchase')[0].addEventListener('click', purchaseClicked)
+}
+
+function purchaseClicked() {
+    alert('Thank you for your purchase')
+    var cartItems = document.getElementsByClassName('cart-rows')[0]
+    while (cartItems.hasChildNodes()) {
+        cartItems.removeChild(cartItems.firstChild)
+    }
+    updateCartTotal()
 }
 
 function removeCartItem(event) {
@@ -44,8 +55,40 @@ function addToCartClicked(event) {
     var shopItem = button.parentElement.parentElement
     var title = shopItem.getElementsByClassName('title-merch')[0].innerText
     var price = shopItem.getElementsByClassName('product-price')[0].innerText
-    var imageSrc = shopItem.getElementsByClassName('picture-album', 'picture-merch')[0].src // need to solve this line
+    var imageSrc = shopItem.getElementsByClassName('picture-album')[0].src
     console.log(title, price, imageSrc)
+    addItemToCart(title, price, imageSrc)
+    updateCartTotal()
+}
+
+function addItemToCart(title, price, imageSrc) {
+    var cartRow = document.createElement('div')
+    cartRow.classList.add('cart-row')
+    var cartItems = document.getElementsByClassName('cart-rows')[0]
+    var cartItemNames = cartItems.getElementsByClassName('cart-row-item-name')
+    console.log(cartItemNames.innerText)
+    for (var i = 0; i < cartItemNames.length; i++) {
+        console.log('HERE')
+        console.log(cartItemNames[i].innerText, title)
+        if (cartItemNames[i].innerText == title) {
+            alert('This item is already added to the cart')
+            return
+        }
+    }
+    var cartRowContents = `
+        <div class="cart-row-item">
+            <img class="cart-row-item-picture" src="${imageSrc}">
+            <span class="cart-row-item-name">${title}</span>
+        </div>
+        <span class="cart-row-price">${price}</span>
+        <div class="cart-row-quantity">
+            <input type="number" value="1" class="cart-row-quantity-number">
+            <button class="button button-remove" role="button">REMOVE</button>
+        </div>`
+    cartRow.innerHTML = cartRowContents
+    cartItems.append(cartRow)
+    cartRow.getElementsByClassName('button-remove')[0].addEventListener('click', removeCartItem)
+    cartRow.getElementsByClassName('cart-row-quantity-number')[0].addEventListener('change', quantityChanged)
 }
 
 function updateCartTotal() {
