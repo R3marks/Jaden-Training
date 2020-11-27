@@ -1,5 +1,5 @@
 if (document.readyState == 'loading') {
-    document.addEventListener('DOMContentLoaded'. ready)
+    document.addEventListener('DOMContentLoaded', ready)
 } else {
     ready()
 }
@@ -24,7 +24,10 @@ function ready() {
         button.addEventListener('click', addToCartClicked)
     }
 
-    document.getElementsByClassName('button-purchase')[0].addEventListener('click', purchaseClicked)
+    var purchaseButton = document.getElementsByClassName('button-purchase')[0]
+    if (purchaseButton) {
+       purchaseButton.addEventListener('click', purchaseClicked) 
+    }
 }
 
 function purchaseClicked() {
@@ -66,9 +69,7 @@ function addItemToCart(title, price, imageSrc) {
     cartRow.classList.add('cart-row')
     var cartItems = document.getElementsByClassName('cart-rows')[0]
     var cartItemNames = cartItems.getElementsByClassName('cart-row-item-name')
-    console.log(cartItemNames.innerText)
     for (var i = 0; i < cartItemNames.length; i++) {
-        console.log('HERE')
         console.log(cartItemNames[i].innerText, title)
         if (cartItemNames[i].innerText == title) {
             alert('This item is already added to the cart')
@@ -106,7 +107,3 @@ function updateCartTotal() {
     total = Math.round(total * 100) / 100
     document.getElementsByClassName('cart-total-price')[0].innerText = '£' + total
 }
-
-var toType = function(obj) {
-    return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
-  }
