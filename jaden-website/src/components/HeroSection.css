@@ -1,6 +1,5 @@
 .hero-container {
     background: url('../Images - Jaden/sunset.jpg') center center/cover no-repeat;
-    /* background-color: lavender; */
     height: 100vh;
     width: 100%;
     display: flex;
