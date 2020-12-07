@@ -1,6 +1,6 @@
-:root {
+/* :root {
     --primary: #fff;
-  }
+  } */
   
   .btn {
     padding: 8px 20px;
@@ -14,6 +14,11 @@
     background-color: var(--primary);
     color: #242424;
     border: 1px solid var(--primary);
+  }
+
+  .btn--navigation {
+    background-color: #0F2021;
+    border-radius: 5px;
   }
   
   .btn--outline {
@@ -37,7 +42,7 @@
   .btn--large:hover,
   .btn--medium:hover {
     transition: all 0.3s ease-out;
-    background: #fff;
+    background: #2b5f61;
     color: #242424;
     transition: 250ms;
   }
