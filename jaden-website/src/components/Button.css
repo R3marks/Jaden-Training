@@ -19,6 +19,7 @@
   .btn--navigation {
     background-color: #0F2021;
     border-radius: 5px;
+    color: #E68FB1;
   }
   
   .btn--outline {
@@ -39,10 +40,10 @@
     font-size: 20px;
   }
   
-  .btn--large:hover,
-  .btn--medium:hover {
+.btn--navigation:hover {
     transition: all 0.3s ease-out;
-    background: #2b5f61;
-    color: #242424;
-    transition: 250ms;
-  }
+    transform: scale(1.1)
+    /* background: #2b5f61;
+    color: #E68FB1;
+    transition: 250ms; */
+}
