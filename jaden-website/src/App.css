@@ -4,7 +4,11 @@
     padding: 0;
     font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-style: normal;
-  }
+}
+
+.wrapper {
+  width: 80vw;
+}
   
 /*  .home,
   .services,
