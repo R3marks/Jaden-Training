@@ -54,7 +54,7 @@ function Navbar() {
                             </Link>
                         </li>
                     </ul>
-                    {button && <Button buttonStyle='btn--navigation'>ACCOUNT</Button>}
+                    {button && <Button buttonStyle='btn--navigation' buttonSize='btn--medium' linkTo='/sign-up'>ACCOUNT</Button>}
                 </div>
             </nav>
         
