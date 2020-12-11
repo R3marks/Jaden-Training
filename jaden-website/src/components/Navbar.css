@@ -1,6 +1,7 @@
 .navbar {
     /* background: linear-gradient(90deg, rgb(28, 27, 27) 0%, rgb(26, 23, 23) 100%); */
-    background: #6f6275;
+    background: #90799A; 
+    opacity: 0.9;
     height: 100px;
     display: flex;
     justify-content: center;
@@ -12,6 +13,7 @@
 }
   
 .navbar-container {
+    backdrop-filter: blur(12px);
     display: flex;
     justify-content: center;
     align-items: center;
