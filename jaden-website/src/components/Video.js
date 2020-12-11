@@ -10,7 +10,6 @@ function Video() {
 
     function cycleVideo (video) {
         setVideo(YOUTUBE_VIDEOS[video]);
-        setSelect
     };
 
     return (
