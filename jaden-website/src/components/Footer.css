@@ -15,6 +15,10 @@
     font-size: 24px;
 }
 
+.social-icon-link:hover {
+    color: #d1fdff;
+}
+
 .social-media {
     max-width: 1000px;
     width: 100%;
@@ -47,10 +51,14 @@
     align-self: center;
 }
 
-.website-right {
+.social-logo:hover {
+    color: #d1fdff;
+}
+
+/* .website-right {
     color: #fff;
     margin-bottom: 16px;
-}
+} */
 
 @media screen and (max-width: 820px) {
     .footer-links {

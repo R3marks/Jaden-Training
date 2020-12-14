@@ -8,7 +8,7 @@ const SIZES = ['btn--circle', 'btn--medium', 'btn--large'];
 
 const STATES = ['btn--select']
 
-export const Button = ({children, type, onClick, linkTo, buttonStyle, buttonSize, buttonState}) => {
+export const Button = React.forwardRef(({children, type, onClick, linkTo, buttonStyle, buttonSize, buttonState}, ref) => {
     const checkButtonStyle = STYLES.includes(buttonStyle) ? buttonStyle : STYLES[0]
 
     const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0]
@@ -17,9 +17,9 @@ export const Button = ({children, type, onClick, linkTo, buttonStyle, buttonSize
 
     return (
         <Link to={linkTo} className="btn-mobile">
-            <button className={`btn ${checkButtonStyle} ${checkButtonSize} ${checkButtonState}`} onClick={onClick} type={type}>
+            <button ref={ref} className={`btn ${checkButtonStyle} ${checkButtonSize} ${checkButtonState}`} onClick={onClick} type={type}>
                 {children}
             </button>
         </Link>
     )
-};
+});
