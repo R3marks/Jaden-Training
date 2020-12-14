@@ -9,7 +9,7 @@ function Home () {
         <>
             <Video />
             {/* <HeroSection /> */}
-            <Cards />
+            {/* <Cards /> */}
         </>
     )
 }
