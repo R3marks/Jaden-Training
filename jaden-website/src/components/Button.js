@@ -2,20 +2,24 @@ import React from 'react';
 import './Button.css';
 import { Link } from 'react-router-dom';
 
-const STYLES = ['btn--primary', 'btn--outline'];
+const STYLES = ['btn--cycle', 'btn--navigation'];
 
-const SIZES = ['btn--medium', 'btn--large'];
+const SIZES = ['btn--circle', 'btn--medium', 'btn--large'];
 
-export const Button = ({children, type, onClick, buttonStyle, buttonSize}) => {
+const STATES = ['btn--select']
+
+export const Button = React.forwardRef(({children, type, onClick, linkTo, buttonStyle, buttonSize, buttonState}, ref) => {
     const checkButtonStyle = STYLES.includes(buttonStyle) ? buttonStyle : STYLES[0]
 
     const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0]
 
+    const checkButtonState = STATES.includes(buttonState) ? buttonState : ''
+
     return (
-        <Link to='/sign-up' className="btn-mobile">
-            <button className={`btn ${checkButtonStyle} ${checkButtonSize}`} onClick={onClick} type={type}>
+        <Link to={linkTo} className="btn-mobile">
+            <button ref={ref} className={`btn ${checkButtonStyle} ${checkButtonSize} ${checkButtonState}`} onClick={onClick} type={type}>
                 {children}
             </button>
         </Link>
     )
-};
+});
