@@ -6,16 +6,20 @@ const YOUTUBE_VIDEOS = ["https://www.youtube.com/embed/82UsnbunJUs", "https://ww
 
 function Video() {
     const [video, setVideo] = useState(YOUTUBE_VIDEOS[0]);
-    const [select, setSelect] = useState('')
-    let refContainer = null
+    let refContainers = useRef([])
 
-    // let refContainer = useRef();
+    refContainers.current = [0,0,0,0].map(
+        (ref, index) =>   refContainers.current[index] = React.createRef()
+    )
 
     function cycleVideo (video) {
         setVideo(YOUTUBE_VIDEOS[video]);
-        setSelect('')
-        refContainer.className = "btn btn--cycle btn--circle btn--select"
-        console.log(refContainer.className)
+        console.log(refContainers.current.length)
+        for (var i = 0; i < refContainers.current.length; i++) {
+            refContainers.current[i].className = "btn btn--cycle btn--circle"
+        }
+        refContainers.current[video].className = "btn btn--cycle btn--circle btn--select"
+
     };
 
     return (
@@ -25,10 +29,10 @@ function Video() {
                 <div className="video-player">
                     <iframe width="560" height="349" src={video} frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="0"></iframe>  
                 </div>
-                <Button ref={(Button) => refContainer = Button} buttonStyle="btn--cycle" buttonSize="btn--circle" buttonState={select} onClick={() => cycleVideo(0)}></Button>
-                <Button ref={(Button) => refContainer = Button} buttonStyle="btn--cycle" buttonSize="btn--circle" buttonState={select} onClick={() => cycleVideo(1)}></Button>
-                <Button buttonStyle="btn--cycle" buttonSize="btn--circle" onClick={() => cycleVideo(2)}></Button>
-                <Button buttonStyle="btn--cycle" buttonSize="btn--circle" onClick={() => cycleVideo(3)}></Button>
+                <Button ref={(Button) => refContainers.current[0] = Button} buttonStyle="btn--cycle" buttonSize="btn--circle" buttonState="btn--select" onClick={() => cycleVideo(0)}></Button>
+                <Button ref={(Button) => refContainers.current[1] = Button} buttonStyle="btn--cycle" buttonSize="btn--circle" onClick={() => cycleVideo(1)}></Button>
+                <Button ref={(Button) => refContainers.current[2] = Button} buttonStyle="btn--cycle" buttonSize="btn--circle" onClick={() => cycleVideo(2)}></Button>
+                <Button ref={(Button) => refContainers.current[3] = Button} buttonStyle="btn--cycle" buttonSize="btn--circle" onClick={() => cycleVideo(3)}></Button>
             </div>
         </div>
     );
