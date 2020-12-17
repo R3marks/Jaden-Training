@@ -2,10 +2,15 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'PT Sans', sans-serif;
-  }
+    font-family: 'Oswald', sans-serif, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-style: normal;
+}
+
+.wrapper {
+  width: 80vw;
+}
   
-  .home,
+/*  .home,
   .services,
   .products,
   .sign-up {
@@ -17,7 +22,7 @@
   }
   
   .services {
-    /* background-image: url('/images/img-2.jpg'); */
+    /* background-image: url('/images/img-2.jpg'); 
     background-color: greenyellow;
     background-position: center;
     background-size: cover;
@@ -27,7 +32,7 @@
   }
   
   .products {
-    /* background-image: url('/images/img-1.jpg'); */
+    /* background-image: url('/images/img-1.jpg'); 
     background-color: honeydew;
     background-position: center;
     background-size: fill;
@@ -37,11 +42,11 @@
   }
   
   .sign-up {
-    /* background-image: url('/images/img-8.jpg'); */
+    /* background-image: url('/images/img-8.jpg'); 
     background-color: hotpink;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     color: #fff;
     font-size: 100px;
-  }
+  } */
