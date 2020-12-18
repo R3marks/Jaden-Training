@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button } from './Button';
 import './Navbar.css'
 
-function Navbar() {
+function Navbar(color) {
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
 
@@ -26,7 +26,7 @@ function Navbar() {
 
     return (
         <>
-            <nav className="navbar">
+            <nav className="navbar" style={color}>
                 <div className="navbar-container">
                     <Link to="/" className="navbar-jaden" onClick={closeMobileMenu}>JADEN</Link>
                     <div className="menu-icon" onClick={handleClick}>

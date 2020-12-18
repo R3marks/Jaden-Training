@@ -1,15 +1,13 @@
 import React from 'react';
 import '../../App.css';
 import Video from '../Video';
-import HeroSection from '../HeroSection';
-import Cards from '../Cards';
+import Navbar from '../Navbar'
 
 function Home () {
     return (
         <>
+            <Navbar />
             <Video />
-            {/* <HeroSection /> */}
-            {/* <Cards /> */}
         </>
     )
 }
