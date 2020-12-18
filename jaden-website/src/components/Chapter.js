@@ -28,7 +28,7 @@ function Chapter() {
                     Thy lips inspired God to make a man
                     And from his rib, an angel born as Eve
                     Formed into flesh and promised him her hand
-                    [Verse 2]
+                    
                     Oh, girl, I don't know why
                     Float alone in the sky at night
                     So, baby, hold me tight
