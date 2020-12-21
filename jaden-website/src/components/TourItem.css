@@ -1,0 +1,24 @@
+.tour-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 2px solid black;
+}
+
+.tour-item:last-child {
+    border-bottom: none;
+}
+
+.tour-info {
+    align-self: flex-start;
+    width: 60%;
+}
+
+.tour-date,
+.tour-city,
+.tour-arena {
+    font-size: 24px;
+    padding-right: 10px;
+}
