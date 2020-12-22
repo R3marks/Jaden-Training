@@ -36,6 +36,16 @@
     justify-self: center;
     text-align: center;
 }
+
+.btn--buy:hover {
+    background: linear-gradient(180deg, rgba(0, 79, 232, 0.75) 0%, rgba(133, 231, 255, 0.75) 105.32%);
+    transform: scale(1.05);
+    transition: all 0.3s ease-out;
+}
+
+.btn--buy:active {
+    transform: translateY(4px);
+}
   
 /* .btn--outline {
     background-color: transparent;
@@ -54,6 +64,9 @@
 }
 
 .btn--medium {
+    height: auto;
+    align-self: center;
+    justify-self: center;
     padding: 10px 20px;
     font-size: 18px;
 }
