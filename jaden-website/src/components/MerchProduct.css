@@ -1,0 +1,27 @@
+.merch-product {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin: 30px;
+    align-self: stretch;
+    justify-items: flex-end;
+    min-width: 250px;
+}
+
+.merch-image {
+    display: flex;
+    align-self: center;
+    max-width: 300px;
+    max-height: 250px;
+    margin: auto 0;
+}
+
+.merch-info {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.merch-info span {
+    font-size: 24px;
+}
