@@ -1,6 +1,7 @@
 import React from 'react'
 import './MerchCart.css'
 import MerchProduct from './MerchProduct'
+import CartProduct from './CartProduct'
 
 function MerchCart() {
     return (
@@ -23,7 +24,16 @@ function MerchCart() {
             <div className="cart-wrapper">
             <h1 className="cart-header">CART</h1>
                 <div className="cart-section">
-
+                    <div className="cart-headers">
+                        <span>PRODUCT</span>
+                        <span>SIZE</span>
+                        <span>QUANTITY</span>
+                        <span>PRICE</span>
+                    </div>
+                    <div className="scroll-box-cart">
+                        <CartProduct src="ctv3_tshirt.png" />
+                        <CartProduct src="ctv3_hoodie.png" />  
+                    </div>
                 </div>
             </div>
         </div>
