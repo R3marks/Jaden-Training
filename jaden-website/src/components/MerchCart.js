@@ -2,6 +2,7 @@ import React from 'react'
 import './MerchCart.css'
 import MerchProduct from './MerchProduct'
 import CartProduct from './CartProduct'
+import { Button } from './Button'
 
 function MerchCart() {
     return (
@@ -25,14 +26,19 @@ function MerchCart() {
             <h1 className="cart-header">CART</h1>
                 <div className="cart-section">
                     <div className="cart-headers">
-                        <span>PRODUCT</span>
+                        <span className="cart-header-product">PRODUCT</span>
                         <span>SIZE</span>
                         <span>QUANTITY</span>
-                        <span>PRICE</span>
+                        <span className="cart-header-price">PRICE</span>
                     </div>
                     <div className="scroll-box-cart">
                         <CartProduct src="ctv3_tshirt.png" />
                         <CartProduct src="ctv3_hoodie.png" />  
+                    </div>
+                    <div className="total-row">
+                        <span className="total-name">Total</span>
+                        <span className="total-price">£39.98</span>
+                        <Button buttonStyle="btn--buy" buttonSize="btn--medium">PURCHASE</Button>
                     </div>
                 </div>
             </div>
