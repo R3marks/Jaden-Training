@@ -7,7 +7,7 @@ import Navbar from '../Navbar'
 function Story() {
     return (
         <>
-            <Navbar background="#8bb8d8" opacity="0.75" />
+            <Navbar background="rgba(139, 184, 216, 0.5)" />
             <Chapter />
         </>
     )
