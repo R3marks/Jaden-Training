@@ -6,7 +6,7 @@ import Tours from '../Tours'
 function Tour() {
     return (
         <>
-            <Navbar background="#223B6E" opacity="0.9" />
+            <Navbar background="rgba(34,59,110,0.46)" />
             <Tours />
         </>
     )
