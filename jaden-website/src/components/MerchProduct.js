@@ -1,6 +1,7 @@
 import React from 'react'
 import './MerchProduct.css'
 import { Button } from './Button'
+import test from './MerchCart'
 
 function MerchProduct(props) {
     return (
@@ -10,7 +11,7 @@ function MerchProduct(props) {
                 <span>CTV3 T-SHIRT</span>
                 <span>£19.99</span>
             </div>
-            <Button buttonStyle="btn--buy" buttonSize="btn--medium">ADD TO CART</Button>
+            <Button buttonStyle="btn--buy" buttonSize="btn--medium" onClick={test}>ADD TO CART</Button>
         </div>
     )
 }
