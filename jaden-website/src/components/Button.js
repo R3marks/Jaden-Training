@@ -2,9 +2,9 @@ import React from 'react';
 import './Button.css';
 import { Link } from 'react-router-dom';
 
-const STYLES = ['btn--cycle', 'btn--navigation', 'btn--buy'];
+const STYLES = ['btn--cycle', 'btn--navigation', 'btn--buy', 'btn--size'];
 
-const SIZES = ['btn--circle', 'btn--medium', 'btn--large'];
+const SIZES = ['btn--circle', 'btn--square', 'btn--medium', 'btn--large'];
 
 const STATES = ['btn--select']
 

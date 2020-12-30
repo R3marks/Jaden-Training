@@ -19,7 +19,6 @@ function Video() {
             refContainers.current[i].className = "btn btn--cycle btn--circle"
         }
         refContainers.current[video].className = "btn btn--cycle btn--circle btn--select"
-
     };
 
     return (

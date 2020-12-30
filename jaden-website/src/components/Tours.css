@@ -81,22 +81,22 @@
 /* width */
 .scroll-box-tickets::-webkit-scrollbar {
     width: 20px;
-  }
+}
   
   /* Track */
-  .scroll-box-tickets::-webkit-scrollbar-track {
+.scroll-box-tickets::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px #383B61; 
     background: #383B61;
     border-radius: 20px;
-  }
+}
    
   /* Handle */
-  .scroll-box-tickets::-webkit-scrollbar-thumb {
+.scroll-box-tickets::-webkit-scrollbar-thumb {
     background: #A0B4DB; 
     border-radius: 20px;
-  }
+}
   
   /* Handle on hover */
-  .scroll-box-tickets::-webkit-scrollbar-thumb:hover {
+.scroll-box-tickets::-webkit-scrollbar-thumb:hover {
     background: #7f9dda; 
-  }
+}
