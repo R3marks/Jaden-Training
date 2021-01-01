@@ -12,6 +12,23 @@ function MerchCart() {
         "syre.jpg"
     ]
 
+    const [cart, setCart] = useState(***REMOVED***)
+
+    function test(element) {
+        let parent = element.target.parentElement
+        var merchInfo = parent.previousElementSibling
+        var merchImage = merchInfo.previousElementSibling
+        var regex = new RegExp('(?<=Jaden/).*')
+        var merchSrc = merchImage.src.match(regex)
+        var [productName, productPrice] = merchInfo.children
+        console.log(merchSrc[0])
+        // CART.push(merchSrc[0])
+        console.log(cart)
+        const newCart = [...cart, merchSrc[0]]
+        console.log(newCart)
+        setCart(newCart)
+    }
+
     const [quantity, setQuantity] = useState(1)
 
     function changeQuantity (event) {
@@ -49,13 +66,13 @@ function MerchCart() {
                     <div className="scroll-box-merch">
                         {IMAGES.map((image, index) => (
                             <div className="merch-product" key={index}>
-                            <img className="merch-image" src={"./Images - Jaden/" + image}></img>
-                            <div className="merch-info">
-                                <span>CTV3 T-SHIRT</span>
-                                <span>£19.99</span>
-                            </div>
-                            <Button buttonStyle="btn--buy" buttonSize="btn--medium" >ADD TO CART</Button>
-                        </div> 
+                                <img className="merch-image" src={"./Images - Jaden/" + image}></img>
+                                <div className="merch-info">
+                                    <span>CTV3 T-SHIRT</span>
+                                    <span>£19.99</span>
+                                </div>
+                                <Button buttonStyle="btn--buy" buttonSize="btn--medium"onClick={test.bind(this)}>ADD TO CART</Button>
+                            </div> 
                         ))}
                     </div>
                 </div>
@@ -72,7 +89,7 @@ function MerchCart() {
                         <span className="cart-header-price">PRICE</span>
                     </div>
                     <div className="scroll-box-cart">
-                        {IMAGES.map((image, index) => (
+                        {cart.map((image, index) => (
                             <div className="cart-products"
                             key={index}>
                             <div className="cart-product">
