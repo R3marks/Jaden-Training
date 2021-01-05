@@ -1,58 +1,62 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import './MerchCart.css'
 import { Button } from './Button'
 
 function MerchCart() {
 
-    const IMAGES = [
-        "twitter-icon.png",
-        "ctv3_tshirt.png",
-        "ctv3_hoodie.png",
-        "erys.jpg",
-        "syre.jpg"
-    ]
+    // const IMAGES = [
+    //     "twitter-icon.png",
+    //     "ctv3_tshirt.png",
+    //     "ctv3_hoodie.png",
+    //     "erys.jpg",
+    //     "syre.jpg"
+    // ]
 
     const MERCH = [{
         src: "twitter-icon.png",
         name: "TWITTER PIN",
-        price: "£0.99"
+        price: 0.99
     }, {
         src: "ctv3_tshirt.png",
         name: "CTV3 T-SHIRT",
-        price: "£19.99"
+        price: 19.99
     }]
 
     const [cart, setCart] = useState(***REMOVED***)
     const [total, setTotal] = useState(0)
 
-    const removePoundSign = new RegExp('(?<=£).*')
-
-    function updateTotal(price) {
-        console.log(price)
-        let numericPrice = price.match(removePoundSign)
-        var roundedTotal = +((total + Number(numericPrice[0])).toFixed(2))
-        setTotal(roundedTotal)
+    useEffect(() => {
+        let total = 0;
+        for (let i = 0; i < cart.length; i++) {
+            total += cart[i].quantity * cart[i].price
+            console.log(cart[i].quantity, cart[i].price)
+        }
         console.log(total)
-    }
+        setTotal(total.toFixed(2))
+    }, [cart])
+
+    const removePoundSign = new RegExp('(?<=£).*')
+    const getSrcName = new RegExp('(?<=Jaden/).*')
 
     function addProductToCart(element) {
         let parent = element.target.parentElement
         var merchInfo = parent.previousElementSibling
         var merchImage = merchInfo.previousElementSibling
-        var regex = new RegExp('(?<=Jaden/).*')
-        var merchSrc = merchImage.src.match(regex)
+        var merchSrc = merchImage.src.match(getSrcName)
         var [productName, productPrice] = merchInfo.children
+        var numericProductPrice = Number(productPrice.innerText.match(removePoundSign))
         var cartProduct = {
             src: merchSrc[0],
             name: productName.innerText,
-            price: productPrice.innerText
+            price: numericProductPrice,
+            quantity: 1
         }
         console.log(cartProduct)
         console.log(cart)
         for (let i = 0; i < cart.length; i++) {
             console.log(cart[i])
             console.log(cartProduct)
-            if (JSON.stringify(cart[i]) === JSON.stringify(cartProduct)) {
+            if (cart[i].src === cartProduct.src) {
                 console.log('HERE')
                 alert('Item has already been added!')
                 return
@@ -60,7 +64,6 @@ function MerchCart() {
         }
         const newCart = [...cart, cartProduct]
         setCart(newCart)
-        updateTotal(productPrice.innerText)
     }
 
     function removeProductFromCart(element) {
@@ -70,8 +73,7 @@ function MerchCart() {
         console.log(cartProductPrice)
         var cartProductInfo = cartQuantityInfo.previousElementSibling.previousElementSibling
         var [productImage, productName] = cartProductInfo.children
-        var regex = new RegExp('(?<=Jaden/).*')
-        var merchSrc = productImage.src.match(regex)
+        var merchSrc = productImage.src.match(getSrcName)
         console.log(merchSrc[0])
         var productToRemove = {
             src: merchSrc[0],
@@ -80,26 +82,32 @@ function MerchCart() {
         }
         const newCart = ***REMOVED***
         for (let i = 0; i < cart.length; i++) {
-            if (JSON.stringify(cart[i]) !== JSON.stringify(productToRemove)) {
+            if (cart[i].src !== productToRemove.src) {
                 newCart.push(cart[i])
             }
         }
         console.log(cart)
         setCart(newCart)
         console.log(newCart)
-        var negativePrice = cartProductPrice.innerText.slice(0, 1) + "-" + cartProductPrice.innerText.slice(1)
-        updateTotal(negativePrice)
     }
-
-    const [quantity, setQuantity] = useState(1)
 
     function changeQuantity (event) {
         var input = event.target
-        console.log(input)
+        var cartProductImage = input.parentElement.previousElementSibling.previousElementSibling.children[0].src.match(getSrcName)
+        console.log(cartProductImage[0])
+        const newCart = ***REMOVED***
         if (isNaN(input.value) || input.value <= 0) {
             input.value = 1
-        } else {
-            setQuantity(event.target.value)  
+        } else { 
+            let value = Math.round(input.value)
+            for (let i = 0; i < cart.length; i++) {
+                newCart.push(cart[i])
+                if (cart[i].src === cartProductImage[0]) {
+                    newCart[i].quantity = value
+                }
+            }
+            setCart(newCart)
+            // updatePrice()  
         }
     }
 
@@ -127,10 +135,10 @@ function MerchCart() {
                     <div className="scroll-box-merch">
                         {MERCH.map((merch, index) => (
                             <div className="merch-product" key={index}>
-                                <img className="merch-image" src={"./Images - Jaden/" + merch.src}></img>
+                                <img className="merch-image" alt="Merch" src={"./Images - Jaden/" + merch.src}></img>
                                 <div className="merch-info">
                                     <span>{merch.name}</span>
-                                    <span>{merch.price}</span>
+                                    <span>£{merch.price}</span>
                                 </div>
                                 <Button buttonStyle="btn--buy" buttonSize="btn--medium" onClick={addProductToCart.bind(this)}>ADD TO CART</Button>
                             </div> 
@@ -149,12 +157,15 @@ function MerchCart() {
                         <span>QUANTITY</span>
                         <span className="cart-header-price">PRICE</span>
                     </div>
-                    <div className="scroll-box-cart">
+                    <div className="scroll-box-cart"> 
+                        {cart.length == 0 && 
+                            <span class="empty-cart">Your cart is empty</span>
+                        }
                         {cart.map((product, index) => (
                             <div className="cart-products"
                             key={index}>
                             <div className="cart-product">
-                                <img className="cart-image" src={"./Images - Jaden/" + product.src}></img>
+                                <img className="cart-image" alt="Cart" src={"./Images - Jaden/" + product.src}></img>
                                 <span className="cart-name">{product.name}</span>
                             </div>
                             <div className="cart-size">
@@ -163,13 +174,12 @@ function MerchCart() {
                                 <Button ref={(Button) => refContainers.current[2] = Button} buttonStyle="btn--size" buttonSize="btn--square" onClick={() => selectSize(2)}>L</Button>
                             </div>
                             <div className="cart-quantity">
-                                <input type="number" value={quantity} onChange={e => changeQuantity(e)}></input>
+                                <input type="number" value={product.quantity} onChange={e => changeQuantity(e)}></input>
                                 <Button buttonStyle="btn--buy" buttonSize="btn--medium" onClick={removeProductFromCart.bind(this)}>REMOVE</Button>
                             </div>
-                            <span className="cart-price">{product.price}</span>
+                            <span className="cart-price">£{(product.price * product.quantity).toFixed(2)}</span>
                         </div>
                         ))}
-                        {/* <CartProduct src="ctv3_hoodie.png" />   */}
                     </div>
                     <div className="total-row">
                         <span className="total-name">Total</span>
