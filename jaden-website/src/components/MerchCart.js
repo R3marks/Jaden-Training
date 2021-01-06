@@ -4,26 +4,39 @@ import { Button } from './Button'
 
 function MerchCart() {
 
-    // const IMAGES = [
-    //     "twitter-icon.png",
-    //     "ctv3_tshirt.png",
-    //     "ctv3_hoodie.png",
-    //     "erys.jpg",
-    //     "syre.jpg"
-    // ]
-
     const MERCH = [{
+        src: "ctv3_tshirt.png",
+        name: "CTV3 T-SHIRT",
+        price: 19.99
+    }, {
+        src: "ctv3_hoodie.png",
+        name: "CTV3 HOODIE",
+        price: 29.99
+    }, {
+        src: "erys.jpg",
+        name: "ERYS",
+        price: 13.99
+    }, {
         src: "twitter-icon.png",
         name: "TWITTER PIN",
         price: 0.99
     }, {
-        src: "ctv3_tshirt.png",
-        name: "CTV3 T-SHIRT",
-        price: 19.99
+        src: "syre.jpg",
+        name: "SYRE",
+        price: 12.99
     }]
 
     const [cart, setCart] = useState([])
     const [total, setTotal] = useState(0)
+
+    const removePoundSign = new RegExp('(?<=£).*')
+    const getSrcName = new RegExp('(?<=Jaden/).*')
+
+    let refContainers = useRef([])
+
+    refContainers.current = [0,0,0].map(
+        (ref, index) =>   refContainers.current[index] = React.createRef()
+    )
 
     useEffect(() => {
         let total = 0;
@@ -34,9 +47,6 @@ function MerchCart() {
         console.log(total)
         setTotal(total.toFixed(2))
     }, [cart])
-
-    const removePoundSign = new RegExp('(?<=£).*')
-    const getSrcName = new RegExp('(?<=Jaden/).*')
 
     function addProductToCart(element) {
         let parent = element.target.parentElement
@@ -51,13 +61,8 @@ function MerchCart() {
             price: numericProductPrice,
             quantity: 1
         }
-        console.log(cartProduct)
-        console.log(cart)
         for (let i = 0; i < cart.length; i++) {
-            console.log(cart[i])
-            console.log(cartProduct)
             if (cart[i].src === cartProduct.src) {
-                console.log('HERE')
                 alert('Item has already been added!')
                 return
             }  
@@ -70,15 +75,11 @@ function MerchCart() {
         let parent = element.target.parentElement
         var cartQuantityInfo = parent.parentElement
         var cartProductPrice = cartQuantityInfo.nextElementSibling
-        console.log(cartProductPrice)
         var cartProductInfo = cartQuantityInfo.previousElementSibling.previousElementSibling
         var [productImage, productName] = cartProductInfo.children
         var merchSrc = productImage.src.match(getSrcName)
-        console.log(merchSrc[0])
         var productToRemove = {
-            src: merchSrc[0],
-            name: productName.innerText,
-            price: cartProductPrice.innerText
+            src: merchSrc[0]
         }
         const newCart = []
         for (let i = 0; i < cart.length; i++) {
@@ -86,15 +87,12 @@ function MerchCart() {
                 newCart.push(cart[i])
             }
         }
-        console.log(cart)
         setCart(newCart)
-        console.log(newCart)
     }
 
-    function changeQuantity (event) {
+    function changeQuantity(event) {
         var input = event.target
         var cartProductImage = input.parentElement.previousElementSibling.previousElementSibling.children[0].src.match(getSrcName)
-        console.log(cartProductImage[0])
         const newCart = []
         if (isNaN(input.value) || input.value <= 0) {
             input.value = 1
@@ -106,18 +104,11 @@ function MerchCart() {
                     newCart[i].quantity = value
                 }
             }
-            setCart(newCart)
-            // updatePrice()  
+            setCart(newCart) 
         }
     }
 
-    let refContainers = useRef([])
-
-    refContainers.current = [0,0,0].map(
-        (ref, index) =>   refContainers.current[index] = React.createRef()
-    )
-
-    function selectSize (size) {
+    function selectSize(size) {
         console.log(refContainers.current.length)
         for (var i = 0; i < refContainers.current.length; i++) {
             console.log(refContainers.current)
@@ -125,6 +116,11 @@ function MerchCart() {
         }
         refContainers.current[size].className = "btn btn--size btn--square btn--select"
     };
+
+    function purchaseMessage() {
+        setCart([])
+        alert("Purchase Completed")
+    }
 
     return (
         <>
@@ -184,7 +180,7 @@ function MerchCart() {
                     <div className="total-row">
                         <span className="total-name">Total</span>
                         <span className="total-price">£{total}</span>
-                        <Button buttonStyle="btn--buy" buttonSize="btn--medium">PURCHASE</Button>
+                        <Button buttonStyle="btn--buy" buttonSize="btn--medium" onClick={purchaseMessage}>PURCHASE</Button>
                     </div>
                 </div>
             </div>
