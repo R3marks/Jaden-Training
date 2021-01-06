@@ -3,6 +3,11 @@ import { Button } from './Button'
 import './TourItem.css'
 
 function TourItem(props) {
+
+    function buyTickets() {
+        alert('Tickets purchased')
+    }
+
     return (
         <div className="tour-item">
             <div className="tour-info">
@@ -13,7 +18,7 @@ function TourItem(props) {
                 </a>
                 <span className="tour-arena">{props.arena}</span>  
             </div>
-            <Button buttonStyle="btn--buy" buttonSize="btn--medium">BUY TICKETS</Button>
+            <Button buttonStyle="btn--buy" buttonSize="btn--medium" onClick={buyTickets}>BUY TICKETS</Button>
         </div>
     )
 }
