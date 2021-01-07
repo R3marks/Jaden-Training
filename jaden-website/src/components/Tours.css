@@ -1,3 +1,5 @@
+/* ************** TOURS ************** */
+
 .tour-background {
     background: url('../Images - Jaden/tour-background.webp') center center/cover no-repeat;
     min-height: 100vh;
@@ -77,6 +79,72 @@
     overflow: auto;
     margin: 30px;
 }
+
+/* ************** TOUR ************** */
+
+.tour-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 2px solid black;
+    width: 95%;
+}
+
+.tour-item:last-child {
+    border-bottom: none;
+}
+
+.tour-info {
+    align-self: flex-start;
+    width: 60%;
+}
+
+.tour-date,
+.tour-city,
+.tour-arena {
+    font-size: 24px;
+    padding-right: 10px;
+}
+
+.tour-city {
+    display: block;
+}
+
+.btn-mobile {
+    align-self: center;
+}
+
+.fa-map-marked-alt {
+    font-size: 24px;
+    padding-bottom: 10px;
+    padding-right: 10px;
+}
+
+.fa-map-marked-alt:hover {
+    transform: translateY(-2px);
+    transition: all 0.1s ease-out;
+}
+
+.fa-map-marked-alt:active {
+    color: rgba(0, 79, 232, 0.75);
+    transition: none;
+}
+
+.fa-map-marked-alt:visited {
+    color:  rgba(133, 231, 255, 0.75);
+}
+
+.map-location {
+    color: black;
+}
+
+.map-location:active {
+    color: #242424;
+}
+
+/* ************** SCROLLBAR ************** */
 
 /* width */
 .scroll-box-tickets::-webkit-scrollbar {
