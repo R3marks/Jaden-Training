@@ -1,34 +1,20 @@
 import React from 'react'
 import './Tours.css'
 import { Button } from './Button'
+import { useQuery } from '@apollo/client'
+import { TOURS } from '../graphql/Queries'
 
 function Tours() {
 
-    const TOUR = [{
-        date: "MAY 26",
-        city: "SAN DIEGO, CA",
-        link: "https://goo.gl/maps/jDKwrSR9XokpJpEr6",
-        arena: "PECHANGA ARENA"
-    }, {
-        date: "JUN 19",
-        city: "MINNEAPOLIS, MN",
-        link: "https://g.page/TargetCenterMN?share",
-        arena: "TARGET CENTER"
-    }, {
-        date: "JUN 28",
-        city: "DETROIT, MN",
-        link: "https://goo.gl/maps/9TE2az6pbm65J3jCA",
-        arena: "LITTLE CAESARS ARENA"
-    }, {
-        date: "JUN 29",
-        city: "COLOMBUS, OH",
-        link: "https://goo.gl/maps/YSGcvvHXZJBYycZN7",
-        arena: "THE SCHOTTENSTEIN CENTER"
-    }]
+    const { loading, error, data } = useQuery(TOURS)
+    console.log(data)
 
     function buyTickets() {
         alert('Tickets purchased')
     }
+
+    if (loading) return 'Loading...';
+    if (error) return `Error! ${error}`;
 
     return (
         <div className="tour-background">
@@ -41,7 +27,7 @@ function Tours() {
                         </input>
                     </div>
                     <div className="scroll-box-tickets">
-                        {TOUR.map((tour, index) => (
+                        {data.tours.map((tour, index) => (
                             <div className="tour-item" key={index}>
                                 <div className="tour-info">
                                     <strong className="tour-date">{tour.date}</strong>
