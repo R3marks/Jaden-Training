@@ -11,6 +11,7 @@ const {
     GraphQLScalarType
 } = require('graphql')
 const app = express()
+const cors = require('cors')
 const mongoose = require('mongoose')
 
 const TOUR = [{
@@ -83,8 +84,31 @@ const RootQueryType = new GraphQLObjectType({
     })
 })
 
+const RootMutationType = new GraphQLObjectType({
+    name: 'Mutation',
+    description: 'Root Mutation',
+    fields: () => ({
+        addTour: {
+            type: TourType,
+            description: 'Add a book',
+            args: {
+                date: { type: GraphQLNonNull(GraphQLString) },
+                city: { type: GraphQLNonNull(GraphQLString) },
+                link: { type: GraphQLNonNull(GraphQLString) },
+                arena: { type: GraphQLNonNull(GraphQLString) }
+            },
+            resolve: (parent, args) => {
+                const tour = { id: TOUR.length + 1, date: args.date, city: args.city, link: args.link, arena: args.arena }
+                TOUR.push(tour)
+                return tour
+            }
+        }
+    })
+})
+
 const schema = new GraphQLSchema({
-    query: RootQueryType
+    query: RootQueryType,
+    mutation: RootMutationType
 })
 
 // Database
@@ -94,12 +118,13 @@ const schema = new GraphQLSchema({
 // db.once('open', () => console.log('Connected to database'))
 
 // app.use(express.json())
+// app.use(cors)
 app.use('/graphql', graphqlHTTP({
     schema: schema,
     graphiql: true
 }))
 
-const merchRouter = require('./routes/merch.js')
-app.use('/merch', merchRouter)
+// const merchRouter = require('./routes/merch.js')
+// app.use('/merch', merchRouter)
 
 app.listen(5000, () => console.log('Server started'))
