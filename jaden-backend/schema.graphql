@@ -1,0 +1,11 @@
+type Query {
+    tour(id: ID!): Tour
+    tours: [Tour]
+}    
+type Tour {
+    id: ID!,
+    date: String!,
+    city: String!,
+    link: String!,
+    arena: String!,
+}
