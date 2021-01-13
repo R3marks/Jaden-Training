@@ -1,7 +1,9 @@
 type Query {
     tour(id: ID!): Tour
     tours: [Tour]
-}    
+    searchTour(search: String!): [Tour]
+}
+
 type Tour {
     id: ID!,
     date: String!,
