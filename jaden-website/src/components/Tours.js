@@ -1,20 +1,26 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Tours.css'
 import { Button } from './Button'
 import { useQuery } from '@apollo/client'
-import { TOURS } from '../graphql/Queries'
+import { SEARCH_TOURS } from '../graphql/Queries'
 
 function Tours() {
-
-    const { loading, error, data } = useQuery(TOURS)
+    const { loading, error, data, refetch, networkStatus } = useQuery(SEARCH_TOURS, {
+        variables: { searchTerm: "" }
+    })
     console.log(data)
+
+    function handleChange(event) {
+        refetch({ searchTerm: event.target.value })
+    }
 
     function buyTickets() {
         alert('Tickets purchased')
     }
 
-    if (loading) return 'Loading...';
-    if (error) return `Error! ${error}`;
+    if (networkStatus === 4) return <h1>Refetching</h1>
+    if (loading) return <h1>Loading...</h1>;
+    if (error) return <h1>Error! ${error}</h1>;
 
     return (
         <div className="tour-background">
@@ -23,11 +29,11 @@ function Tours() {
                 <div className="tours-section">
                     <div className="search">
                         <i className="fas fa-search" />
-                        <input placeholder="Search..." className="search-field" >
+                        <input placeholder="Search..." className="search-field" onChange={handleChange}>
                         </input>
                     </div>
                     <div className="scroll-box-tickets">
-                        {data.tours.map((tour, index) => (
+                        {data.searchTour.map((tour, index) => (
                             <div className="tour-item" key={index}>
                                 <div className="tour-info">
                                     <strong className="tour-date">{tour.date}</strong>

@@ -9,7 +9,7 @@ import Story from './components/pages/Story';
 
 
 const client = new ApolloClient({
-  uri: '/',
+  uri: '/graphql',
   cache: new InMemoryCache()
 })
 
