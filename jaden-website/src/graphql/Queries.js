@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client'
 
-export const TOURS = gql`
-    query {
-        tours {
+export const SEARCH_TOURS = gql`
+    query searchTour($searchTerm: String!) {
+        searchTour(search: $searchTerm) {
             date
             city
             link
@@ -12,4 +12,4 @@ export const TOURS = gql`
 `
 const CHECK = ''
 
-// export default { TOURS, CHECK }
+export default { SEARCH_TOURS, CHECK }
