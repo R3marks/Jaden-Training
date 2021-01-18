@@ -1,0 +1,27 @@
+[
+    {
+        "id": "1",
+        "date": "MAY 26",
+        "city": "SAN DIEGO, CA",
+        "link": "https://goo.gl/maps/jDKwrSR9XokpJpEr6",
+        "arena": "PECHANGA ARENA"
+    }, {
+        "id": "2",
+        "date": "JUN 19",
+        "city": "MINNEAPOLIS, MN",
+        "link": "https://g.page/TargetCenterMN?share",
+        "arena": "TARGET CENTER"
+    }, {
+        "id": "3",
+        "date": "JUN 28",
+        "city": "DETROIT, MN",
+        "link": "https://goo.gl/maps/9TE2az6pbm65J3jCA",
+        "arena": "LITTLE CAESARS ARENA"
+    }, {
+        "id": "4",
+        "date": "JUN 29",
+        "city": "COLOMBUS, OH",
+        "link": "https://goo.gl/maps/YSGcvvHXZJBYycZN7",
+        "arena": "THE SCHOTTENSTEIN CENTER"
+    }
+]

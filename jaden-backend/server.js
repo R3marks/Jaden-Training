@@ -1,17 +1,64 @@
-require('dotenv').config()
-
+require('dotenv')
+const fs = require('fs')
+const { ApolloServer, gql } = require('apollo-server-express');
+const bodyParser = require('body-parser')
+const cors = require('cors')
 const express = require('express')
+const expressJwt = require('express-jwt')
+const jwt = require('jsonwebtoken')
+const db = require('./db')
+
+const jwtSecret = Buffer.from('cGFzc3dvcmQ=', 'base64')
+
 const app = express()
-const mongoose = require('mongoose')
+// app.use(cors(), bodyParser.json(), expressJwt({
+//     secret: jwtSecret,
+//     credentialsRequired: false
+// }))
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true,  useUnifiedTopology: true })
-const db = mongoose.connection
-db.on('error', (error) => console.error(error))
-db.once('open', () => console.log('Connected to database'))
+// app.post('/login', (req, res) => {
+//   const { email, password} = req.body
+//   const user = db.users.list().find((user) => user.email === email)
+//   if (!(user && user.password === password)) {
+//     res.sendStatus(401)
+//     return
+//   }
+//   const token = jet.sign({ sub: user.id }, jwtSecret)
+//   res.send({ token })
+// })
 
-app.use(express.json())
+const typeDefs = require('./schema')
 
-const merchRouter = require('./routes/merch.js')
-app.use('/merch', merchRouter)
+const resolvers = require('./resolvers')
 
-app.listen(5000, () => console.log('Server started'))
+const apolloServer = new ApolloServer({ typeDefs, resolvers })
+apolloServer.applyMiddleware({ app, path: '/graphql' })
+app.listen({ port: process.env.PORT || 9000 }, () => console.log(`🚀 Server ready on port 9000`))
+
+// const typeDefs = gql`
+//     type Tour {
+//         date: String
+//         city: String
+//         link: String
+//         arena: String
+//     }
+
+//     type Query {
+//         tours: [Tour]
+//     }
+
+//     interface MutationResponse {
+//         code: String!
+//         success: Boolean!
+//         message: String!
+//     }
+
+//     type UpdateUserEmailMutationResponse implements MutationResponse {
+//         code: String!
+//         success: Boolean!
+//         message: String!
+//         user: User
+//     }
+// `  
+
+
