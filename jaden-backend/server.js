@@ -1,3 +1,4 @@
+require('dotenv')
 const fs = require('fs')
 const { ApolloServer, gql } = require('apollo-server-express');
 const bodyParser = require('body-parser')
@@ -7,7 +8,6 @@ const expressJwt = require('express-jwt')
 const jwt = require('jsonwebtoken')
 const db = require('./db')
 
-const port = 9000;
 const jwtSecret = Buffer.from('cGFzc3dvcmQ=', 'base64')
 
 const app = express()
@@ -27,14 +27,13 @@ const app = express()
 //   res.send({ token })
 // })
 
-const typeDefs = gql(fs.readFileSync('./schema.graphql', { encoding: 'utf-8'}))
+const typeDefs = require('./schema')
 
 const resolvers = require('./resolvers')
 
 const apolloServer = new ApolloServer({ typeDefs, resolvers })
 apolloServer.applyMiddleware({ app, path: '/graphql' })
-console.log(port)
-app.listen(port, () => console.log(`🚀 Server ready on port ${port}`))
+app.listen({ port: process.env.PORT || 9000 }, () => console.log(`🚀 Server ready on port 9000`))
 
 // const typeDefs = gql`
 //     type Tour {
