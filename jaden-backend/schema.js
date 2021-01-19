@@ -5,6 +5,7 @@ module.exports = gql`
         tour(id: ID!): Tour
         tours: [Tour]
         searchTour(search: String!): [Tour]
+        allMerch: [Merch]
     }
 
     type Tour {
@@ -13,5 +14,12 @@ module.exports = gql`
         city: String!,
         link: String!,
         arena: String!,
+    }
+
+    type Merch {
+        id: ID!
+        src: String!,
+        name: String!,
+        price: Float!
     }
 `

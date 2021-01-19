@@ -1,30 +1,59 @@
 import React, { useState, useEffect, useRef } from 'react'
 import './MerchCart.css'
 import { Button } from './Button'
+import MerchQuery from './MerchQuery'
+import { useQuery } from '@apollo/client'
+import { GET_MERCH } from '../graphql/Queries'
+import { onError } from "@apollo/client/link/error";
 
 function MerchCart() {
 
     const MERCH = [{
-        src: "ctv3_tshirt.png",
+        src: "/Images - Jaden/ctv3_tshirt.png",
         name: "CTV3 T-SHIRT",
         price: 19.99
     }, {
-        src: "ctv3_hoodie.png",
+        src: "/Images - Jaden/ctv3_hoodie.png",
         name: "CTV3 HOODIE",
         price: 29.99
     }, {
-        src: "erys.jpg",
+        src: "/Images - Jaden/erys.jpg",
         name: "ERYS",
         price: 13.99
     }, {
-        src: "twitter-icon.png",
+        src: "/Images - Jaden/twitter-icon.png",
         name: "TWITTER PIN",
         price: 0.99
     }, {
-        src: "syre.jpg",
+        src: "/Images - Jaden/syre.jpg",
         name: "SYRE",
         price: 12.99
     }]
+
+    const { loading, error, data, refetch, networkStatus } = useQuery(GET_MERCH)
+    console.log(data)
+
+    function newSearch(event) {
+        refetch()
+    }
+
+    function checkMerchQuery() {
+        if (error) {
+            return <h1>Server Offline</h1>
+        } else {
+            return <MerchQuery data={data} loading={loading} error={error} refetch={newSearch} networkStatus={networkStatus} />
+        }
+    }
+
+    onError(({ graphQLErrors, networkError }) => {
+        if (graphQLErrors)
+            graphQLErrors.map(({ message, locations, path }) =>
+            console.log(
+                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+            ),
+        );
+        if (networkError) console.log(`[Network error]: ${networkError}`);
+    });
 
     const [cart, setCart] = useState(***REMOVED***)
     const [total, setTotal] = useState(0)
@@ -121,6 +150,9 @@ function MerchCart() {
         setCart(***REMOVED***)
         alert("Purchase Completed")
     }
+    
+    if (loading) return <h1>Loading</h1>
+    if (error) return <h1>Error</h1>
 
     return (
         <>
@@ -129,16 +161,7 @@ function MerchCart() {
             <h1 className="merch-header">MERCH</h1>
                 <div className="merch-section">
                     <div className="scroll-box-merch">
-                        {MERCH.map((merch, index) => (
-                            <div className="merch-product" key={index}>
-                                <img className="merch-image" alt="Merch" src={"./Images - Jaden/" + merch.src}></img>
-                                <div className="merch-info">
-                                    <span>{merch.name}</span>
-                                    <span>£{merch.price}</span>
-                                </div>
-                                <Button buttonStyle="btn--buy" buttonSize="btn--medium" onClick={addProductToCart.bind(this)}>ADD TO CART</Button>
-                            </div> 
-                        ))}
+                        {checkMerchQuery()}
                     </div>
                 </div>
             </div>
@@ -155,7 +178,7 @@ function MerchCart() {
                     </div>
                     <div className="scroll-box-cart"> 
                         {cart.length == 0 && 
-                            <span class="empty-cart">Your cart is empty</span>
+                            <span className="empty-cart">Your cart is empty</span>
                         }
                         {cart.map((product, index) => (
                             <div className="cart-products"

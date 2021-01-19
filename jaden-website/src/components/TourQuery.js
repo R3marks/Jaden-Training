@@ -20,7 +20,7 @@ function TourQuery(props) {
                     <strong className="tour-date">{tour.date}</strong>
                     <span className="tour-city">{tour.city}</span>
                     <a href={tour.link} target="_blank" rel="noreferrer" className="map-location">
-                        <i class="fas fa-map-marked-alt"></i>
+                        <i className="fas fa-map-marked-alt"></i>
                     </a>
                     <span className="tour-arena">{tour.arena}</span>  
                 </div>
