@@ -4,7 +4,8 @@ const db = require('./db')
 const Query = {
     tour: (parent, args) => getTourByID(parent, args),
     tours: () => getAllTours(),
-    searchTour: (parent, args) => searchTours(parent, args)
+    searchTour: (parent, args) => searchTours(parent, args),
+    allMerch: () => getAllMerch()
 }
 
 function getTourByID(parent, args) {
@@ -45,6 +46,18 @@ function searchTours(parent, args) {
         return results
     } catch (error) {
         return new ApolloError('Could not search through database for tours', 'DATABASE_ERROR')
+    }
+}
+
+function getAllMerch() {
+    try {
+        var result = db.merch.list()
+        if (!result) {
+            return new ApolloError('Could not find all Tours', 'DATABASE_TABLE_NOT_FOUND')
+        }
+        return result
+    } catch (error) {
+        return new ApolloError('Could not get all tours from database', 'DATABASE_ERROR')
     }
 }
 
