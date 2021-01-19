@@ -11,6 +11,7 @@ const db = require('./db')
 const jwtSecret = Buffer.from('cGFzc3dvcmQ=', 'base64')
 
 const app = express()
+app.use(cors())
 // app.use(cors(), bodyParser.json(), expressJwt({
 //     secret: jwtSecret,
 //     credentialsRequired: false
