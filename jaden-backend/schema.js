@@ -6,20 +6,47 @@ module.exports = gql`
         tours: [Tour]
         searchTour(search: String!): [Tour]
         allMerch: [Merch]
+        allCart: [Cart]
+    }
+
+    type Mutation {
+        addToCart(src: String!, name: String!, price: Float!, quantity: String): UpdateCartMutationResponse
+        deleteCartItemById(id: ID!): UpdateCartMutationResponse
+    }
+
+    interface MutationResponse {
+        code: String!
+        success: Boolean!
+        message: String!
     }
 
     type Tour {
-        id: ID!,
-        date: String!,
-        city: String!,
-        link: String!,
-        arena: String!,
+        id: ID!
+        date: String!
+        city: String!
+        link: String!
+        arena: String!
     }
 
     type Merch {
         id: ID!
-        src: String!,
-        name: String!,
+        src: String!
+        name: String!
         price: Float!
+    }
+
+    type Cart {
+        id: ID!
+        src: String!
+        name: String!
+        price: Float!
+        quantity: Int!
+    }
+
+    type UpdateCartMutationResponse implements MutationResponse {
+        code: String!
+        success: Boolean!
+        message: String!
+        cart: [Cart]
     }
 `
