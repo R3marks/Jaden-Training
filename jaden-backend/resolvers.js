@@ -5,7 +5,8 @@ const Query = {
     tour: (parent, args) => getTourByID(parent, args),
     tours: () => getAllTours(),
     searchTour: (parent, args) => searchTours(parent, args),
-    allMerch: () => getAllMerch()
+    allMerch: () => getAllMerch(),
+    allCart: () => getAllCart()
 }
 
 function getTourByID(parent, args) {
@@ -61,5 +62,59 @@ function getAllMerch() {
     }
 }
 
+function getAllCart() {
+    try {
+        var result = db.cart.list()
+        if (!result) {
+            return new ApolloError('Could not find all Tours', 'DATABASE_TABLE_NOT_FOUND')
+        }
+        return result
+    } catch (error) {
+        return new ApolloError('Could not get all tours from database', 'DATABASE_ERROR')
+    }
+}
 
-module.exports = { Query }
+const Mutation = {
+    addToCart: (parent, args) => addMerchToCart(args),
+    deleteCartItemById: (parent, args) => deleteCartEntryById(args)
+}
+
+function addMerchToCart(args) {
+    try {
+        var id = db.cart.create({ src: args.src, name: args.name, price: args.price, quantity: 1 })
+        var cart = db.cart.list()
+        var result = {
+            code: "200",
+            success: true,
+            message: `You have successfully added ${args.name} to the cart with ID: ${id}`,
+            cart: cart
+        }
+        return result
+    } catch (error) {
+        return new ApolloError('Could not create a new entry in cart', 'DATABASE_COULD_NOT_CREATE')
+    }
+}
+
+function deleteCartEntryById(args) {
+    try {
+        db.cart.delete(args.id)
+        var cart = db.cart.list()
+        var result = {
+            code: "200",
+            success: true,
+            message: `You have successfully deleted the cart entry: ${args.id}`,
+            cart: cart
+        }
+        return result
+    } catch (error) {
+        return new ApolloError(`Could not delete entry with ID: ${args.id}`, 'DATABASE_COULD_NOT_DELETE')
+    }
+}
+
+const MutationResponse = {
+    __resolveType(mutationResponse, context, info) {
+        return null
+    }
+}
+
+module.exports = { Query, Mutation, MutationResponse }
