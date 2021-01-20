@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from 'react'
 import './MerchCart.css'
 import { Button } from './Button'
 import MerchQuery from './MerchQuery'
-import { useQuery } from '@apollo/client'
-import { GET_MERCH } from '../graphql/Queries'
+import CartQuery from './CartQuery'
+import { useQuery, useLazyQuery } from '@apollo/client'
+import { GET_MERCH, GET_CART } from '../graphql/Queries'
 import { onError } from "@apollo/client/link/error";
 
 function MerchCart() {
@@ -33,6 +34,9 @@ function MerchCart() {
     const { loading, error, data, refetch, networkStatus } = useQuery(GET_MERCH)
     console.log(data)
 
+    const { loading: loadingCart, error: errorCart, data: dataCart } = useQuery(GET_CART)
+    console.log({dataCart})
+
     function newSearch(event) {
         refetch()
     }
@@ -42,6 +46,14 @@ function MerchCart() {
             return <h1>Server Offline</h1>
         } else {
             return <MerchQuery data={data} loading={loading} error={error} refetch={newSearch} networkStatus={networkStatus} />
+        }
+    }
+
+    function checkCartQuery() {
+        if (errorCart) {
+            return <h1>Server Offline</h1>
+        } else {
+            return <CartQuery data={dataCart} loading={loadingCart} error={errorCart} />
         }
     }
 
@@ -61,21 +73,20 @@ function MerchCart() {
     const removePoundSign = new RegExp('(?<=£).*')
     const getSrcName = new RegExp('(?<=Jaden/).*')
 
-    let refContainers = useRef(***REMOVED***)
+    // useEffect(() => {
+    //     let total = 0;
+    //     for (let i = 0; i < cart.length; i++) {
+    //         total += cart[i].quantity * cart[i].price
+    //         console.log(cart[i].quantity, cart[i].price)
+    //     }
+    //     console.log(total)
+    //     setTotal(total.toFixed(2))
+    // }, [cart])
 
-    refContainers.current = [0,0,0].map(
-        (ref, index) =>   refContainers.current[index] = React.createRef()
-    )
-
-    useEffect(() => {
-        let total = 0;
-        for (let i = 0; i < cart.length; i++) {
-            total += cart[i].quantity * cart[i].price
-            console.log(cart[i].quantity, cart[i].price)
-        }
-        console.log(total)
-        setTotal(total.toFixed(2))
-    }, [cart])
+    // useEffect(() => {
+    //     getMerch()
+    //     getCart()
+    // }, ***REMOVED***)
 
     function addProductToCart(element) {
         let parent = element.target.parentElement
@@ -137,22 +148,13 @@ function MerchCart() {
         }
     }
 
-    function selectSize(size) {
-        console.log(refContainers.current.length)
-        for (var i = 0; i < refContainers.current.length; i++) {
-            console.log(refContainers.current)
-            refContainers.current[i].className = "btn btn--size btn--square"
-        }
-        refContainers.current[size].className = "btn btn--size btn--square btn--select"
-    };
-
     function purchaseMessage() {
         setCart(***REMOVED***)
         alert("Purchase Completed")
     }
-    
-    if (loading) return <h1>Loading</h1>
-    if (error) return <h1>Error</h1>
+
+    if (loadingCart) return <h1>Loading...</h1>
+    if (errorCart) return <h1>Error</h1>
 
     return (
         <>
@@ -177,28 +179,10 @@ function MerchCart() {
                         <span className="cart-header-price">PRICE</span>
                     </div>
                     <div className="scroll-box-cart"> 
-                        {cart.length == 0 && 
+                        {/* {cart.length == 0 && 
                             <span className="empty-cart">Your cart is empty</span>
-                        }
-                        {cart.map((product, index) => (
-                            <div className="cart-products"
-                            key={index}>
-                            <div className="cart-product">
-                                <img className="cart-image" alt="Cart" src={"./Images - Jaden/" + product.src}></img>
-                                <span className="cart-name">{product.name}</span>
-                            </div>
-                            <div className="cart-size">
-                                <Button ref={(Button) => refContainers.current[0] = Button} buttonStyle="btn--size" buttonSize="btn--square" onClick={() => selectSize(0)}>S</Button>
-                                <Button ref={(Button) => refContainers.current[1] = Button} buttonStyle="btn--size" buttonSize="btn--square" buttonState="btn--select" onClick={() => selectSize(1)}>M</Button>
-                                <Button ref={(Button) => refContainers.current[2] = Button} buttonStyle="btn--size" buttonSize="btn--square" onClick={() => selectSize(2)}>L</Button>
-                            </div>
-                            <div className="cart-quantity">
-                                <input type="number" value={product.quantity} onChange={e => changeQuantity(e)}></input>
-                                <Button buttonStyle="btn--buy" buttonSize="btn--medium" onClick={removeProductFromCart.bind(this)}>REMOVE</Button>
-                            </div>
-                            <span className="cart-price">£{(product.price * product.quantity).toFixed(2)}</span>
-                        </div>
-                        ))}
+                        } */}
+                        {checkCartQuery()}
                     </div>
                     <div className="total-row">
                         <span className="total-name">Total</span>
