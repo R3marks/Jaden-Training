@@ -14,6 +14,7 @@ export const SEARCH_TOURS = gql`
 export const GET_MERCH = gql`
     query {
         allMerch {
+            id
             src
             name
             price
