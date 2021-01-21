@@ -81,12 +81,13 @@ const Mutation = {
 
 function addMerchToCart(args) {
     try {
-        var id = db.cart.create({ src: args.src, name: args.name, price: args.price, quantity: 1 })
+        var merchById = db.merch.get(args.id)
+        var id = db.cart.create({ src: merchById.src, name: merchById.name, price: merchById.price, quantity: 1 })
         var cart = db.cart.list()
         var result = {
             code: "200",
             success: true,
-            message: `You have successfully added ${args.name} to the cart with ID: ${id}`,
+            message: `You have successfully added ${merchById.name} to the cart with ID: ${id}`,
             cart: cart
         }
         return result
