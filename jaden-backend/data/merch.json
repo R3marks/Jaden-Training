@@ -1,21 +1,26 @@
 [
     {
+        "id": "1",
         "src": "/Images - Jaden/ctv3_tshirt.png",
         "name": "CTV3 T-SHIRT",
         "price": 19.99
     }, {
+        "id": "2",
         "src": "/Images - Jaden/ctv3_hoodie.png",
         "name": "CTV3 HOODIE",
         "price": 29.99
     }, {
+        "id": "3",
         "src": "/Images - Jaden/erys.jpg",
         "name": "ERYS",
         "price": 13.99
     }, {
+        "id": "4",
         "src": "/Images - Jaden/twitter-icon.png",
         "name": "TWITTER PIN",
         "price": 0.99
     }, {
+        "id": "5",
         "src": "/Images - Jaden/syre.jpg",
         "name": "SYRE",
         "price": 12.99

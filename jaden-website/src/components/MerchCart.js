@@ -3,8 +3,9 @@ import './MerchCart.css'
 import { Button } from './Button'
 import MerchQuery from './MerchQuery'
 import CartQuery from './CartQuery'
-import { useQuery, useLazyQuery } from '@apollo/client'
+import { useQuery, useMutation, useLazyQuery } from '@apollo/client'
 import { GET_MERCH, GET_CART } from '../graphql/Queries'
+import { ADD_TO_CART } from '../graphql/Mutations'
 import { onError } from "@apollo/client/link/error";
 
 function MerchCart() {
@@ -37,6 +38,8 @@ function MerchCart() {
     const { loading: loadingCart, error: errorCart, data: dataCart } = useQuery(GET_CART)
     console.log({dataCart})
 
+    const [addToCart] = useMutation(ADD_TO_CART)
+
     function newSearch(event) {
         refetch()
     }
@@ -45,7 +48,7 @@ function MerchCart() {
         if (error) {
             return <h1>Server Offline</h1>
         } else {
-            return <MerchQuery data={data} loading={loading} error={error} refetch={newSearch} networkStatus={networkStatus} />
+            return <MerchQuery data={data} loading={loading} error={error} addToCart={addToCart} networkStatus={networkStatus} />
         }
     }
 
