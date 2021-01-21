@@ -10,7 +10,7 @@ module.exports = gql`
     }
 
     type Mutation {
-        addToCart(src: String!, name: String!, price: Float!, quantity: String): UpdateCartMutationResponse
+        addToCart(id: ID!): UpdateCartMutationResponse
         deleteCartItemById(id: ID!): UpdateCartMutationResponse
     }
 
