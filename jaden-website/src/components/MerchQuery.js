@@ -14,8 +14,9 @@ function MerchQuery(props) {
 
     if (props.networkStatus === 4) return <h1>Refetching</h1>
     if (props.loading) return <h1>Loading...</h1>;
-    if (props.error) return <h1>Error! ${props.error}</h1>
-    if (props.data.allMerch.length === 0) return <h1>No Shows Available</h1>
+    if (props.mutationLoading) return <h1 classname="empty-cart">Adding To Cart...</h1>
+    if (props.error || props.mutationError) return <h1>Error! ${props.error}</h1>
+    if (props.data.allMerch.length === 0) return <h1 className="empty-cart">Your Cart is Empty</h1>
 
     return (
         props.data.allMerch.map((merch, index) => (

@@ -25,6 +25,7 @@ export const GET_MERCH = gql`
 export const GET_CART = gql`
     query {
         allCart {
+            id
             src
             name
             price
