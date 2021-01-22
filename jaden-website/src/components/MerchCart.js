@@ -5,7 +5,7 @@ import MerchQuery from './MerchQuery'
 import CartQuery from './CartQuery'
 import { useQuery, useMutation, useLazyQuery } from '@apollo/client'
 import { GET_MERCH, GET_CART } from '../graphql/Queries'
-import { ADD_TO_CART } from '../graphql/Mutations'
+import { ADD_TO_CART, REMOVE_FROM_CART } from '../graphql/Mutations'
 import { onError } from "@apollo/client/link/error";
 
 function MerchCart() {
@@ -38,7 +38,50 @@ function MerchCart() {
     const { loading: loadingCart, error: errorCart, data: dataCart } = useQuery(GET_CART)
     console.log({dataCart})
 
-    const [addToCart] = useMutation(ADD_TO_CART)
+    const [addToCart,
+        { loading: mutationLoadingAdd, error: mutationErrorAdd }] = useMutation(ADD_TO_CART, {
+        update: updateCartWithNewEntry
+    })
+
+    const [removeFromCart, 
+        { loading: mutationLoadingRemove, error: mutationErrorRemove }] = useMutation(REMOVE_FROM_CART, {
+        update: updateCartWithRemovedEntry
+    })
+
+    function updateCartWithNewEntry(cache, { data }) {
+        console.log('yesss')
+        cache.modify({
+            fields: {
+                allCart(existingCart = []) {
+                    const newCart = data.addToCart.cart
+                    console.log(newCart)
+                    console.log(...existingCart)
+                    cache.writeQuery({
+                        query: GET_CART,
+                        data: { newCart }
+                    })
+                    console.log(cache.data)
+                }    
+            }
+        })
+    }
+
+    function updateCartWithRemovedEntry(cache, { data }) {
+        console.log('yesss')
+        cache.modify({
+            fields: {
+                allCart(existingCart = []) {
+                    const newCart = data.deleteCartItemById.cart
+                    console.log(newCart)
+                    console.log(...existingCart)
+                    cache.writeQuery({
+                        query: GET_CART,
+                        data: { newCart }
+                    })
+                }    
+            }
+        })
+    }
 
     function newSearch(event) {
         refetch()
@@ -48,7 +91,7 @@ function MerchCart() {
         if (error) {
             return <h1>Server Offline</h1>
         } else {
-            return <MerchQuery data={data} loading={loading} error={error} addToCart={addToCart} networkStatus={networkStatus} />
+            return <MerchQuery data={data} loading={loading} error={error} addToCart={addToCart} networkStatus={networkStatus} mutationLoading={mutationLoadingAdd} mutationError={mutationErrorAdd} />
         }
     }
 
@@ -56,7 +99,7 @@ function MerchCart() {
         if (errorCart) {
             return <h1>Server Offline</h1>
         } else {
-            return <CartQuery data={dataCart} loading={loadingCart} error={errorCart} />
+            return <CartQuery data={dataCart} loading={loadingCart} error={errorCart} removeFromCart={removeFromCart} mutationLoading={mutationLoadingRemove} mutationError={mutationErrorRemove} />
         }
     }
 
