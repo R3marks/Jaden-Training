@@ -12,6 +12,7 @@ module.exports = gql`
     type Mutation {
         addToCart(id: ID!): UpdateCartMutationResponse
         deleteCartItemById(id: ID!): UpdateCartMutationResponse
+        updateCartItemQuantityById(id: ID!, quantity: Int!): UpdateCartMutationResponse
     }
 
     interface MutationResponse {
