@@ -35,31 +35,3 @@ const resolvers = require('./resolvers')
 const apolloServer = new ApolloServer({ typeDefs, resolvers })
 apolloServer.applyMiddleware({ app, path: '/graphql' })
 app.listen({ port: process.env.PORT || 9000 }, () => console.log(`🚀 Server ready on port 9000`))
-
-// const typeDefs = gql`
-//     type Tour {
-//         date: String
-//         city: String
-//         link: String
-//         arena: String
-//     }
-
-//     type Query {
-//         tours: [Tour]
-//     }
-
-//     interface MutationResponse {
-//         code: String!
-//         success: Boolean!
-//         message: String!
-//     }
-
-//     type UpdateUserEmailMutationResponse implements MutationResponse {
-//         code: String!
-//         success: Boolean!
-//         message: String!
-//         user: User
-//     }
-// `  
-
-

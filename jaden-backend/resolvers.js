@@ -76,7 +76,8 @@ function getAllCart() {
 
 const Mutation = {
     addToCart: (parent, args) => addMerchToCart(args),
-    deleteCartItemById: (parent, args) => deleteCartEntryById(args)
+    deleteCartItemById: (parent, args) => deleteCartEntryById(args),
+    updateCartItemQuantityById: (parent, args) => updateCartEntryQuantityById(args)
 }
 
 function addMerchToCart(args) {
@@ -109,6 +110,23 @@ function deleteCartEntryById(args) {
         return result
     } catch (error) {
         return new ApolloError(`Could not delete entry with ID: ${args.id}`, 'DATABASE_COULD_NOT_DELETE')
+    }
+}
+
+function updateCartEntryQuantityById(args) {
+    try {
+        var cartEntry = db.cart.get(args.id)
+        db.cart.update({ id: args.id, src: cartEntry.src, name: cartEntry.name, price: cartEntry.price, quantity: args.quantity })
+        var cart = db.cart.list()
+        var result = {
+            code: "200",
+            success: true,
+            message: `You have successfully changed the quantity of: ${args.id}, to ${args.quantity}`,
+            cart: cart
+        }
+        return result
+    } catch (error) {
+        return new ApolloError(`Could not update quantity of entry with ID: ${args.id} to ${args.quantity}`, 'DATABASE_COULD_NOT_UPDATE')
     }
 }
 
