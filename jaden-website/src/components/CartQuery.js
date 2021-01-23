@@ -30,8 +30,18 @@ function CartQuery(props) {
     //     console.log(size)
     // }
 
-    function changeQuantity(n) {
-        console.log('')
+    function changeQuantity(event) {
+        var input = event.target
+        var id = event.target.parentElement.parentElement.getAttribute('data-key')
+        console.log(id)
+        if (isNaN(input.value) || input.value <= 0) {
+            input.value = 1
+        } else { 
+            input.value = Math.round(input.value)
+        }
+        props.updateQuantity({ variables: {
+            idProvided: id, newQuantity: parseInt(input.value)
+        }})
     }
 
     // function removeProductFromCart() {
@@ -40,11 +50,9 @@ function CartQuery(props) {
 
     // buttonState="btn--select"
 
-    console.log(props.mutationLoading)
-
     if (props.loading) return <h1>Loading...</h1>;
-    if (props.mutationLoading) return <h1 className="empty-cart">Removing From Cart...</h1>
-    if (props.error || props.mutationError) return <h1>Error! ${props.error}</h1>
+    if (props.mutationLoadingRemove || props.mutationLoadingUpdate) return <h1 className="empty-cart">Removing From Cart...</h1>
+    if (props.error || props.mutationErrorRemove || props.mutationErrorUpdate) return <h1>Error! ${props.error}</h1>
     if (props.data.allCart.length == 0) return <h1 className="empty-cart">Your cart is empty</h1>
 
     return (
@@ -61,7 +69,7 @@ function CartQuery(props) {
                     <Button ref={(Button) => refContainers.current[2] = Button} buttonStyle="btn--size" buttonSize="btn--square" onClick={() => selectSize(2)}>L</Button>
                 </div>
                 <div className="cart-quantity">
-                    <input type="number" value={product.quantity} onChange={e => changeQuantity(e)}></input>
+                    <input type="number" value={product.quantity} onChange={changeQuantity}></input>
                     <Button buttonStyle="btn--buy" buttonSize="btn--medium" onClick={removeProductFromCart}>REMOVE</Button>
                 </div>
                 <span className="cart-price">£{(product.price * product.quantity).toFixed(2)}</span>

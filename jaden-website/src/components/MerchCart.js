@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo, useLayoutEffect } from 'react'
 import './MerchCart.css'
 import { Button } from './Button'
 import MerchQuery from './MerchQuery'
 import CartQuery from './CartQuery'
 import { useQuery, useMutation, useLazyQuery } from '@apollo/client'
 import { GET_MERCH, GET_CART } from '../graphql/Queries'
-import { ADD_TO_CART, REMOVE_FROM_CART } from '../graphql/Mutations'
+import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_QUANTITY } from '../graphql/Mutations'
 import { onError } from "@apollo/client/link/error";
 
-function MerchCart() {
+function MerchCart(currentView) {
 
     const MERCH = [{
         src: "/Images - Jaden/ctv3_tshirt.png",
@@ -48,8 +48,12 @@ function MerchCart() {
         update: updateCartWithRemovedEntry
     })
 
+    const [updateQuantity, 
+        { loading: mutationLoadingUpdate, error: mutationErrorUpdate }] = useMutation(UPDATE_QUANTITY, {
+            update: updateCartWithUpdatedEntry
+    })
+
     function updateCartWithNewEntry(cache, { data }) {
-        console.log('yesss')
         cache.modify({
             fields: {
                 allCart(existingCart = ***REMOVED***) {
@@ -67,11 +71,26 @@ function MerchCart() {
     }
 
     function updateCartWithRemovedEntry(cache, { data }) {
-        console.log('yesss')
         cache.modify({
             fields: {
                 allCart(existingCart = ***REMOVED***) {
                     const newCart = data.deleteCartItemById.cart
+                    console.log(newCart)
+                    console.log(...existingCart)
+                    cache.writeQuery({
+                        query: GET_CART,
+                        data: { newCart }
+                    })
+                }    
+            }
+        })
+    }
+
+    function updateCartWithUpdatedEntry(cache, { data }) {
+        cache.modify({
+            fields: {
+                allCart(existingCart = ***REMOVED***) {
+                    const newCart = data.updateCartItemQuantityById.cart
                     console.log(newCart)
                     console.log(...existingCart)
                     cache.writeQuery({
@@ -89,7 +108,7 @@ function MerchCart() {
 
     function checkMerchQuery() {
         if (error) {
-            return <h1>Server Offline</h1>
+            return <h1 className="empty-cart">Server Offline</h1>
         } else {
             return <MerchQuery data={data} loading={loading} error={error} addToCart={addToCart} networkStatus={networkStatus} mutationLoading={mutationLoadingAdd} mutationError={mutationErrorAdd} />
         }
@@ -97,9 +116,9 @@ function MerchCart() {
 
     function checkCartQuery() {
         if (errorCart) {
-            return <h1>Server Offline</h1>
+            return <h1 className="empty-cart">Server Offline</h1>
         } else {
-            return <CartQuery data={dataCart} loading={loadingCart} error={errorCart} removeFromCart={removeFromCart} mutationLoading={mutationLoadingRemove} mutationError={mutationErrorRemove} />
+            return <CartQuery data={dataCart} loading={loadingCart} error={errorCart} removeFromCart={removeFromCart} updateQuantity={updateQuantity} mutationLoadingRemove={mutationLoadingRemove} mutationErrorRemove={mutationErrorRemove} mutationLoadingUpdate={mutationLoadingUpdate} mutationErrorUpdate={mutationErrorUpdate} />
         }
     }
 
@@ -113,26 +132,23 @@ function MerchCart() {
         if (networkError) console.log(`[Network error]: ${networkError}`);
     });
 
+    // save scroll position
+
     const [cart, setCart] = useState(***REMOVED***)
     const [total, setTotal] = useState(0)
 
     const removePoundSign = new RegExp('(?<=£).*')
     const getSrcName = new RegExp('(?<=Jaden/).*')
 
-    // useEffect(() => {
-    //     let total = 0;
-    //     for (let i = 0; i < cart.length; i++) {
-    //         total += cart[i].quantity * cart[i].price
-    //         console.log(cart[i].quantity, cart[i].price)
-    //     }
-    //     console.log(total)
-    //     setTotal(total.toFixed(2))
-    // }, [cart])
-
-    // useEffect(() => {
-    //     getMerch()
-    //     getCart()
-    // }, ***REMOVED***)
+    useEffect(() => {
+        let total = 0;
+        for (let i = 0; i < cart.length; i++) {
+            total += cart[i].quantity * cart[i].price
+            console.log(cart[i].quantity, cart[i].price)
+        }
+        console.log(total)
+        setTotal(total.toFixed(2))
+    }, [cart])
 
     function addProductToCart(element) {
         let parent = element.target.parentElement
@@ -198,9 +214,6 @@ function MerchCart() {
         setCart(***REMOVED***)
         alert("Purchase Completed")
     }
-
-    if (loadingCart) return <h1>Loading...</h1>
-    if (errorCart) return <h1>Error</h1>
 
     return (
         <>
