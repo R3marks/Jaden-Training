@@ -8,94 +8,12 @@ import { GET_MERCH, GET_CART } from '../graphql/Queries'
 import { ADD_TO_CART, PURCHASE_CART, REMOVE_FROM_CART, UPDATE_QUANTITY } from '../graphql/Mutations'
 import { onError } from "@apollo/client/link/error";
 
-function MerchCart(currentView) {
-
-    const [total, setTotal] = useState(0)
-
-    useEffect(() => {
-        let total = 0;
-        if (dataCart) {
-            var calculateTotal = dataCart.allCart.map(cartEntry => {
-                total += cartEntry.quantity * cartEntry.price
-            })
-        }
-        setTotal(total.toFixed(2))
-    })
-
-    const { loading, error, data, refetch, networkStatus } = useQuery(GET_MERCH)
-    console.log(data)
-
-    const { loading: loadingCart, error: errorCart, data: dataCart } = useQuery(GET_CART)
-    console.log({dataCart})
-
-    const [addToCart,
-        { loading: mutationLoadingAdd, error: mutationErrorAdd }] = useMutation(ADD_TO_CART, {
-        update: updateCartWithNewEntry
-    })
-
-    const [removeFromCart, 
-        { loading: mutationLoadingRemove, error: mutationErrorRemove }] = useMutation(REMOVE_FROM_CART, {
-        update: updateCartWithRemovedEntry
-    })
-
-    const [updateQuantity, 
-        { loading: mutationLoadingUpdate, error: mutationErrorUpdate }] = useMutation(UPDATE_QUANTITY, {
-            update: updateCartWithUpdatedEntry
-    })
+function MerchCart() {
 
     const [purchaseCart, 
         { loading: mutationLoadingPurchase, error: mutationErrorPurchase}] = useMutation(PURCHASE_CART, {
             update: updateCartWithPurchase
-        })
-
-    function updateCartWithNewEntry(cache, { data }) {
-        cache.modify({
-            fields: {
-                allCart(existingCart = []) {
-                    const newCart = data.addToCart.cart
-                    console.log(newCart)
-                    console.log(...existingCart)
-                    cache.writeQuery({
-                        query: GET_CART,
-                        data: { newCart }
-                    })
-                    console.log(cache.data)
-                }    
-            }
-        })
-    }
-
-    function updateCartWithRemovedEntry(cache, { data }) {
-        cache.modify({
-            fields: {
-                allCart(existingCart = []) {
-                    const newCart = data.deleteCartItemById.cart
-                    console.log(newCart)
-                    console.log(...existingCart)
-                    cache.writeQuery({
-                        query: GET_CART,
-                        data: { newCart }
-                    })
-                }    
-            }
-        })
-    }
-
-    function updateCartWithUpdatedEntry(cache, { data }) {
-        cache.modify({
-            fields: {
-                allCart(existingCart = []) {
-                    const newCart = data.updateCartItemQuantityById.cart
-                    console.log(newCart)
-                    console.log(...existingCart)
-                    cache.writeQuery({
-                        query: GET_CART,
-                        data: { newCart }
-                    })
-                }    
-            }
-        })
-    }
+    })
 
     function updateCartWithPurchase(cache, { data }) {
         cache.modify({
@@ -113,24 +31,40 @@ function MerchCart(currentView) {
         })
     }
 
+    const [total, setTotal] = useState(0)
+    const [cart, setCart] = useState([])
+
+    useEffect(() => {
+        let total = 0;
+        if (cart.length !== 0) {
+            var calculateTotal = cart.allCart.map(cartEntry => {
+                total += cartEntry.quantity * cartEntry.price
+            })
+        }
+        setTotal(total.toFixed(2))
+    }, [cart])
+
     function purchaseMessage() {
         purchaseCart()
         alert("Purchase Completed")
     }
 
+    let x = 3
+    
+
     function checkMerchQuery() {
-        if (error) {
+        if (x == 4) {
             return <h1 className="empty-cart">Server Offline</h1>
         } else {
-            return <MerchQuery data={data} loading={loading} error={error} addToCart={addToCart} networkStatus={networkStatus} mutationLoading={mutationLoadingAdd} mutationError={mutationErrorAdd} />
+            return <MerchQuery />
         }
     }
 
     function checkCartQuery() {
-        if (errorCart) {
+        if (x == 4) {
             return <h1 className="empty-cart">Server Offline</h1>
         } else {
-            return <CartQuery data={dataCart} loading={loadingCart} error={errorCart} removeFromCart={removeFromCart} updateQuantity={updateQuantity} mutationLoadingRemove={mutationLoadingRemove} mutationErrorRemove={mutationErrorRemove} mutationLoadingUpdate={mutationLoadingUpdate} mutationErrorUpdate={mutationErrorUpdate} />
+            return <CartQuery setCart={setCart} />
         }
     }
 
