@@ -5,32 +5,22 @@ import MerchQuery from './MerchQuery'
 import CartQuery from './CartQuery'
 import { useQuery, useMutation, useLazyQuery } from '@apollo/client'
 import { GET_MERCH, GET_CART } from '../graphql/Queries'
-import { ADD_TO_CART, REMOVE_FROM_CART, UPDATE_QUANTITY } from '../graphql/Mutations'
+import { ADD_TO_CART, PURCHASE_CART, REMOVE_FROM_CART, UPDATE_QUANTITY } from '../graphql/Mutations'
 import { onError } from "@apollo/client/link/error";
 
 function MerchCart(currentView) {
 
-    const MERCH = [{
-        src: "/Images - Jaden/ctv3_tshirt.png",
-        name: "CTV3 T-SHIRT",
-        price: 19.99
-    }, {
-        src: "/Images - Jaden/ctv3_hoodie.png",
-        name: "CTV3 HOODIE",
-        price: 29.99
-    }, {
-        src: "/Images - Jaden/erys.jpg",
-        name: "ERYS",
-        price: 13.99
-    }, {
-        src: "/Images - Jaden/twitter-icon.png",
-        name: "TWITTER PIN",
-        price: 0.99
-    }, {
-        src: "/Images - Jaden/syre.jpg",
-        name: "SYRE",
-        price: 12.99
-    }]
+    const [total, setTotal] = useState(0)
+
+    useEffect(() => {
+        let total = 0;
+        if (dataCart) {
+            var calculateTotal = dataCart.allCart.map(cartEntry => {
+                total += cartEntry.quantity * cartEntry.price
+            })
+        }
+        setTotal(total.toFixed(2))
+    })
 
     const { loading, error, data, refetch, networkStatus } = useQuery(GET_MERCH)
     console.log(data)
@@ -52,6 +42,11 @@ function MerchCart(currentView) {
         { loading: mutationLoadingUpdate, error: mutationErrorUpdate }] = useMutation(UPDATE_QUANTITY, {
             update: updateCartWithUpdatedEntry
     })
+
+    const [purchaseCart, 
+        { loading: mutationLoadingPurchase, error: mutationErrorPurchase}] = useMutation(PURCHASE_CART, {
+            update: updateCartWithPurchase
+        })
 
     function updateCartWithNewEntry(cache, { data }) {
         cache.modify({
@@ -102,8 +97,25 @@ function MerchCart(currentView) {
         })
     }
 
-    function newSearch(event) {
-        refetch()
+    function updateCartWithPurchase(cache, { data }) {
+        cache.modify({
+            fields: {
+                allCart(existingCart = []) {
+                    const newCart = data.purchaseCart.cart
+                    console.log(newCart)
+                    console.log(...existingCart)
+                    cache.writeQuery({
+                        query: GET_CART,
+                        data: { newCart }
+                    })
+                }    
+            }
+        })
+    }
+
+    function purchaseMessage() {
+        purchaseCart()
+        alert("Purchase Completed")
     }
 
     function checkMerchQuery() {
@@ -134,87 +146,6 @@ function MerchCart(currentView) {
 
     // save scroll position
 
-    const [cart, setCart] = useState([])
-    const [total, setTotal] = useState(0)
-
-    const removePoundSign = new RegExp('(?<=£).*')
-    const getSrcName = new RegExp('(?<=Jaden/).*')
-
-    useEffect(() => {
-        let total = 0;
-        for (let i = 0; i < cart.length; i++) {
-            total += cart[i].quantity * cart[i].price
-            console.log(cart[i].quantity, cart[i].price)
-        }
-        console.log(total)
-        setTotal(total.toFixed(2))
-    }, [cart])
-
-    function addProductToCart(element) {
-        let parent = element.target.parentElement
-        var merchInfo = parent.previousElementSibling
-        var merchImage = merchInfo.previousElementSibling
-        var merchSrc = merchImage.src.match(getSrcName)
-        var [productName, productPrice] = merchInfo.children
-        var numericProductPrice = Number(productPrice.innerText.match(removePoundSign))
-        var cartProduct = {
-            src: merchSrc[0],
-            name: productName.innerText,
-            price: numericProductPrice,
-            quantity: 1
-        }
-        for (let i = 0; i < cart.length; i++) {
-            if (cart[i].src === cartProduct.src) {
-                alert('Item has already been added!')
-                return
-            }  
-        }
-        const newCart = [...cart, cartProduct]
-        setCart(newCart)
-    }
-
-    function removeProductFromCart(element) {
-        let parent = element.target.parentElement
-        var cartQuantityInfo = parent.parentElement
-        var cartProductPrice = cartQuantityInfo.nextElementSibling
-        var cartProductInfo = cartQuantityInfo.previousElementSibling.previousElementSibling
-        var [productImage, productName] = cartProductInfo.children
-        var merchSrc = productImage.src.match(getSrcName)
-        var productToRemove = {
-            src: merchSrc[0]
-        }
-        const newCart = []
-        for (let i = 0; i < cart.length; i++) {
-            if (cart[i].src !== productToRemove.src) {
-                newCart.push(cart[i])
-            }
-        }
-        setCart(newCart)
-    }
-
-    function changeQuantity(event) {
-        var input = event.target
-        var cartProductImage = input.parentElement.previousElementSibling.previousElementSibling.children[0].src.match(getSrcName)
-        const newCart = []
-        if (isNaN(input.value) || input.value <= 0) {
-            input.value = 1
-        } else { 
-            let value = Math.round(input.value)
-            for (let i = 0; i < cart.length; i++) {
-                newCart.push(cart[i])
-                if (cart[i].src === cartProductImage[0]) {
-                    newCart[i].quantity = value
-                }
-            }
-            setCart(newCart) 
-        }
-    }
-
-    function purchaseMessage() {
-        setCart([])
-        alert("Purchase Completed")
-    }
-
     return (
         <>
         <div className="merch-background">
@@ -238,9 +169,6 @@ function MerchCart(currentView) {
                         <span className="cart-header-price">PRICE</span>
                     </div>
                     <div className="scroll-box-cart"> 
-                        {/* {cart.length == 0 && 
-                            <span className="empty-cart">Your cart is empty</span>
-                        } */}
                         {checkCartQuery()}
                     </div>
                     <div className="total-row">

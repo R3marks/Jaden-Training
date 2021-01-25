@@ -77,7 +77,8 @@ function getAllCart() {
 const Mutation = {
     addToCart: (parent, args) => addMerchToCart(args),
     deleteCartItemById: (parent, args) => deleteCartEntryById(args),
-    updateCartItemQuantityById: (parent, args) => updateCartEntryQuantityById(args)
+    updateCartItemQuantityById: (parent, args) => updateCartEntryQuantityById(args),
+    purchaseCart: () => purchaseCart()
 }
 
 function addMerchToCart(args) {
@@ -127,6 +128,28 @@ function updateCartEntryQuantityById(args) {
         return result
     } catch (error) {
         return new ApolloError(`Could not update quantity of entry with ID: ${args.id} to ${args.quantity}`, 'DATABASE_COULD_NOT_UPDATE')
+    }
+}
+
+function purchaseCart() {
+    try {
+        var cartToPurchase = db.cart.list()
+        var ids = cartToPurchase.map(cartEntry => {
+            return cartEntry.id
+        })
+        ids.forEach((id) => {
+            db.cart.delete(id) // iteration separated bc of notarealdb
+        })
+        var cart = db.cart.list()
+        var result = {
+            code: "200",
+            success: true,
+            message: `You have successfully purchased the items in your cart`,
+            cart: cart
+        }
+        return result
+    } catch (error) {
+        return new ApolloError(`Could not purchase items placed in your cart`, 'DATABASE_COULD_NOT_PURCHASE')
     }
 }
 

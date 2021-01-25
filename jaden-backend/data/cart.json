@@ -1,16 +1,9 @@
 [
   {
-    "id": "Skmv2jYk_",
-    "src": "/Images - Jaden/ctv3_tshirt.png",
-    "name": "CTV3 T-SHIRT",
-    "price": 19.99,
-    "quantity": 1
-  },
-  {
-    "id": "Hk4P3jFJO",
-    "src": "/Images - Jaden/ctv3_hoodie.png",
-    "name": "CTV3 HOODIE",
-    "price": 29.99,
-    "quantity": 1
+    "id": "SyzsL_hJu",
+    "src": "/Images - Jaden/erys.jpg",
+    "name": "ERYS",
+    "price": 13.99,
+    "quantity": 7
   }
 ]
