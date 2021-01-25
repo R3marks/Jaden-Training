@@ -41,3 +41,17 @@ export const UPDATE_QUANTITY = gql`
         }
     }
 `
+
+export const PURCHASE_CART = gql`
+    mutation purchaseCart {
+        purchaseCart {
+            cart {
+                id
+                src 
+                name 
+                price 
+                quantity
+            }
+        }
+    }
+`

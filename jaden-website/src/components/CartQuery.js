@@ -50,7 +50,7 @@ function CartQuery(props) {
 
     // buttonState="btn--select"
 
-    if (props.loading) return <h1>Loading...</h1>;
+    if (props.loading) return <h1 className="empty-cart">Loading...</h1>;
     if (props.mutationLoadingRemove || props.mutationLoadingUpdate) return <h1 className="empty-cart">Removing From Cart...</h1>
     if (props.error || props.mutationErrorRemove || props.mutationErrorUpdate) return <h1>Error! ${props.error}</h1>
     if (props.data.allCart.length == 0) return <h1 className="empty-cart">Your cart is empty</h1>
