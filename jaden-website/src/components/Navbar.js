@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from './Button';
+import { LinkedButton } from './LinkedButton';
 import './Navbar.css'
 
 function Navbar(color) {
@@ -54,7 +54,7 @@ function Navbar(color) {
                             </Link>
                         </li>
                     </ul>
-                    {button && <Button buttonStyle='btn--navigation' buttonSize='btn--medium' linkTo='/sign-up'>ACCOUNT</Button>}
+                    {button && <LinkedButton buttonStyle='btn--navigation' buttonSize='btn--medium' linkTo='/sign-up'>ACCOUNT</LinkedButton>}
                 </div>
             </nav>
         
