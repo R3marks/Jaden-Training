@@ -1,17 +1,18 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { useQuery, useMutation, useLazyQuery } from '@apollo/client'
+import React, { useEffect, useState } from 'react'
+import { useQuery, useMutation } from '@apollo/client'
 import { GET_CART } from '../graphql/Queries'
 import { PURCHASE_CART, REMOVE_FROM_CART, UPDATE_QUANTITY } from '../graphql/Mutations'
-import { Button } from './Button'
+import { ActionButton } from './ActionButton'
 
 function CartQuery() {
 
+    const [sizeArray, setSizeArray] = useState([false, true, false])
     const [total, setTotal] = useState(0)
 
     useEffect(() => {
         let total = 0;
         if (data) {
-            data.allCart.map(cartEntry => {
+            data.allCart.forEach(cartEntry => {
                 total += cartEntry.quantity * cartEntry.price
             })
         }
@@ -77,21 +78,14 @@ function CartQuery() {
         })
     }
 
-    let refContainers = useRef([])
-
-    refContainers.current = [0,0,0].map(
-        (ref, index) => refContainers.current[index] = React.createRef()
-    )
-
     function selectSize(size) {
-        for (var i = 0; i < refContainers.current.length; i++) {
-            refContainers.current[i].className = "btn btn--size btn--square"
-        }
-        refContainers.current[size].className = "btn btn--size btn--square btn--select"
+        let newSizeArray = [false, false, false]
+        newSizeArray[size] = true
+        setSizeArray(newSizeArray)
     }
 
     async function removeProductFromCart(event) {
-        var cartId = event.target.parentElement.parentElement.parentElement.getAttribute('data-key')
+        var cartId = event.target.parentElement.parentElement.getAttribute('data-key')
         await removeFromCart({ variables: {
             idProvided: cartId
         }})
@@ -121,7 +115,7 @@ function CartQuery() {
     if (loading) return <h1 className="empty-cart">Loading...</h1>;
     if (loadRemoveFromCart || loadUpdateQuantity) return <h1 className="empty-cart">Removing From Cart...</h1>
     if (error || errorRemoveFromCart || errorUpdateQuantity) return <h1 className="empty-cart">Error! ${JSON.stringify(error, errorRemoveFromCart, errorUpdateQuantity)}</h1>
-    if (data.allCart.length == 0) return <h1 className="empty-cart">Your cart is empty</h1>
+    if (data.allCart.length === 0) return <h1 className="empty-cart">Your cart is empty</h1>
     if (loadPurchaseCart) return <h1>Test</h1>
     if (errorPurchaseCart) return <h1>Test</h1>
 
@@ -136,13 +130,13 @@ function CartQuery() {
                         <span className="cart-name">{product.name}</span>
                     </div>
                     <div className="cart-size">
-                        <Button ref={(Button) => refContainers.current[0] = Button} buttonStyle="btn--size" buttonSize="btn--square" onClick={() => selectSize(0)}>S</Button>
-                        <Button ref={(Button) => refContainers.current[1] = Button} buttonStyle="btn--size" buttonSize="btn--square" onClick={() => selectSize(1)}>M</Button>
-                        <Button ref={(Button) => refContainers.current[2] = Button} buttonStyle="btn--size" buttonSize="btn--square" onClick={() => selectSize(2)}>L</Button>
+                        <ActionButton buttonStyle="btn--size" buttonSize="btn--square" select={sizeArray[0]} onClick={() => selectSize(0)}>S</ActionButton>
+                        <ActionButton buttonStyle="btn--size" buttonSize="btn--square" select={sizeArray[1]} onClick={() => selectSize(1)}>M</ActionButton>
+                        <ActionButton buttonStyle="btn--size" buttonSize="btn--square" select={sizeArray[2]} onClick={() => selectSize(2)}>L</ActionButton>
                     </div>
                     <div className="cart-quantity">
                         <input type="number" value={product.quantity} onChange={changeQuantity}></input>
-                        <Button buttonStyle="btn--buy" buttonSize="btn--medium" onClick={removeProductFromCart}>REMOVE</Button>
+                        <ActionButton buttonStyle="btn--buy" buttonSize="btn--medium" onClick={removeProductFromCart}>REMOVE</ActionButton>
                     </div>
                     <span className="cart-price">£{(product.price * product.quantity).toFixed(2)}</span>
                 </div>
@@ -151,7 +145,7 @@ function CartQuery() {
         <div className="total-row">
             <span className="total-name">Total</span>
             <span className="total-price">£{total}</span>
-            <Button buttonStyle="btn--buy" buttonSize="btn--medium" onClick={purchaseMessage}>PURCHASE</Button>
+            <ActionButton buttonStyle="btn--buy" buttonSize="btn--medium" onClick={purchaseMessage}>PURCHASE</ActionButton>
         </div>
         </>
     )
