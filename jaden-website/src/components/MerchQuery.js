@@ -1,13 +1,12 @@
-import React, { useRef, useMemo, useLayoutEffect } from 'react'
-import { useQuery, useMutation, useLazyQuery } from '@apollo/client'
+import React from 'react' //{ useRef, useMemo, useLayoutEffect }
+import { useQuery, useMutation } from '@apollo/client'
 import { GET_MERCH, GET_CART } from '../graphql/Queries'
 import { ADD_TO_CART } from '../graphql/Mutations'
-import { Button } from './Button'
+import { ActionButton } from './ActionButton'
 
 function MerchQuery() {
 
     const { loading, error, data } = useQuery(GET_MERCH)
-    console.log(data)
 
     const [addToCart,
         { loading: loadAddToCart, error: errorAddToCart }] = useMutation(ADD_TO_CART, {
@@ -29,7 +28,7 @@ function MerchQuery() {
     }
 
     async function addToCartById(event) {
-        var merchId = event.target.parentElement.parentElement.getAttribute('data-key')
+        var merchId = event.target.parentElement.getAttribute('data-key')
         await addToCart({ variables: {
             idProvided: merchId
         }})
@@ -63,7 +62,7 @@ function MerchQuery() {
     // }, [scrollTo, props.data]);
 
     if (loading) return <h1>Loading...</h1>;
-    if (loadAddToCart) return <h1 classname="empty-cart">Adding To Cart...</h1>
+    if (loadAddToCart) return <h1 className="empty-cart">Adding To Cart...</h1>
     if (error) return <h1>Error! {JSON.stringify(error)}</h1>
     if (errorAddToCart) return <h1>Error! {JSON.stringify(errorAddToCart)}</h1>
     if (data.allMerch.length === 0) return <h1 className="empty-cart">Your Cart is Empty</h1>
@@ -76,7 +75,7 @@ function MerchQuery() {
                     <span>{merch.name}</span>
                     <span>£{merch.price}</span>
                 </div>
-                <Button buttonStyle="btn--buy" buttonSize="btn--medium" onClick={addToCartById}>ADD TO CART</Button>
+                <ActionButton buttonStyle="btn--buy" buttonSize="btn--medium" onClick={addToCartById}>ADD TO CART</ActionButton>
             </div> 
         ))
     )
