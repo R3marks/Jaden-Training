@@ -5,8 +5,6 @@ const STYLES = ['btn--cycle', 'btn--navigation', 'btn--buy', 'btn--size'];
 
 const SIZES = ['btn--circle', 'btn--square', 'btn--medium', 'btn--large'];
 
-const STATES = ['btn--select']
-
 export const ActionButton = React.forwardRef(({children, type, onClick, buttonStyle, buttonSize, select}, ref) => {
     const checkButtonStyle = STYLES.includes(buttonStyle) ? buttonStyle : STYLES[0]
 
