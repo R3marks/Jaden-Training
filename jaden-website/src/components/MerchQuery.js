@@ -3,6 +3,7 @@ import { useQuery, useMutation } from '@apollo/client'
 import { GET_MERCH, GET_CART } from '../graphql/Queries'
 import { ADD_TO_CART } from '../graphql/Mutations'
 import { ActionButton } from './ActionButton'
+import { onError } from "@apollo/client/link/error";
 
 function MerchQuery() {
 
@@ -12,6 +13,16 @@ function MerchQuery() {
         { loading: loadAddToCart, error: errorAddToCart }] = useMutation(ADD_TO_CART, {
         update: updateCartWithNewEntry
     })
+
+    onError(({ graphQLErrors, networkError }) => {
+        if (graphQLErrors)
+            graphQLErrors.map(({ message, locations, path }) =>
+            console.log(
+                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+            ),
+        );
+        if (networkError) console.log(`[Network error]: ${networkError}`);
+    });
 
     function updateCartWithNewEntry(cache, { data }) {
         cache.modify({
