@@ -1,11 +1,11 @@
-import React from 'react' //{ useRef, useMemo, useLayoutEffect }
+import React from 'react'
 import { useQuery, useMutation } from '@apollo/client'
 import { GET_MERCH, GET_CART } from '../graphql/Queries'
 import { ADD_TO_CART } from '../graphql/Mutations'
-import { ActionButton } from './ActionButton'
+import ActionButton from './ActionButton'
 import { onError } from "@apollo/client/link/error";
 
-function MerchQuery() {
+function MerchQuery(props) {
 
     const { loading, error, data } = useQuery(GET_MERCH)
 
@@ -24,7 +24,7 @@ function MerchQuery() {
         if (networkError) console.log(`[Network error]: ${networkError}`);
     });
 
-    function updateCartWithNewEntry(cache, { data }) {
+    async function updateCartWithNewEntry(cache, { data }) {
         cache.modify({
             fields: {
                 allCart() {
@@ -39,38 +39,13 @@ function MerchQuery() {
     }
 
     async function addToCartById(event) {
+        var prevScrollTop = event.target.parentElement.parentElement.scrollTop
         var merchId = event.target.parentElement.getAttribute('data-key')
         await addToCart({ variables: {
             idProvided: merchId
         }})
+        props.scrollBoxMerch.current.scrollTop = prevScrollTop
     }
-
-    // const findFirstElementInViewPort = elements =>
-    // Array.prototype.find.call(
-    //   elements,
-    //   element => element.getBoundingClientRect().y >= 85 // nav height offset
-    // );
-
-    // // Ref to the container with elements
-    // const containerRef = useRef(null);
-
-    // const scrollTo = useMemo(() => {
-    //     // Find all elements in container which will be checked if are in view or not
-    //     const nodeElements = containerRef.current?.querySelectorAll("[data-item]");
-    //     if (nodeElements) {
-    //         return findFirstElementInViewPort(nodeElements);
-    //     }
-    //     return undefined;
-    // }, [props.data]);
-
-    // useLayoutEffect(() => {
-    //     if (scrollTo) {
-    //         // Scroll to element with should be in view after rendering
-    //         scrollTo.scrollIntoView();
-    //         // Scroll by height of nav
-    //         window.scrollBy(0, -85);
-    //     }
-    // }, [scrollTo, props.data]);
 
     if (loading) return <h1>Loading...</h1>;
     if (loadAddToCart) return <h1 className="empty-cart">Adding To Cart...</h1>
