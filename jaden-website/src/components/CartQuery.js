@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useQuery, useMutation } from '@apollo/client'
 import { GET_CART } from '../graphql/Queries'
 import { PURCHASE_CART, REMOVE_FROM_CART, UPDATE_QUANTITY } from '../graphql/Mutations'
-import { ActionButton } from './ActionButton'
+import ActionButton from './ActionButton'
 
 function CartQuery() {
 
-    const [sizeArray, setSizeArray] = useState([false, true, false])
+    const [sizeArray, setSizeArray] = useState(['', 'btn--select', ''])
     const [total, setTotal] = useState(0)
+    const scrollBoxCart = useRef(null)
 
     useEffect(() => {
         let total = 0;
@@ -79,16 +80,18 @@ function CartQuery() {
     }
 
     function selectSize(size) {
-        let newSizeArray = [false, false, false]
-        newSizeArray[size] = true
+        let newSizeArray = ['', '', '']
+        newSizeArray[size] = 'btn--select'
         setSizeArray(newSizeArray)
     }
 
     async function removeProductFromCart(event) {
+        var prevScrollTop = event.target.parentElement.parentElement.parentElement.scrollTop
         var cartId = event.target.parentElement.parentElement.getAttribute('data-key')
         await removeFromCart({ variables: {
             idProvided: cartId
         }})
+        scrollBoxCart.current.scrollTop = prevScrollTop
     }
 
     function changeQuantity(event) {
@@ -121,7 +124,7 @@ function CartQuery() {
 
     return (
         <>
-        <div className="scroll-box-cart">
+        <div ref={scrollBoxCart} className="scroll-box-cart">
             {data.allCart.map((product, index) => (
                 <div className="cart-products"
                 key={index} data-key={product.id}>
