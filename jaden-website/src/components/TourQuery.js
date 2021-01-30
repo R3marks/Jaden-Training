@@ -1,6 +1,6 @@
 import React from 'react'
 import './TourQuery.css'
-import { ActionButton } from './ActionButton'
+import ActionButton from './ActionButton'
 
 function TourQuery(props) {
 
