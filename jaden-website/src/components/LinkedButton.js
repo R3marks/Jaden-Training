@@ -8,7 +8,7 @@ const SIZES = ['btn--circle', 'btn--square', 'btn--medium', 'btn--large'];
 
 const STATES = ['btn--select']
 
-export const Button = React.forwardRef(({children, type, onClick, linkTo, buttonStyle, buttonSize, buttonState}, ref) => {
+export const LinkedButton = React.forwardRef(({children, type, onClick, linkTo, buttonStyle, buttonSize, buttonState}, ref) => {
     const checkButtonStyle = STYLES.includes(buttonStyle) ? buttonStyle : STYLES[0]
 
     const checkButtonSize = SIZES.includes(buttonSize) ? buttonSize : SIZES[0]
