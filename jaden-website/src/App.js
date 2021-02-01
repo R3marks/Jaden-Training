@@ -6,6 +6,7 @@ import Home from './components/pages/Home';
 import Tour from './components/pages/Tour';
 import Merch from './components/pages/Merch';
 import Story from './components/pages/Story';
+import SignUp from './components/pages/SignUp'
 
 
 const client = new ApolloClient({
@@ -22,6 +23,7 @@ function App() {
           <Route path='/tour' exact component={Tour} />
           <Route path='/merch' exact component={Merch} />
           <Route path='/story' exact component={Story} />
+          <Route path='/sign-up' exact component={SignUp} />
         </Switch>
         <Footer />
       </Router>
