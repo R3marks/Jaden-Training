@@ -152,7 +152,8 @@
 .empty-cart {
     display: flex;
     justify-content: center;
-    margin: 110px auto;
+    margin: 0 auto;
+    margin-bottom: 200px;
     font-size: 32px;
     letter-spacing: 0.5px;
 }
