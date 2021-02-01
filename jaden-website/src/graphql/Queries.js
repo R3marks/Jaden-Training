@@ -10,6 +10,26 @@ export const SEARCH_TOURS = gql`
         }
     }
 `
-const CHECK = ''
 
-export default { SEARCH_TOURS, CHECK }
+export const GET_MERCH = gql`
+    query {
+        allMerch {
+            id
+            src
+            name
+            price
+        }
+    }
+`
+
+export const GET_CART = gql`
+    query {
+        allCart {
+            id
+            src
+            name
+            price
+            quantity
+        }
+    }
+`
