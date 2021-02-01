@@ -6,12 +6,12 @@ const YOUTUBE_VIDEOS = ["https://www.youtube.com/embed/82UsnbunJUs", "https://ww
 
 function Video() {
     const [video, setVideo] = useState(YOUTUBE_VIDEOS[0]);
-    const [videoArray, setVideoArray] = useState([true, false, false, false])
+    const [videoArray, setVideoArray] = useState(['btn--select', '', '', ''])
 
     function cycleVideo (video) {
         setVideo(YOUTUBE_VIDEOS[video]);
-        var newVideoArray = [false, false, false, false]
-        newVideoArray[video] = true
+        var newVideoArray = ['', '', '', '']
+        newVideoArray[video] = 'btn--select'
         setVideoArray(newVideoArray)
     };
 
