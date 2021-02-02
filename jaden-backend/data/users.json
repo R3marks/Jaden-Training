@@ -1,5 +1,18 @@
-{
-    "username": "Michael",
-    "email": "michael@me.com",
-    "password": "password"
-}
+[
+  {
+    "id": "B1Ga6bvgd",
+    "email": "test@test.com"
+  },
+  {
+    "id": "BJlv0-Px_",
+    "email": "test@test.com"
+  },
+  {
+    "id": "ry1s0bvg_",
+    "email": "test@test.com"
+  },
+  {
+    "id": "HkF30WDld",
+    "email": "test@test.com"
+  }
+]
