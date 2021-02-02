@@ -10,6 +10,8 @@ module.exports = gql`
     }
 
     type Mutation {
+        signUp(credentials: Credentials!): AuthPayload
+        signIn(credentials: Credentials!): AuthPayload
         addToCart(id: ID!): UpdateCartMutationResponse
         deleteCartItemById(id: ID!): UpdateCartMutationResponse
         updateCartItemQuantityById(id: ID!, quantity: Int!): UpdateCartMutationResponse
@@ -20,6 +22,22 @@ module.exports = gql`
         code: String!
         success: Boolean!
         message: String!
+    }
+
+    type User {
+        id: ID!
+        email: String!
+        password: String!
+    }
+
+    input Credentials {
+        email: String!
+        password: String!
+    }
+
+    type AuthPayload {
+        token: String
+        user: User
     }
 
     type Tour {

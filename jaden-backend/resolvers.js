@@ -1,5 +1,6 @@
 const { ApolloError } = require('apollo-server')
 const db = require('./db')
+const AuthUtils = require('./auth')
 
 const Query = {
     tour: (parent, args) => getTourByID(parent, args),
@@ -75,10 +76,30 @@ function getAllCart() {
 }
 
 const Mutation = {
+    signUp: (parent, args) => signUp(args),
     addToCart: (parent, args) => addMerchToCart(args),
     deleteCartItemById: (parent, args) => deleteCartEntryById(args),
     updateCartItemQuantityById: (parent, args) => updateCartEntryQuantityById(args),
     purchaseCart: () => purchaseCart()
+}
+
+function signUp(args) {
+    try {
+        var users = db.users.list() // check email exists
+        var hash = AuthUtils.hashPassword(args.credentials.password)
+        var user = db.users.create({ email: args.credentials.email, password: hash })
+        var token = AuthUtils.createToken(user)
+        console.log(user)
+        return {
+            token,
+            user: {
+                id: user,
+                email: args.credentials.email
+            }
+        }
+    } catch (error) {
+        return new ApolloError(`Could not create new user due to: ${error}`, 'DATABASE_COULD_NOT_CREATE')
+    }
 }
 
 function addMerchToCart(args) {
