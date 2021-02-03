@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useMutation } from '@apollo/client'
+import { SIGN_IN } from '../graphql/Mutations'
 import './Auth.css'
 
 function Auth() {
@@ -6,18 +8,29 @@ function Auth() {
     const [eyeIcon, setEyeIcon] = useState(false)
     const [passwordVisibility, setPasswordVisibility] = useState(false)
 
+    const [signIn, { loading: loadSignIn, error: errorSignIn }] = useMutation(SIGN_IN)
+
     function togglePasswordVisibility(event) {
         var par = event.target
         setEyeIcon(!eyeIcon)
         setPasswordVisibility(!passwordVisibility)
     }
 
-    function logIn(event) {
+    async function logIn(event) {
         event.preventDefault()
-        var username = event.target.children[1].children[1].value
+        var email = event.target.children[1].children[1].value
         var password = event.target.children[3].children[1].value
-
+        var credentials = {
+            email: email,
+            password: password
+        }
+        await signIn({ variables: {
+            credentials: credentials 
+        }})
     }
+
+    if (loadSignIn) return <h1>Signing In...</h1>
+    if (errorSignIn) return <h1>Error</h1>
 
     return (
         <div className="auth-background">
