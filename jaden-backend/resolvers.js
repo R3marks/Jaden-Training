@@ -77,6 +77,7 @@ function getAllCart() {
 
 const Mutation = {
     signUp: (parent, args) => signUp(args),
+    signIn: (parent, args) => signIn(args),
     addToCart: (parent, args) => addMerchToCart(args),
     deleteCartItemById: (parent, args) => deleteCartEntryById(args),
     updateCartItemQuantityById: (parent, args) => updateCartEntryQuantityById(args),
@@ -85,11 +86,16 @@ const Mutation = {
 
 function signUp(args) {
     try {
-        var users = db.users.list() // check email exists
+        var users = db.users.list() // check email does not exist
+        users.map(user => {
+            if (user.email === args.credentials.email) {
+                throw new ApolloError ('Email already in use', 'DATABASE_EMAIL_ALREADY_EXISTS')
+            }
+        })
         var hash = AuthUtils.hashPassword(args.credentials.password)
         var user = db.users.create({ email: args.credentials.email, password: hash })
         var token = AuthUtils.createToken(user)
-        console.log(user)
+        console.log(token)
         return {
             token,
             user: {
@@ -98,7 +104,37 @@ function signUp(args) {
             }
         }
     } catch (error) {
-        return new ApolloError(`Could not create new user due to: ${error}`, 'DATABASE_COULD_NOT_CREATE')
+        return new ApolloError(`Could not create new user due to: ${error}`, 'DATABASE_COULD_NOT_SIGN_UP')
+    }
+}
+
+function signIn(args) {
+    try {
+        let existingUser
+        var users = db.users.list() // check email exists
+        users.forEach(user => {
+            if (user.email === args.credentials.email) {
+                existingUser = user
+                return 
+            }
+        })
+        if (!existingUser) {
+            return new ApolloError('Incorrect email address', 'DATABASE_COULD_NOT_FIND_EMAIL')
+        }
+        var isValidPassword = AuthUtils.verifyPassword(args.credentials.password, existingUser.password)
+        if (!isValidPassword) {
+            return new ApolloError('Incorrect password', 'DATABASE_PASSWORD_DOES_NOT_MATCH_EMAIL')
+        }
+        var token = AuthUtils.createToken(existingUser)
+        return {
+            token,
+            user: {
+                id: existingUser.id,
+                email: existingUser.email
+            }
+        }
+    } catch (error) {
+        return new ApolloError(`Could not sign user in because: ${error}`, 'DATABASE_COULD_NOT_SIGN_IN')
     }
 }
 
