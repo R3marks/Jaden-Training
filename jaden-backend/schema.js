@@ -35,8 +35,11 @@ module.exports = gql`
         password: String!
     }
 
-    type AuthPayload {
+    type AuthPayload implements MutationResponse {
         token: String
+        code: String!
+        success: Boolean!
+        message: String!
         user: User
     }
 

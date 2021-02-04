@@ -1,4 +1,4 @@
-const { ApolloError } = require('apollo-server')
+const { ApolloError, UserInputError } = require('apollo-server')
 const db = require('./db')
 const AuthUtils = require('./auth')
 
@@ -119,15 +119,22 @@ function signIn(args) {
             }
         })
         if (!existingUser) {
-            return new ApolloError('Incorrect email address', 'DATABASE_COULD_NOT_FIND_EMAIL')
+            return new UserInputError('Sign in arguments invalid', {
+                invalidArgs: 'Email'
+            })
         }
         var isValidPassword = AuthUtils.verifyPassword(args.credentials.password, existingUser.password)
         if (!isValidPassword) {
-            return new ApolloError('Incorrect password', 'DATABASE_PASSWORD_DOES_NOT_MATCH_EMAIL')
+            return new UserInputError('Sign in arguments invalid', {
+                invalidArgs: 'Password'
+            })
         }
         var token = AuthUtils.createToken(existingUser)
         return {
             token,
+            code: "SUCCESSFUL_SIGN_IN",
+            success: true,
+            message: `User with email: ${existingUser.email} successfully signed in`,
             user: {
                 id: existingUser.id,
                 email: existingUser.email
