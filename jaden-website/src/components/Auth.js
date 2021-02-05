@@ -3,9 +3,6 @@ import './Auth.css'
 import SignIn from './SignIn'
 
 function Auth() {
-
-
-
     return (
         <div className="auth-background">
             <div className="auth-wrapper">

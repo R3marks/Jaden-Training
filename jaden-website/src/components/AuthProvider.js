@@ -6,13 +6,12 @@ const Provider = AuthContext.Provider
 function AuthProvider({ children }) {
 
     const [authInfo, setAuthInfo] = useState({
-        token: null,
-        userData: {}
+        userData: undefined
     })
-    console.log(authInfo.token)
+    console.log(authInfo.userData)
 
     function isAuthenticated() {
-        if (authInfo.token !== null) {
+        if (authInfo.userData !== null) {
             return true
         } else {
             return false

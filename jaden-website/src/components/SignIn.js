@@ -13,7 +13,6 @@ function SignIn() {
     const [signIn, { loading: loadSignIn, error: errorSignIn }] = useMutation(SIGN_IN)
 
     function togglePasswordVisibility(event) {
-        var par = event.target
         setEyeIcon(!eyeIcon)
         setPasswordVisibility(!passwordVisibility)
     }
@@ -30,8 +29,13 @@ function SignIn() {
             var result = await signIn({ variables: {
                 credentials: credentials 
             }})
-            authContext.setAuthInfo({token: result.data.signIn.token, userData: result.data.signIn.user})
+            console.log(result)
+            authContext.setAuthInfo({ userData: result.data.signIn.user })
         } catch (errors) {
+            if (errors) {
+                console.log(errors)
+                return
+            }
             let err = errors.graphQLErrors[0].extensions
             if (err.invalidArgs) {
                 if (err.invalidArgs === "email") {
