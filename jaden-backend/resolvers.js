@@ -1,4 +1,4 @@
-const { ApolloError, UserInputError } = require('apollo-server')
+const { ApolloError, AuthenticationError, UserInputError } = require('apollo-server')
 const db = require('./db')
 const AuthUtils = require('./auth')
 
@@ -7,7 +7,7 @@ const Query = {
     tours: () => getAllTours(),
     searchTour: (parent, args) => searchTours(parent, args),
     allMerch: () => getAllMerch(),
-    allCart: () => getAllCart()
+    allCart: (parent, args, context) => getAllCart(context)
 }
 
 function getTourByID(parent, args) {
@@ -63,8 +63,11 @@ function getAllMerch() {
     }
 }
 
-function getAllCart() {
+function getAllCart(context) {
     try {
+        if (!context.user) {
+            return new AuthenticationError('User has not logged in')
+        }
         var result = db.cart.list()
         if (!result) {
             return new ApolloError('Could not find all Tours', 'DATABASE_TABLE_NOT_FOUND')
@@ -76,15 +79,15 @@ function getAllCart() {
 }
 
 const Mutation = {
-    signUp: (parent, args) => signUp(args),
-    signIn: (parent, args) => signIn(args),
+    signUp: (parent, args, context) => signUp(args, context),
+    signIn: (parent, args, context) => signIn(args, context),
     addToCart: (parent, args) => addMerchToCart(args),
     deleteCartItemById: (parent, args) => deleteCartEntryById(args),
     updateCartItemQuantityById: (parent, args) => updateCartEntryQuantityById(args),
     purchaseCart: () => purchaseCart()
 }
 
-function signUp(args) {
+function signUp(args, context) {
     try {
         var users = db.users.list() // check email does not exist
         users.map(user => {
@@ -95,9 +98,10 @@ function signUp(args) {
         var hash = AuthUtils.hashPassword(args.credentials.password)
         var user = db.users.create({ email: args.credentials.email, password: hash })
         var token = AuthUtils.createToken(user)
-        console.log(token)
+        context.res.cookie('token', token, {
+            httpOnly: true
+        })
         return {
-            token,
             user: {
                 id: user,
                 email: args.credentials.email
@@ -108,7 +112,7 @@ function signUp(args) {
     }
 }
 
-function signIn(args) {
+function signIn(args, context) {
     try {
         let existingUser
         var users = db.users.list() // check email exists
@@ -130,8 +134,11 @@ function signIn(args) {
             })
         }
         var token = AuthUtils.createToken(existingUser)
+        var r = context.res.cookie('token', token, {
+            httpOnly: true
+        })
+        console.log(r)
         return {
-            token,
             code: "SUCCESSFUL_SIGN_IN",
             success: true,
             message: `User with email: ${existingUser.email} successfully signed in`,
