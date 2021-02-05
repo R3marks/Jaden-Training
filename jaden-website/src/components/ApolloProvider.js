@@ -9,11 +9,12 @@ function ApolloProvider({ children }) {
 	const token = authContext.authInfo.token
 	
 	const client = new ApolloClient({
+		cache: new InMemoryCache(),
 		link: new HttpLink({
 			uri: 'http://localhost:9000/graphql',
-			headers: token ? { authorization: token } : undefined
+			credentials: "include"
 		}),
-		cache: new InMemoryCache()
+		// credentials: "include" // include
     })
     
     return (

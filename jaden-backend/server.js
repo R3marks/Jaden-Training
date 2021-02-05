@@ -7,11 +7,18 @@ const express = require('express')
 const expressJwt = require('express-jwt')
 const jwt = require('jsonwebtoken')
 const db = require('./db')
+const auth = require('./auth')
+const cookieParser = require('cookie-parser')
 
 const jwtSecret = Buffer.from('cGFzc3dvcmQ=', 'base64')
 
+var corsOptions = {
+    origin: 'http://localhost:3000',
+    credentials: true // <-- REQUIRED backend setting
+  };
+
 const app = express()
-app.use(cors())
+app.use(cors(corsOptions), cookieParser())
 // app.use(cors(), bodyParser.json(), expressJwt({
 //     secret: jwtSecret,
 //     credentialsRequired: false
@@ -32,6 +39,18 @@ const typeDefs = require('./schema')
 
 const resolvers = require('./resolvers')
 
-const apolloServer = new ApolloServer({ typeDefs, resolvers })
+const apolloServer = new ApolloServer({ 
+    typeDefs, 
+    resolvers,
+    context: ({ req, res }) => {
+        let user = null
+        if (req.cookies.token) {
+            const payload = auth.verifyToken(req.headers.authorization)
+            user = payload
+        }
+        return { user, res }
+    } 
+})
+
 apolloServer.applyMiddleware({ app, path: '/graphql' })
 app.listen({ port: process.env.PORT || 9000 }, () => console.log(`🚀 Server ready on port 9000`))
