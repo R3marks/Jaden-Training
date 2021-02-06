@@ -1,8 +1,30 @@
 import { gql } from '@apollo/client'
 
+export const USER_INFO = gql`
+    mutation userInfo {
+        userInfo {
+            user {
+                id
+                email
+            }
+        }
+    }
+`
+
 export const SIGN_IN = gql`
     mutation signIn($credentials: Credentials!) {
         signIn(credentials: $credentials) {
+            user {
+                id
+                email
+            }
+        }
+    }
+`
+
+export const SIGN_OUT = gql`
+    mutation signOut {
+        signOut {
             user {
                 id
                 email

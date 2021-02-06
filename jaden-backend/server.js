@@ -45,12 +45,14 @@ const apolloServer = new ApolloServer({
     context: ({ req, res }) => {
         let user = null
         if (req.cookies.token) {
-            const payload = auth.verifyToken(req.headers.authorization)
+            console.log(req.cookies)
+            const payload = auth.verifyToken(req.cookies.token)
             user = payload
         }
         return { user, res }
     } 
 })
 
-apolloServer.applyMiddleware({ app, path: '/graphql' })
+// Apollo server has its own cors implementation and therefore you need to turn it off if you have cors set up already
+apolloServer.applyMiddleware({ app, path: '/graphql', cors: false })
 app.listen({ port: process.env.PORT || 9000 }, () => console.log(`🚀 Server ready on port 9000`))
