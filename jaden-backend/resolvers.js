@@ -79,12 +79,26 @@ function getAllCart(context) {
 }
 
 const Mutation = {
+    userInfo: (parent, args, context) => userInfo(context),
     signUp: (parent, args, context) => signUp(args, context),
     signIn: (parent, args, context) => signIn(args, context),
+    signOut: (parent, args, context) => signOut(context),
     addToCart: (parent, args) => addMerchToCart(args),
     deleteCartItemById: (parent, args) => deleteCartEntryById(args),
     updateCartItemQuantityById: (parent, args) => updateCartEntryQuantityById(args),
     purchaseCart: () => purchaseCart()
+}
+
+function userInfo(context) {
+    if (context.user) {
+        return {
+            user: { 
+                id: context.user.sub,
+                email: context.user.email 
+            }
+        }
+    }
+    return { user: undefined }
 }
 
 function signUp(args, context) {
@@ -134,10 +148,9 @@ function signIn(args, context) {
             })
         }
         var token = AuthUtils.createToken(existingUser)
-        var r = context.res.cookie('token', token, {
+        context.res.cookie('token', token, {
             httpOnly: true
         })
-        console.log(r)
         return {
             code: "SUCCESSFUL_SIGN_IN",
             success: true,
@@ -150,6 +163,11 @@ function signIn(args, context) {
     } catch (error) {
         return new ApolloError(`Could not sign user in because: ${error}`, 'DATABASE_COULD_NOT_SIGN_IN')
     }
+}
+
+function signOut(context) {
+    context.res.clearCookie('token')
+    return { user: undefined }
 }
 
 function addMerchToCart(args) {
