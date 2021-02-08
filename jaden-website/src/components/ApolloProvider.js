@@ -1,6 +1,5 @@
 import React, { useContext } from 'react'
 import { ApolloClient, ApolloProvider as Provider, HttpLink, InMemoryCache } from '@apollo/client'
-import { createHttpLink } from 'apollo-link-http'
 import { AuthContext } from './AuthProvider'
 
 function ApolloProvider({ children }) {
