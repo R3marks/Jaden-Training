@@ -22,6 +22,17 @@ export const SIGN_IN = gql`
     }
 `
 
+export const SIGN_UP = gql`
+    mutation signUp($credentials: Credentials!) {
+        signUp(credentials: $credentials) {
+            user {
+                id
+                email
+            }
+        }
+    }
+`
+
 export const SIGN_OUT = gql`
     mutation signOut {
         signOut {
