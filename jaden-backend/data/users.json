@@ -3,5 +3,10 @@
     "id": "BJLyUbdxO",
     "email": "test@tgest.com",
     "password": "$2a$10$QKJhzkOE9ysewaUSxrTkV.1Z4MqkEBSYodZf60l.Ou.xFd3VOuRBi"
+  },
+  {
+    "id": "ryLbLcReu",
+    "email": "test@test.com",
+    "password": "$2a$10$MEKguuA8TKSgLSmYwzQoA.EgBFSxW3gSOwB/YqI5HcFPGEo9CXunO"
   }
 ]

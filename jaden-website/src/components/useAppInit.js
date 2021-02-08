@@ -16,7 +16,7 @@ function useAppInit() {
                 console.log(errors)
             }
         }
-        handleSession()
+        handleSession();
     }, [setAuthinfo, getUserInfo])
 
     return loading

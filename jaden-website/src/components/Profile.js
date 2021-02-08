@@ -15,9 +15,14 @@ function Profile() {
     }
 
     return (
-        <div>
+        <>
+        <div className="auth-headers">
+            <h1 className='auth-header' >PROFILE</h1>
+        </div>
+        <div className="auth-section">
             <ActionButton buttonSize='btn--large' buttonStyle='btn--buy' onClick={handleSignOut}>Sign out</ActionButton>
         </div>
+        </>
     )
 }
 

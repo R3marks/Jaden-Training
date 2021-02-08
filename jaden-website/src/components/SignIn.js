@@ -12,7 +12,7 @@ function SignIn() {
 
     const [signIn, { loading: loadSignIn, error: errorSignIn }] = useMutation(SIGN_IN)
 
-    function togglePasswordVisibility(event) {
+    function togglePasswordVisibility() {
         setEyeIcon(!eyeIcon)
         setPasswordVisibility(!passwordVisibility)
     }
