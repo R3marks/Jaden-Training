@@ -117,7 +117,9 @@ function CartQuery() {
 
     if (loading) return <h1 className="empty-cart">Loading...</h1>;
     if (loadRemoveFromCart || loadUpdateQuantity) return <h1 className="empty-cart">Removing From Cart...</h1>
-    if (error || errorRemoveFromCart || errorUpdateQuantity) return <h1 className="empty-cart">Error! ${JSON.stringify(error, errorRemoveFromCart, errorUpdateQuantity)}</h1>
+    if (error && error.networkError) return <h1 className='empty-cart'>Server Offline</h1>
+    if (error && error.graphQLErrors) return <h1 className="empty-cart">Log in to access cart</h1>
+    if (errorRemoveFromCart || errorUpdateQuantity) return <h1 className="empty-cart">Error! ${JSON.stringify(error, errorRemoveFromCart, errorUpdateQuantity)}</h1>
     if (data.allCart.length === 0) return <h1 className="empty-cart">Your cart is empty</h1>
     if (loadPurchaseCart) return <h1>Test</h1>
     if (errorPurchaseCart) return <h1>Test</h1>
