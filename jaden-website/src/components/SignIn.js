@@ -7,6 +7,10 @@ function SignIn() {
 
     const [eyeIcon, setEyeIcon] = useState(false)
     const [passwordVisibility, setPasswordVisibility] = useState(false)
+    const [email, setEmail] = useState('')
+    const [errorMessage, setErrorMessage] = useState(null)
+    const [validEmail, setValidEmail] = useState(true)
+    const [validPassword, setValidPassword] = useState(true)
 
     const authContext = useContext(AuthContext)
 
@@ -32,23 +36,23 @@ function SignIn() {
             console.log(result)
             authContext.setAuthInfo({ userData: result.data.signIn.user })
         } catch (errors) {
-            if (errors) {
-                console.log(errors)
-                return
-            }
-            let err = errors.graphQLErrors[0].extensions
-            if (err.invalidArgs) {
-                if (err.invalidArgs === "email") {
-                    console.log('Email')
-                } else {
-                    console.log('password')
+            if (errors.graphQLErrors[0]) {
+                let err = errors.graphQLErrors[0]?.extensions
+                if (err.invalidArgs === "Email") {
+                    setValidEmail(false)
+                    setErrorMessage('Email not registered')
+                } else if (err.invalidArgs === 'Password') {
+                    setValidPassword(false)
+                    setErrorMessage('Password incorrect')
                 }
+            } else {
+                console.log(errors)
             }
         }
     }
 
     if (loadSignIn) return <h1>Signing In...</h1>
-    if (errorSignIn) return <h1>Error: ${JSON.stringify(errorSignIn.graphQLErrors[0].extensions.code)}</h1>
+    if (errorSignIn && errorSignIn.networkError) return <h1>Error: ${JSON.stringify(errorSignIn)}</h1>
 
     return (
         <div>
@@ -56,13 +60,16 @@ function SignIn() {
                 <label className="form-headers">Email</label>
                 <div className="input-rows">
                     <i className="fas fa-user" />
-                    <input type="text" className="field" />
+                    <input value={email} onChange={(event) => setEmail(event.target.value)} type="text" className={validEmail ? 'field' : 'field field-invalid'} onClick={() => setValidEmail(true)} />
                 </div>
                 <label className="form-headers">Password</label>
                 <div className="input-rows">
                     <i className="fas fa-lock" />
-                    <input type={passwordVisibility ? 'text' : 'password'} className="field" />
+                    <input type={passwordVisibility ? 'text' : 'password'} className={validPassword ? 'field' : 'field field-invalid'} onClick={() => setValidPassword(true)} />
                     <i className={eyeIcon ? 'fas fa-eye' : 'fas fa-eye-slash'} onClick={togglePasswordVisibility} />
+                </div>
+                <div className="error-holder">
+                    {errorMessage && <span className="error-message">{errorMessage}</span>}
                 </div>
                 <input className="sign-in" type="submit" value="Sign In" />
             </form>

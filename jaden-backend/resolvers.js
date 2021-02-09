@@ -103,12 +103,19 @@ function userInfo(context) {
 
 function signUp(args, context) {
     try {
+        let existingUser = false
         var users = db.users.list() // check email does not exist
-        users.map(user => {
+        users.forEach(user => {
             if (user.email === args.credentials.email) {
-                throw new ApolloError ('Email already in use', 'DATABASE_EMAIL_ALREADY_EXISTS')
+                return existingUser = true
             }
         })
+        console.log(existingUser)
+        if (existingUser) {
+            return new UserInputError('Sign in arguments invalid', {
+                invalidArgs: 'Email'
+            })
+        }
         var hash = AuthUtils.hashPassword(args.credentials.password)
         var user = db.users.create({ email: args.credentials.email, password: hash })
         var token = AuthUtils.createToken(user)
@@ -116,6 +123,9 @@ function signUp(args, context) {
             httpOnly: true
         })
         return {
+            code: "SUCCESSFUL_SIGN_UP",
+            success: true,
+            message: `User with email: ${args.credentials.email} successfully signed up`,
             user: {
                 id: user,
                 email: args.credentials.email
@@ -132,8 +142,7 @@ function signIn(args, context) {
         var users = db.users.list() // check email exists
         users.forEach(user => {
             if (user.email === args.credentials.email) {
-                existingUser = user
-                return 
+                return existingUser = user
             }
         })
         if (!existingUser) {

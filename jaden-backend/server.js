@@ -45,7 +45,6 @@ const apolloServer = new ApolloServer({
     context: ({ req, res }) => {
         let user = null
         if (req.cookies.token) {
-            console.log(req.cookies)
             const payload = auth.verifyToken(req.cookies.token)
             user = payload
         }
