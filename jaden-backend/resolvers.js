@@ -110,7 +110,6 @@ function signUp(args, context) {
                 return existingUser = true
             }
         })
-        console.log(existingUser)
         if (existingUser) {
             return new UserInputError('Sign in arguments invalid', {
                 invalidArgs: 'Email'
@@ -146,13 +145,13 @@ function signIn(args, context) {
             }
         })
         if (!existingUser) {
-            return new UserInputError('Sign in arguments invalid', {
+            return new UserInputError('Email not registered', {
                 invalidArgs: 'Email'
             })
         }
         var isValidPassword = AuthUtils.verifyPassword(args.credentials.password, existingUser.password)
         if (!isValidPassword) {
-            return new UserInputError('Sign in arguments invalid', {
+            return new UserInputError('Password incorrect', {
                 invalidArgs: 'Password'
             })
         }
