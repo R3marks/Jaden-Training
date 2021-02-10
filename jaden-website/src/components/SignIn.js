@@ -60,12 +60,12 @@ function SignIn() {
                 <label className="form-headers">Email</label>
                 <div className="input-rows">
                     <i className="fas fa-user" />
-                    <input value={email} onChange={(event) => setEmail(event.target.value)} type="text" className={validEmail ? 'field' : 'field field-invalid'} onClick={() => setValidEmail(true)} />
+                    <input value={email} onChange={(event) => setEmail(event.target.value)} type="text" className={validEmail ? 'field' : 'field field-invalid-server'} onClick={() => setValidEmail(true)} />
                 </div>
                 <label className="form-headers">Password</label>
                 <div className="input-rows">
                     <i className="fas fa-lock" />
-                    <input type={passwordVisibility ? 'text' : 'password'} className={validPassword ? 'field' : 'field field-invalid'} onClick={() => setValidPassword(true)} />
+                    <input type={passwordVisibility ? 'text' : 'password'} className={validPassword ? 'field' : 'field field-invalid-server'} onClick={() => setValidPassword(true)} />
                     <i className={eyeIcon ? 'fas fa-eye' : 'fas fa-eye-slash'} onClick={togglePasswordVisibility} />
                 </div>
                 <div className="error-holder">
