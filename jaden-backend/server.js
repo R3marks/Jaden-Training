@@ -1,6 +1,8 @@
 require('dotenv')
 const fs = require('fs')
 const { ApolloServer, gql } = require('apollo-server-express');
+const ConstraintDirective = require('apollo-server-constraint-directive')
+const { makeExecutableSchema } = require('apollo-server')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const express = require('express')
@@ -39,9 +41,14 @@ const typeDefs = require('./schema')
 
 const resolvers = require('./resolvers')
 
-const apolloServer = new ApolloServer({ 
-    typeDefs, 
+const schemaDirectives = {
+    constraint: ConstraintDirective,
+  };
+
+const schema = makeExecutableSchema({
+    typeDefs,
     resolvers,
+    schemaDirectives,
     context: ({ req, res }) => {
         let user = null
         if (req.cookies.token) {
@@ -49,8 +56,23 @@ const apolloServer = new ApolloServer({
             user = payload
         }
         return { user, res }
-    } 
+    }
 })
+
+const apolloServer = new ApolloServer({ 
+    schema,
+    context: ({ req, res }) => {
+        let user = null
+        if (req.cookies.token) {
+            const payload = auth.verifyToken(req.cookies.token)
+            user = payload
+        }
+        return { user, res }
+    },
+    formatError: (err) => {
+        
+    }
+ })
 
 // Apollo server has its own cors implementation and therefore you need to turn it off if you have cors set up already
 apolloServer.applyMiddleware({ app, path: '/graphql', cors: false })
