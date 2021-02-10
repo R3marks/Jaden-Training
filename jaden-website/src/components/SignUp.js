@@ -53,7 +53,10 @@ function SignUp() {
         console.log(email, password, retypedPassword)
         console.log(password)
         console.log(retypedPassword)
-        if (password !== retypedPassword) {
+        if (!email || !password) {
+            setValidEmail('field field-invalid-client')
+            setErrorMessage('Fields cant be empty')
+        } else if (password !== retypedPassword) {
             setPasswordsMatch(false)
             setErrorMessage('Passwords do not match')
         } else {
@@ -69,8 +72,8 @@ function SignUp() {
                 authContext.setAuthInfo({ userData: result.data.signUp.user })
                 console.log(authContext)
             } catch (errors) {
-                console.log(errors)
-                if (errors.graphQLErrors[0]) {
+                console.log(JSON.stringify(errors))
+                if (errors.graphQLErrors) {
                     let err = errors.graphQLErrors[0]?.extensions
                     if (err.invalidArgs === "Email") {
                         setValidEmail('field field-invalid-server')
