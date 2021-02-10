@@ -13,7 +13,7 @@ function useAppInit() {
                 var result = await getUserInfo()
                 setAuthinfo({ userData: result.data.userInfo.user })
             } catch (errors) {
-                console.log(errors)
+                // console.log(errors)
             }
         }
         handleSession();

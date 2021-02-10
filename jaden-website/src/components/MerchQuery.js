@@ -3,7 +3,6 @@ import { useQuery, useMutation } from '@apollo/client'
 import { GET_MERCH, GET_CART } from '../graphql/Queries'
 import { ADD_TO_CART } from '../graphql/Mutations'
 import ActionButton from './ActionButton'
-import { onError } from "@apollo/client/link/error";
 
 function MerchQuery(props) {
 
@@ -13,16 +12,6 @@ function MerchQuery(props) {
         { loading: loadAddToCart, error: errorAddToCart }] = useMutation(ADD_TO_CART, {
         update: updateCartWithNewEntry
     })
-
-    onError(({ graphQLErrors, networkError }) => {
-        if (graphQLErrors)
-            graphQLErrors.map(({ message, locations, path }) =>
-            console.log(
-                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-            ),
-        );
-        if (networkError) console.log(`[Network error]: ${networkError}`);
-    });
 
     async function updateCartWithNewEntry(cache, { data }) {
         cache.modify({
@@ -49,7 +38,7 @@ function MerchQuery(props) {
 
     if (loading) return <h1>Loading...</h1>;
     if (loadAddToCart) return <h1 className="empty-cart">Adding To Cart...</h1>
-    if (error) return <h1>Error! {JSON.stringify(error)}</h1>
+    if (error) return <h1>Error! {JSON.stringify(error.message)}</h1>
     if (errorAddToCart) return <h1>Error! {JSON.stringify(errorAddToCart)}</h1>
     if (data.allMerch.length === 0) return <h1 className="empty-cart">Your Cart is Empty</h1>
 

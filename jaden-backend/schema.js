@@ -1,6 +1,28 @@
 const { gql } = require('apollo-server') 
 
 module.exports = gql`
+
+    # scalar ValidateString
+    # scalar ValidateNumber
+
+    directive @constraint(
+        # String constraints
+        minLength: Int
+        maxLength: Int
+        startsWith: String
+        endsWith: String
+        notContains: String
+        pattern: String
+        format: String
+
+        # Number constraints
+        min: Int
+        max: Int
+        exclusiveMin: Int
+        exclusiveMax: Int
+        multipleOf: Int
+    ) on INPUT_FIELD_DEFINITION
+    
     type Query {
         tour(id: ID!): Tour
         tours: [Tour]
@@ -33,8 +55,8 @@ module.exports = gql`
     }
 
     input Credentials {
-        email: String!
-        password: String!
+        email: String! 
+        password: String! @constraint(minLength: 8)
     }
 
     type AuthPayload implements MutationResponse {
