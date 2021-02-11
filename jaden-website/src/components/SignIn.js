@@ -45,8 +45,10 @@ function SignIn() {
                     setValidPassword(false)
                     setErrorMessage('Password incorrect')
                 }
+            } else if (errors.networkError) {
+                
             } else {
-                console.log(errors)
+                console.log(JSON.stringify(errors))
             }
         }
     }

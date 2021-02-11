@@ -73,7 +73,7 @@ function SignUp() {
                 console.log(authContext)
             } catch (errors) {
                 console.log(JSON.stringify(errors))
-                if (errors.graphQLErrors) {
+                if (errors.graphQLErrors[0]) {
                     let err = errors.graphQLErrors[0]?.extensions
                     if (err.invalidArgs === "Email") {
                         setValidEmail('field field-invalid-server')
