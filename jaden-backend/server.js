@@ -49,18 +49,19 @@ const schema = makeExecutableSchema({
     typeDefs,
     resolvers,
     schemaDirectives,
-    context: ({ req, res }) => {
-        let user = null
-        if (req.cookies.token) {
-            const payload = auth.verifyToken(req.cookies.token)
-            user = payload
-        }
-        return { user, res }
-    }
+    // context: ({ req, res }) => {
+    //     let user = null
+    //     if (req.cookies.token) {
+    //         const payload = auth.verifyToken(req.cookies.token)
+    //         user = payload
+    //     }
+    //     return { user, res }
+    // }
 })
 
 const apolloServer = new ApolloServer({ 
     schema,
+    playground: true,
     context: ({ req, res }) => {
         let user = null
         if (req.cookies.token) {
@@ -70,7 +71,13 @@ const apolloServer = new ApolloServer({
         return { user, res }
     },
     formatError: (err) => {
-        
+        if (err.extensions.code === 'GRAPHQL_VALIDATION_FAILED') {
+            var validationError = err.extensions.exception.stacktrace[0].split(': ')
+            if (validationError[0] === 'CustomDirectiveError')
+            var newErrorMessage = validationError[1]
+            err.message = newErrorMessage.charAt(0).toUpperCase() + newErrorMessage.slice(1)
+        }
+        return err
     }
  })
 
