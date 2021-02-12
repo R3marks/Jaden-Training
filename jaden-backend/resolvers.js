@@ -111,7 +111,7 @@ function signUp(args, context) {
             }
         })
         if (existingUser) {
-            return new UserInputError('Sign in arguments invalid', {
+            return new UserInputError('Email already registered', {
                 invalidArgs: 'Email'
             })
         }
