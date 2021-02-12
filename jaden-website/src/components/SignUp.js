@@ -38,7 +38,7 @@ function SignUp() {
     function checkValidityOfPassword(event) {
         if (event.target.value.length < 8) {
             setValidPassword('field field-invalid-client')
-            setErrorMessage('Password must be 8 characters long')
+            setErrorMessage('Password must be at least 8 characters in length')
         } else {
             setValidPassword('field field-valid-client')
             setErrorMessage(null)
@@ -50,9 +50,6 @@ function SignUp() {
         var email = event.target.children[1].children[1].value
         var password = event.target.children[3].children[1].value
         var retypedPassword = event.target.children[5].children[1].value
-        console.log(email, password, retypedPassword)
-        console.log(password)
-        console.log(retypedPassword)
         if (!email || !password) {
             setValidEmail('field field-invalid-client')
             setErrorMessage('Fields cant be empty')
@@ -72,15 +69,59 @@ function SignUp() {
                 authContext.setAuthInfo({ userData: result.data.signUp.user })
                 console.log(authContext)
             } catch (errors) {
-                console.log(JSON.stringify(errors))
-                if (errors.graphQLErrors[0]) {
-                    let err = errors.graphQLErrors[0]?.extensions
-                    if (err.invalidArgs === "Email") {
+                const {
+                    graphQLErrors: [graphQLError],
+                    networkError,
+                    message
+                } = errors
+                console.log(graphQLError)
+                if (message === 'Failed to fetch') {
+                    setErrorMessage('Server Offline')
+                } else if (graphQLError) {
+                    const {
+                        message,
+                        extensions: {
+                            invalidArgs
+                        } 
+                    } = graphQLError
+                    console.log(errors)
+                    if (invalidArgs === 'Email') {
                         setValidEmail('field field-invalid-server')
-                        setErrorMessage('Email already registered')
-                    } else if (err.invalidArgs === 'Password') {
-                        // setValidPassword(false)
+                        setErrorMessage(message)
                     }
+                    // let err = errors.graphQLErrors[0]?.extensions
+                    // if (err.invalidArgs === "Email") {
+                    //     setValidEmail('field field-invalid-server')
+                    //     setErrorMessage('Email already registered')
+                    // } else if (err.invalidArgs === 'Password') {
+                    //     setValidPassword(false)
+                    // }
+                } else if (networkError) {//errors.networkError.result.errors[0]) {
+                    const {
+                        result: {
+                            errors: [{
+                                message,
+                                extensions: {
+                                    exception: {
+                                        fieldName
+                                    }
+                                }
+                            }]
+                        }
+                    } = networkError
+                    if (fieldName === 'email') {
+                        setValidEmail('field field-invalid-server')
+                    } else if (fieldName === 'password') {
+                        setValidPassword('field field-invalid-server')
+                    }
+                    // console.log(fieldName)
+                    // switch (fieldName) {
+                    //     case "email":
+                    //         setValidEmail('field field-invalid-server')
+                    //     case "password":
+                    //         setValidPassword('field field-invalid-server')
+                    // }
+                    setErrorMessage(message)
                 } else {
                     console.log(errors)
                 }
@@ -89,7 +130,7 @@ function SignUp() {
     }
 
     if (loadSignIn) return <h1>Signing In...</h1>
-    if (errorSignIn && errorSignIn.networkError) return <h1>Error: ${JSON.stringify(errorSignIn)}</h1>
+    // if (errorSignIn && errorSignIn.networkError) return <h1>{errorMessage}</h1>
 
     return (
         <div className="form">
