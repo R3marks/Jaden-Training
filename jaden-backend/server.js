@@ -71,12 +71,17 @@ const apolloServer = new ApolloServer({
         return { user, res }
     },
     formatError: (err) => {
-        if (err.extensions.code === 'GRAPHQL_VALIDATION_FAILED') {
+        if (err.extensions.exception.name === 'CustomDirectiveError') {
             var validationError = err.extensions.exception.stacktrace[0].split(': ')
-            if (validationError[0] === 'CustomDirectiveError')
-            var newErrorMessage = validationError[1]
-            err.message = newErrorMessage.charAt(0).toUpperCase() + newErrorMessage.slice(1)
+            err.message = validationError[1].charAt(0).toUpperCase() + validationError[1].slice(1)
         }
+        // What used to work
+        // if (err.extensions.code === 'GRAPHQL_VALIDATION_FAILED') {
+        //     var validationError = err.extensions.exception.stacktrace[0].split(': ')
+        //     if (validationError[0] === 'CustomDirectiveError')
+        //     var newErrorMessage = validationError[1]
+        //     err.message = newErrorMessage.charAt(0).toUpperCase() + newErrorMessage.slice(1)
+        // }
         return err
     }
  })

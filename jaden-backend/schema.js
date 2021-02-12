@@ -55,7 +55,7 @@ module.exports = gql`
     }
 
     input Credentials {
-        email: String! 
+        email: String! @constraint(format: "email")
         password: String! @constraint(minLength: 8)
     }
 
