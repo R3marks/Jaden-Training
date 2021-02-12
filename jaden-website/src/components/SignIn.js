@@ -11,6 +11,7 @@ function SignIn() {
     const [errorMessage, setErrorMessage] = useState(null)
     const [validEmail, setValidEmail] = useState(true)
     const [validPassword, setValidPassword] = useState(true)
+    console.log(validEmail, validPassword)
 
     const authContext = useContext(AuthContext)
 
@@ -29,6 +30,7 @@ function SignIn() {
             email: email,
             password: password
         }
+        console.log(credentials)
         try {
             var result = await signIn({ variables: {
                 credentials: credentials 
@@ -36,7 +38,10 @@ function SignIn() {
             console.log(result)
             authContext.setAuthInfo({ userData: result.data.signIn.user })
         } catch (errors) {
-            if (errors.graphQLErrors[0]) {
+            if (errors.message === 'Failed to fetch') {
+                setErrorMessage('Server Offline')
+            } else if (errors.graphQLErrors[0]) {
+                console.log(errors.graphQLErrors[0])
                 let err = errors.graphQLErrors[0]?.extensions
                 if (err.invalidArgs === "Email") {
                     setValidEmail(false)
@@ -46,7 +51,7 @@ function SignIn() {
                     setErrorMessage('Password incorrect')
                 }
             } else if (errors.networkError) {
-                
+                setErrorMessage(errors.networkError.result.errors[0].message)
             } else {
                 console.log(JSON.stringify(errors))
             }
@@ -54,7 +59,7 @@ function SignIn() {
     }
 
     if (loadSignIn) return <h1>Signing In...</h1>
-    if (errorSignIn && errorSignIn.networkError) return <h1>Error: ${JSON.stringify(errorSignIn)}</h1>
+    // if (errorSignIn && errorSignIn.networkError) return <h1> {errorMessage}</h1>
 
     return (
         <div>
