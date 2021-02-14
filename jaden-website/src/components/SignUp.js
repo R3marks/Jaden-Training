@@ -89,14 +89,7 @@ function SignUp() {
                         setValidEmail('field field-invalid-server')
                         setErrorMessage(message)
                     }
-                    // let err = errors.graphQLErrors[0]?.extensions
-                    // if (err.invalidArgs === "Email") {
-                    //     setValidEmail('field field-invalid-server')
-                    //     setErrorMessage('Email already registered')
-                    // } else if (err.invalidArgs === 'Password') {
-                    //     setValidPassword(false)
-                    // }
-                } else if (networkError) {//errors.networkError.result.errors[0]) {
+                } else if (networkError) {
                     const {
                         result: {
                             errors: [{
@@ -114,13 +107,6 @@ function SignUp() {
                     } else if (fieldName === 'password') {
                         setValidPassword('field field-invalid-server')
                     }
-                    // console.log(fieldName)
-                    // switch (fieldName) {
-                    //     case "email":
-                    //         setValidEmail('field field-invalid-server')
-                    //     case "password":
-                    //         setValidPassword('field field-invalid-server')
-                    // }
                     setErrorMessage(message)
                 } else {
                     console.log(errors)
