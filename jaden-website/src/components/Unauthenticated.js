@@ -8,7 +8,6 @@ function Unauthenticated() {
 
     function toggleSignInMethod() {
         setSignInMethod(!signInMethod)
-        console.log(signInMethod)
     }
 
     return (
