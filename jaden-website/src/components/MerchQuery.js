@@ -37,9 +37,9 @@ function MerchQuery(props) {
     }
 
     if (loading) return <h1>Loading...</h1>;
-    if (loadAddToCart) return <h1 className="empty-cart">Adding To Cart...</h1>
+    // if (loadAddToCart) return <h1 className="empty-cart">Adding To Cart...</h1>
     if (error) return <h1>Error! {JSON.stringify(error.message)}</h1>
-    if (errorAddToCart) return <h1>Error! {JSON.stringify(errorAddToCart)}</h1>
+    // if (errorAddToCart) return <h1>Error! {JSON.stringify(errorAddToCart)}</h1>
     if (data.allMerch.length === 0) return <h1 className="empty-cart">Your Cart is Empty</h1>
 
     return (
