@@ -1,12 +1,13 @@
-const { ApolloError } = require('apollo-server')
+const { ApolloError, AuthenticationError, UserInputError } = require('apollo-server')
 const db = require('./db')
+const AuthUtils = require('./auth')
 
 const Query = {
     tour: (parent, args) => getTourByID(parent, args),
     tours: () => getAllTours(),
     searchTour: (parent, args) => searchTours(parent, args),
     allMerch: () => getAllMerch(),
-    allCart: () => getAllCart()
+    allCart: (parent, args, context) => getAllCart(context)
 }
 
 function getTourByID(parent, args) {
@@ -62,8 +63,11 @@ function getAllMerch() {
     }
 }
 
-function getAllCart() {
+function getAllCart(context) {
     try {
+        if (!context.user) {
+            return new AuthenticationError('User has not logged in')
+        }
         var result = db.cart.list()
         if (!result) {
             return new ApolloError('Could not find all Tours', 'DATABASE_TABLE_NOT_FOUND')
@@ -75,10 +79,103 @@ function getAllCart() {
 }
 
 const Mutation = {
+    userInfo: (parent, args, context) => userInfo(context),
+    signUp: (parent, args, context) => signUp(args, context),
+    signIn: (parent, args, context) => signIn(args, context),
+    signOut: (parent, args, context) => signOut(context),
     addToCart: (parent, args) => addMerchToCart(args),
     deleteCartItemById: (parent, args) => deleteCartEntryById(args),
     updateCartItemQuantityById: (parent, args) => updateCartEntryQuantityById(args),
     purchaseCart: () => purchaseCart()
+}
+
+function userInfo(context) {
+    if (context.user) {
+        return {
+            user: { 
+                id: context.user.sub,
+                email: context.user.email 
+            }
+        }
+    }
+    return { user: undefined }
+}
+
+function signUp(args, context) {
+    try {
+        let existingUser = false
+        var users = db.users.list() // check email does not exist
+        users.forEach(user => {
+            if (user.email === args.credentials.email) {
+                return existingUser = true
+            }
+        })
+        if (existingUser) {
+            return new UserInputError('Email already registered', {
+                invalidArgs: 'Email'
+            })
+        }
+        var hash = AuthUtils.hashPassword(args.credentials.password)
+        var user = db.users.create({ email: args.credentials.email, password: hash })
+        var token = AuthUtils.createToken(user)
+        context.res.cookie('token', token, {
+            httpOnly: true
+        })
+        return {
+            code: "SUCCESSFUL_SIGN_UP",
+            success: true,
+            message: `User with email: ${args.credentials.email} successfully signed up`,
+            user: {
+                id: user,
+                email: args.credentials.email
+            }
+        }
+    } catch (error) {
+        return new ApolloError(`Could not create new user due to: ${error}`, 'DATABASE_COULD_NOT_SIGN_UP')
+    }
+}
+
+function signIn(args, context) {
+    try {
+        let existingUser
+        var users = db.users.list() // check email exists
+        users.forEach(user => {
+            if (user.email === args.credentials.email) {
+                return existingUser = user
+            }
+        })
+        if (!existingUser) {
+            return new UserInputError('Email not registered', {
+                invalidArgs: 'Email'
+            })
+        }
+        var isValidPassword = AuthUtils.verifyPassword(args.credentials.password, existingUser.password)
+        if (!isValidPassword) {
+            return new UserInputError('Password incorrect', {
+                invalidArgs: 'Password'
+            })
+        }
+        var token = AuthUtils.createToken(existingUser)
+        context.res.cookie('token', token, {
+            httpOnly: true
+        })
+        return {
+            code: "SUCCESSFUL_SIGN_IN",
+            success: true,
+            message: `User with email: ${existingUser.email} successfully signed in`,
+            user: {
+                id: existingUser.id,
+                email: existingUser.email
+            }
+        }
+    } catch (error) {
+        return new ApolloError(`Could not sign user in because: ${error}`, 'DATABASE_COULD_NOT_SIGN_IN')
+    }
+}
+
+function signOut(context) {
+    context.res.clearCookie('token')
+    return { user: undefined }
 }
 
 function addMerchToCart(args) {

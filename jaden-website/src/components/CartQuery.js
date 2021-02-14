@@ -6,6 +6,7 @@ import ActionButton from './ActionButton'
 
 function CartQuery() {
 
+    const [errorObject, setErrorObject] = useState({})
     const [sizeArray, setSizeArray] = useState(['', 'btn--select', ''])
     const [total, setTotal] = useState(0)
     const scrollBoxCart = useRef(null)
@@ -20,7 +21,15 @@ function CartQuery() {
         setTotal(total.toFixed(2))
     })
 
-    const { loading, error, data } = useQuery(GET_CART)
+    const { loading, error, data } = useQuery(GET_CART, 
+        { onError: (errors) => {
+            if (errors.message === 'Failed to fetch') {
+                setErrorObject({ clientMessage: 'Server Offline'})
+            } else {
+                console.log(errors)
+            }
+        }
+    })
 
     const [removeFromCart, 
         { loading: loadRemoveFromCart, error: errorRemoveFromCart }] = useMutation(REMOVE_FROM_CART, {
@@ -116,11 +125,14 @@ function CartQuery() {
     // Queries need to be handled better. It doesnt make sense to re-render everytime you change the quantity
 
     if (loading) return <h1 className="empty-cart">Loading...</h1>;
-    if (loadRemoveFromCart || loadUpdateQuantity) return <h1 className="empty-cart">Removing From Cart...</h1>
-    if (error || errorRemoveFromCart || errorUpdateQuantity) return <h1 className="empty-cart">Error! ${JSON.stringify(error, errorRemoveFromCart, errorUpdateQuantity)}</h1>
-    if (data.allCart.length === 0) return <h1 className="empty-cart">Your cart is empty</h1>
-    if (loadPurchaseCart) return <h1>Test</h1>
-    if (errorPurchaseCart) return <h1>Test</h1>
+    if (error) return <h1 className="empty-cart">{errorObject.clientMessage}</h1>
+    // if (loadRemoveFromCart || loadUpdateQuantity) return <h1 className="empty-cart">Removing From Cart...</h1>
+    // if (error && error.networkError) return <h1 className='empty-cart'>Server Offline</h1>
+    // if (error && error.graphQLErrors) return <h1 className="empty-cart">Log in to access cart</h1>
+    // if (errorRemoveFromCart || errorUpdateQuantity) return <h1 className="empty-cart">Error! ${JSON.stringify(error, errorRemoveFromCart, errorUpdateQuantity)}</h1>
+    // if (data.allCart.length === 0) return <h1 className="empty-cart">Your cart is empty</h1>
+    // if (loadPurchaseCart) return <h1>Test</h1>
+    // if (errorPurchaseCart) return <h1>Test</h1>
 
     return (
         <>
