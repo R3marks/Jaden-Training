@@ -11,7 +11,6 @@ function SignIn() {
     const [errorMessage, setErrorMessage] = useState(null)
     const [validEmail, setValidEmail] = useState(true)
     const [validPassword, setValidPassword] = useState(true)
-    console.log(validEmail, validPassword)
 
     const authContext = useContext(AuthContext)
 
@@ -30,7 +29,6 @@ function SignIn() {
             email: email,
             password: password
         }
-        console.log(credentials)
         try {
             var result = await signIn({ variables: {
                 credentials: credentials 
@@ -38,20 +36,46 @@ function SignIn() {
             console.log(result)
             authContext.setAuthInfo({ userData: result.data.signIn.user })
         } catch (errors) {
-            if (errors.message === 'Failed to fetch') {
+            const {
+                graphQLErrors: [graphQLError],
+                networkError,
+                message
+            } = errors
+            if (message === 'Failed to fetch') {
                 setErrorMessage('Server Offline')
-            } else if (errors.graphQLErrors[0]) {
-                console.log(errors.graphQLErrors[0])
-                let err = errors.graphQLErrors[0]?.extensions
-                if (err.invalidArgs === "Email") {
+            } else if (graphQLError) {
+                const {
+                    message,
+                    extensions: {
+                        invalidArgs
+                    } 
+                } = graphQLError
+                if (invalidArgs === "Email") {
                     setValidEmail(false)
-                    setErrorMessage('Email not registered')
-                } else if (err.invalidArgs === 'Password') {
+                    setErrorMessage(message)
+                } else if (invalidArgs === 'Password') {
                     setValidPassword(false)
-                    setErrorMessage('Password incorrect')
+                    setErrorMessage(message)
                 }
-            } else if (errors.networkError) {
-                setErrorMessage(errors.networkError.result.errors[0].message)
+            } else if (networkError) {
+                const {
+                    result: {
+                        errors: [{
+                            message,
+                            extensions: {
+                                exception: {
+                                    fieldName
+                                }
+                            }
+                        }]
+                    }
+                } = networkError
+                if (fieldName === 'email') {
+                    setValidEmail(false)
+                } else if (fieldName === 'password') {
+                    setValidPassword(false)
+                }
+                setErrorMessage(message)
             } else {
                 console.log(JSON.stringify(errors))
             }
@@ -62,7 +86,7 @@ function SignIn() {
     // if (errorSignIn && errorSignIn.networkError) return <h1> {errorMessage}</h1>
 
     return (
-        <div>
+        <div className="form">
             <form className="auth-inputs" onSubmit={logIn}>
                 <label className="form-headers">Email</label>
                 <div className="input-rows">
