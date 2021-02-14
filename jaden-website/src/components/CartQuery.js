@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useQuery, useMutation } from '@apollo/client'
 import { GET_CART } from '../graphql/Queries'
-import { PURCHASE_CART, REMOVE_FROM_CART, UPDATE_QUANTITY } from '../graphql/Mutations'
+import { ADD_TO_CART, PURCHASE_CART, REMOVE_FROM_CART, UPDATE_QUANTITY } from '../graphql/Mutations'
 import ActionButton from './ActionButton'
 
 function CartQuery() {

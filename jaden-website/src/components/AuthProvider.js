@@ -8,6 +8,7 @@ function AuthProvider({ children }) {
     const [authInfo, setAuthInfo] = useState({
         userData: undefined
     })
+    console.log(authInfo.userData)
 
     // const isAuthenticated = () => authInfo.userData !== undefined 
 
