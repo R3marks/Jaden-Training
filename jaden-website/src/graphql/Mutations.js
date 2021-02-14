@@ -1,5 +1,49 @@
 import { gql } from '@apollo/client'
 
+export const USER_INFO = gql`
+    mutation userInfo {
+        userInfo {
+            user {
+                id
+                email
+            }
+        }
+    }
+`
+
+export const SIGN_IN = gql`
+    mutation signIn($credentials: Credentials!) {
+        signIn(credentials: $credentials) {
+            user {
+                id
+                email
+            }
+        }
+    }
+`
+
+export const SIGN_UP = gql`
+    mutation signUp($credentials: Credentials!) {
+        signUp(credentials: $credentials) {
+            user {
+                id
+                email
+            }
+        }
+    }
+`
+
+export const SIGN_OUT = gql`
+    mutation signOut {
+        signOut {
+            user {
+                id
+                email
+            }
+        }
+    }
+`
+
 export const ADD_TO_CART = gql`
     mutation addToCart($idProvided: ID!) {
         addToCart(id: $idProvided) {
