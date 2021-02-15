@@ -48,11 +48,13 @@ export const ADD_TO_CART = gql`
     mutation addToCart($idProvided: ID!) {
         addToCart(id: $idProvided) {
             cart {
-                id
-                src 
-                name 
-                price 
-                quantity
+                cartItems {
+                    src 
+                    name 
+                    price 
+                    quantity
+                }
+                total
             }
         }
     }
