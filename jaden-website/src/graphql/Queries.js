@@ -26,10 +26,17 @@ export const GET_CART = gql`
     query {
         allCart {
             id
-            src
-            name
-            price
-            quantity
+            user {
+                id
+                email
+            }
+            cartItems {
+                src
+                name
+                price
+                quantity
+            }
+            total
         }
     }
 `

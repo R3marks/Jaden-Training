@@ -11,7 +11,7 @@ function Profile() {
 
     async function handleSignOut() {
         await signOutUser()
-        setAuthInfo({ userData: undefined })
+        setAuthInfo({ userData: null })
     }
 
     return (

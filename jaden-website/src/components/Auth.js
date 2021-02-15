@@ -9,6 +9,7 @@ function Auth() {
 
     const { isAuthenticated } = useContext(AuthContext)
     var result = isAuthenticated()
+    console.log(result)
 
     return (
         <div className="auth-background">
