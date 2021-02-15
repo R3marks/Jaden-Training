@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import './MerchCart.css'
+import './MerchSection.css'
 import MerchQuery from './MerchQuery'
 
 function MerchSection() {

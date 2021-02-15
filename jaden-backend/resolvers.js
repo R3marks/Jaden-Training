@@ -68,13 +68,11 @@ function getAllCart(context) {
         if (!context.user) {
             return new AuthenticationError('User has not logged in')
         }
-        var result = db.cart.list()
-        if (!result) {
-            return new ApolloError('Could not find all Tours', 'DATABASE_TABLE_NOT_FOUND')
-        }
-        return result
+        var user = db.users.get(context.user.sub)
+        console.log(user.cart)
+        return user.cart
     } catch (error) {
-        return new ApolloError('Could not get all tours from database', 'DATABASE_ERROR')
+        return new ApolloError(`Could not retrieve cart from database due to ${error}`, 'DATABASE_ERROR')
     }
 }
 
@@ -83,7 +81,7 @@ const Mutation = {
     signUp: (parent, args, context) => signUp(args, context),
     signIn: (parent, args, context) => signIn(args, context),
     signOut: (parent, args, context) => signOut(context),
-    addToCart: (parent, args) => addMerchToCart(args),
+    addToCart: (parent, args, context) => addToCart(args, context),
     deleteCartItemById: (parent, args) => deleteCartEntryById(args),
     updateCartItemQuantityById: (parent, args) => updateCartEntryQuantityById(args),
     purchaseCart: () => purchaseCart()
@@ -92,13 +90,21 @@ const Mutation = {
 function userInfo(context) {
     if (context.user) {
         return {
+            code: 'AUTHENTICATED',
+            success: true,
+            message: 'User has an authenticated token stored locally within cookies',
             user: { 
                 id: context.user.sub,
                 email: context.user.email 
             }
         }
     }
-    return { user: undefined }
+    return {         
+        code: 'UNAUTHENTICATED',
+        success: false,
+        message: 'User has no authenticated token stored locally within cookies',
+        user: null
+    }
 }
 
 function signUp(args, context) {
@@ -116,7 +122,7 @@ function signUp(args, context) {
             })
         }
         var hash = AuthUtils.hashPassword(args.credentials.password)
-        var user = db.users.create({ email: args.credentials.email, password: hash })
+        var user = db.users.create({ email: args.credentials.email, password: hash, cart: null })
         var token = AuthUtils.createToken(user)
         context.res.cookie('token', token, {
             httpOnly: true
@@ -178,15 +184,36 @@ function signOut(context) {
     return { user: undefined }
 }
 
-function addMerchToCart(args) {
+function addToCart(args, context) {
     try {
+        if (!context.user) {
+            return new AuthenticationError('User has not logged in')
+        }
+        var user = db.users.get(context.user.sub)
+        if (user.cart === null) {
+            var newCart = db.cart.create({ user: user, cartItems: [], total: 0.00 })
+            var usersCart = db.cart.get(newCart)
+            db.users.update({id: user.id, email: user.email, password: user.password, cart: usersCart })
+        } else {
+            var usersCart = user.cart
+        }
         var merchById = db.merch.get(args.id)
-        var id = db.cart.create({ src: merchById.src, name: merchById.name, price: merchById.price, quantity: 1 })
-        var cart = db.cart.list()
+        // var id = db.cart.create({ src: merchById.src, name: merchById.name, price: merchById.price, quantity: 1 })
+        db.cart.update({ 
+            id: usersCart.id, 
+            cartItems: [...usersCart.cartItems, {
+                src: merchById.src, 
+                name: merchById.name, 
+                price: merchById.price, 
+                quantity: 1
+            }],
+            total: usersCart.total + merchById.price
+        })
+        var cart = db.users.get(user.cart)
         var result = {
             code: "200",
             success: true,
-            message: `You have successfully added ${merchById.name} to the cart with ID: ${id}`,
+            message: `You have successfully added ${merchById.name} to the cart`,
             cart: cart
         }
         return result
