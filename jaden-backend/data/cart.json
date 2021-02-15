@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": "H1we74_bu",
+    "cartItems": [
+      {
+        "src": "/Images - Jaden/ctv3_tshirt.png",
+        "name": "CTV3 T-SHIRT",
+        "price": 19.99,
+        "quantity": 1
+      }
+    ],
+    "total": 19.99
+  }
+]

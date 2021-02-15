@@ -52,11 +52,10 @@ function SignIn() {
                 } = graphQLError
                 if (invalidArgs === "Email") {
                     setValidEmail(false)
-                    setErrorMessage(message)
                 } else if (invalidArgs === 'Password') {
                     setValidPassword(false)
-                    setErrorMessage(message)
                 }
+                setErrorMessage(message)
             } else if (networkError) {
                 const {
                     result: {

@@ -28,7 +28,7 @@ module.exports = gql`
         tours: [Tour]
         searchTour(search: String!): [Tour]
         allMerch: [Merch]
-        allCart: [Cart]
+        allCart: Cart
     }
 
     type Mutation {
@@ -52,6 +52,7 @@ module.exports = gql`
         id: ID!
         email: String!
         password: String!
+        cart: Cart
     }
 
     input Credentials {
@@ -83,6 +84,13 @@ module.exports = gql`
 
     type Cart {
         id: ID!
+        user: User
+        cartItems: [CartItem]!
+        total: Float!
+    }
+
+    type CartItem {
+        id: ID!
         src: String!
         name: String!
         price: Float!
@@ -93,6 +101,6 @@ module.exports = gql`
         code: String!
         success: Boolean!
         message: String!
-        cart: [Cart]
+        cart: Cart
     }
 `

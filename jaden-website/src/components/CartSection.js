@@ -1,5 +1,5 @@
 import React from 'react'
-import './MerchCart.css'
+import './CartSection.css'
 import CartQuery from './CartQuery'
 
 function CartSection() {
