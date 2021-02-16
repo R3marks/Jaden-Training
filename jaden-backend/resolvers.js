@@ -1,6 +1,7 @@
 const { ApolloError, AuthenticationError, UserInputError } = require('apollo-server')
 const db = require('./db')
 const AuthUtils = require('./auth')
+const { users, merch } = require('./db')
 
 const Query = {
     tour: (parent, args) => getTourByID(parent, args),
@@ -69,7 +70,6 @@ function getAllCart(context) {
             return new AuthenticationError('User has not logged in')
         }
         var user = db.users.get(context.user.sub)
-        console.log(user.cart)
         return user.cart
     } catch (error) {
         return new ApolloError(`Could not retrieve cart from database due to ${error}`, 'DATABASE_ERROR')
@@ -82,8 +82,8 @@ const Mutation = {
     signIn: (parent, args, context) => signIn(args, context),
     signOut: (parent, args, context) => signOut(context),
     addToCart: (parent, args, context) => addToCart(args, context),
-    deleteCartItemById: (parent, args) => deleteCartEntryById(args),
-    updateCartItemQuantityById: (parent, args) => updateCartEntryQuantityById(args),
+    removeFromCart: (parent, args, context) => removeFromCart(args, context),
+    updateCart: (parent, args, context) => updateCart(args, context),
     purchaseCart: () => purchaseCart()
 }
 
@@ -191,17 +191,27 @@ function addToCart(args, context) {
         }
         var user = db.users.get(context.user.sub)
         if (user.cart === null) {
-            var newCart = db.cart.create({ user: user, cartItems: ***REMOVED***, total: 0.00 })
+            var newCart = db.cart.create({ 
+                user: { 
+                    id: user.id,
+                    email: user.email
+                }, 
+                cartItems: ***REMOVED***,
+                total: 0.00 })
             var usersCart = db.cart.get(newCart)
             db.users.update({id: user.id, email: user.email, password: user.password, cart: usersCart })
         } else {
             var usersCart = user.cart
         }
         var merchById = db.merch.get(args.id)
-        // var id = db.cart.create({ src: merchById.src, name: merchById.name, price: merchById.price, quantity: 1 })
         db.cart.update({ 
-            id: usersCart.id, 
+            id: usersCart.id,
+            user: {
+                id: user.id,
+                email: user.email
+            },
             cartItems: [...usersCart.cartItems, {
+                id: merchById.id,
                 src: merchById.src, 
                 name: merchById.name, 
                 price: merchById.price, 
@@ -209,23 +219,54 @@ function addToCart(args, context) {
             }],
             total: usersCart.total + merchById.price
         })
-        var cart = db.users.get(user.cart)
+        var updatedCart = db.cart.get(usersCart.id)
+        db.users.update({
+            id: user.id,
+            email: user.email,
+            password: user.password,
+            cart: updatedCart
+        })
         var result = {
-            code: "200",
+            code: "SUCCESSFULLY_ADDED_TO_CART",
             success: true,
             message: `You have successfully added ${merchById.name} to the cart`,
-            cart: cart
+            cart: updatedCart
         }
         return result
     } catch (error) {
-        return new ApolloError('Could not create a new entry in cart', 'DATABASE_COULD_NOT_CREATE')
+        return new ApolloError(`Could not add to cart because of an error: ${error}`, 'DATABASE_COULD_NOT_CREATE')
     }
 }
 
-function deleteCartEntryById(args) {
+function removeFromCart(args, context) {
     try {
-        db.cart.delete(args.id)
-        var cart = db.cart.list()
+        if (!context.user) {
+            return new AuthenticationError('User has not logged in')
+        }
+        var user = db.users.get(context.user.sub)
+        var usersCartitems = user.cart.cartItems
+        var updatedCartItems = usersCartitems.filter(item => item.id !== args.id)
+        var newTotal = 0.00
+        updatedCartItems.forEach(item => {
+            itemPrice = item.price * item.quantity
+            newTotal += itemPrice
+        })
+        db.cart.update({
+            id: user.cart.id,
+            user: {
+                id: user.id,
+                email: user.id
+            },
+            cartItems: updatedCartItems,
+            total: newTotal
+        })
+        var cart = db.cart.get(user.cart.id)
+        db.users.update({
+            id: user.id,
+            email: user.email,
+            password: user.password,
+            cart: cart
+        })
         var result = {
             code: "200",
             success: true,
@@ -234,24 +275,64 @@ function deleteCartEntryById(args) {
         }
         return result
     } catch (error) {
-        return new ApolloError(`Could not delete entry with ID: ${args.id}`, 'DATABASE_COULD_NOT_DELETE')
+        return new ApolloError(`Could not delete entry with ID: ${args.id} because of error: ${error}`, 'DATABASE_COULD_NOT_DELETE')
     }
 }
 
-function updateCartEntryQuantityById(args) {
+function updateCart(args, context) {
     try {
-        var cartEntry = db.cart.get(args.id)
-        db.cart.update({ id: args.id, src: cartEntry.src, name: cartEntry.name, price: cartEntry.price, quantity: args.quantity })
-        var cart = db.cart.list()
+        if (!context.user) {
+            return new AuthenticationError('User has not logged in')
+        }
+        var user = db.users.get(context.user.sub)
+        var usersCartitems = user.cart.cartItems
+        var updatedCartItems = usersCartitems.map(item => {
+            if (item.id === args.id) {
+                item.quantity = args.quantity
+            }
+            return item
+        })
+        var newTotal = 0.00
+        updatedCartItems.forEach(item => {
+            itemPrice = item.price * item.quantity
+            newTotal += itemPrice
+        })
+        db.cart.update({
+            id: user.cart.id,
+            user: {
+                id: user.id,
+                email: user.id
+            },
+            cartItems: updatedCartItems,
+            total: newTotal
+        })
+        var cart = db.cart.get(user.cart.id)
+        console.log(cart)
+        db.users.update({
+            id: user.id,
+            email: user.email,
+            password: user.password,
+            cart: cart
+        })
         var result = {
             code: "200",
             success: true,
-            message: `You have successfully changed the quantity of: ${args.id}, to ${args.quantity}`,
+            message: `You have successfully deleted the cart entry: ${args.id}`,
             cart: cart
         }
         return result
+        // var cartEntry = db.cart.get(args.id)
+        // db.cart.update({ id: args.id, src: cartEntry.src, name: cartEntry.name, price: cartEntry.price, quantity: args.quantity })
+        // var cart = db.cart.list()
+        // var result = {
+        //     code: "200",
+        //     success: true,
+        //     message: `You have successfully changed the quantity of: ${args.id}, to ${args.quantity}`,
+        //     cart: cart
+        // }
+        // return result
     } catch (error) {
-        return new ApolloError(`Could not update quantity of entry with ID: ${args.id} to ${args.quantity}`, 'DATABASE_COULD_NOT_UPDATE')
+        return new ApolloError(`Could not update quantity of entry with ID: ${args.id} to ${args.quantity} because of error: ${error}`, 'DATABASE_COULD_NOT_UPDATE')
     }
 }
 
