@@ -10,19 +10,25 @@
     "password": "$2a$10$MEKguuA8TKSgLSmYwzQoA.EgBFSxW3gSOwB/YqI5HcFPGEo9CXunO"
   },
   {
-    "id": "S1BvcQdWO",
+    "id": "r1aGMSt-u",
     "email": "t@t.com",
-    "password": "$2a$10$bjAn6v9p/Y7FHxmy6A0ITe2PA.EZ9I0wgh4gRLILZcK2wz.JKTW96",
+    "password": "$2a$10$wY6vFcXaOQogl3sKJJAshuOHqhsoP94OUCxMJPK1/FzHl9wuDLye6",
     "cart": {
-      "id": "H1we74_bu",
+      "id": "Sk7yBBYbO",
       "user": {
-        "id": "S1BvcQdWO",
-        "email": "t@t.com",
-        "password": "$2a$10$bjAn6v9p/Y7FHxmy6A0ITe2PA.EZ9I0wgh4gRLILZcK2wz.JKTW96",
-        "cart": null
+        "id": "r1aGMSt-u",
+        "email": "r1aGMSt-u"
       },
-      "cartItems": [],
-      "total": 0
+      "cartItems": [
+        {
+          "id": "2",
+          "src": "/Images - Jaden/ctv3_hoodie.png",
+          "name": "CTV3 HOODIE",
+          "price": 29.99,
+          "quantity": 1
+        }
+      ],
+      "total": 29.99
     }
   }
 ]

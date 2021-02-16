@@ -37,8 +37,8 @@ module.exports = gql`
         signIn(credentials: Credentials!): AuthPayload
         signOut: AuthPayload
         addToCart(id: ID!): UpdateCartMutationResponse
-        deleteCartItemById(id: ID!): UpdateCartMutationResponse
-        updateCartItemQuantityById(id: ID!, quantity: Int!): UpdateCartMutationResponse
+        removeFromCart(id: ID!): UpdateCartMutationResponse
+        updateCart(id: ID!, quantity: Int!): UpdateCartMutationResponse
         purchaseCart: UpdateCartMutationResponse
     }
 
