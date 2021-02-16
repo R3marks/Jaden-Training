@@ -9,18 +9,8 @@ function CartQuery() {
 
     const [errorMessage, setErrorMessage] = useState(null)
     const [sizeArray, setSizeArray] = useState(['', 'btn--select', ''])
-    const [total, setTotal] = useState(0)
+    const [disabledButton, setDisabledButton] = useState(false)
     const scrollBoxCart = useRef(null)
-
-    // useEffect(() => {
-    //     let total = 0;
-    //     if (data) {
-    //         data.allCart.forEach(cartEntry => {
-    //             total += cartEntry.quantity * cartEntry.price
-    //         })
-    //     }
-    //     setTotal(total.toFixed(2))
-    // })
 
     const { loading, error, data } = useQuery(GET_CART, 
         { onError: (errors) => {
@@ -40,7 +30,7 @@ function CartQuery() {
 
     const [updateQuantity, 
         { loading: loadUpdateQuantity, error: errorUpdateQuantity }] = useMutation(UPDATE_QUANTITY, {
-            ignoreResults: true
+            update: updateCartWithUpdatedEntry
         })
 
     const [purchaseCart, 
@@ -52,7 +42,7 @@ function CartQuery() {
         cache.modify({
             fields: {
                 allCart() {
-                    const newCart = data.deleteCartItemById.cart
+                    const newCart = data.removeFromCart.cart
                     cache.writeQuery({
                         query: GET_CART,
                         data: { newCart }
@@ -66,7 +56,7 @@ function CartQuery() {
         cache.modify({
             fields: {
                 allCart() {
-                    const newCart = data.updateCartItemQuantityById.cart
+                    const newCart = data.updateCart.cart
                     cache.writeQuery({
                         query: GET_CART,
                         data: { newCart }
@@ -99,9 +89,13 @@ function CartQuery() {
     async function removeProductFromCart(event) {
         var prevScrollTop = event.target.parentElement.parentElement.parentElement.scrollTop
         var cartId = event.target.parentElement.parentElement.getAttribute('data-key')
-        await removeFromCart({ variables: {
-            idProvided: cartId
-        }})
+        try {
+            await removeFromCart({ variables: {
+                idProvided: cartId
+            }})
+        } catch (errors) {
+            console.log(JSON.stringify(errors))
+        }
         scrollBoxCart.current.scrollTop = prevScrollTop
     }
 
@@ -132,7 +126,7 @@ function CartQuery() {
     // if (error && error.networkError) return <h1 className='empty-cart'>Server Offline</h1>
     // if (error && error.graphQLErrors) return <h1 className="empty-cart">Log in to access cart</h1>
     // if (errorRemoveFromCart || errorUpdateQuantity) return <h1 className="empty-cart">Error! ${JSON.stringify(error, errorRemoveFromCart, errorUpdateQuantity)}</h1>
-    if (data.allCart === null) return <h1 className="empty-cart">Your cart is empty</h1>
+    if (data.allCart.cartItems && data.allCart.cartItems.length === 0) return <h1 className="empty-cart">Your cart is empty</h1>
     // if (loadPurchaseCart) return <h1>Test</h1>
     // if (errorPurchaseCart) return <h1>Test</h1>
 
@@ -153,7 +147,7 @@ function CartQuery() {
                     </div>
                     <div className="cart-quantity">
                         <input type="number" value={product.quantity} onChange={changeQuantity}></input>
-                        <ActionButton buttonStyle="btn--buy" buttonSize="btn--medium" onClick={removeProductFromCart}>REMOVE</ActionButton>
+                        <ActionButton buttonStyle="btn--buy" buttonSize="btn--medium" onClick={removeProductFromCart} disabled={loadRemoveFromCart ? true : false}>REMOVE</ActionButton>
                     </div>
                     <span className="cart-price">£{(product.price * product.quantity).toFixed(2)}</span>
                 </div>
@@ -161,7 +155,7 @@ function CartQuery() {
         </div>    
         <div className="total-row">
             <span className="total-name">Total</span>
-            <span className="total-price">£{total}</span>
+            <span className="total-price">£{data.allCart.total.toFixed(2)}</span>
             <ActionButton buttonStyle="btn--buy" buttonSize="btn--medium" onClick={purchaseMessage}>PURCHASE</ActionButton>
         </div>
         </>
