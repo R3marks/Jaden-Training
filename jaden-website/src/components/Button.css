@@ -39,6 +39,10 @@
     transform: translateY(4px);
 }
 
+.btn--buy:disabled {
+    background: linear-gradient(180deg, rgba(0, 77, 232, 0.301) 0%, rgba(133, 231, 255, 0.301) 105.32%);
+}
+
 .btn--size {
     background: #ABABAB;
     border: 2px solid #000000;
