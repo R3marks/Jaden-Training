@@ -60,7 +60,10 @@ const schema = makeExecutableSchema({
 })
 
 const apolloServer = new ApolloServer({ 
-    schema,
+    // schema,
+    typeDefs,
+    resolvers,
+    schemaDirectives: { constraint: ConstraintDirective },
     playground: true,
     context: ({ req, res }) => {
         let user = null
