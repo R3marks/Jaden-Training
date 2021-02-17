@@ -1,9 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { LinkedButton } from './LinkedButton';
 import './Navbar.css'
+import { AuthContext } from './AuthProvider'
 
 function Navbar(color) {
+
+    const { isAuthenticated } = useContext(AuthContext)
+    const authenticated = isAuthenticated()
+
     const [click, setClick] = useState(false);
     const [button, setButton] = useState(true);
 
@@ -54,7 +59,7 @@ function Navbar(color) {
                             </Link>
                         </li>
                     </ul>
-                    {button && <LinkedButton buttonStyle='btn--navigation' buttonSize='btn--medium' linkTo='/sign-up'>ACCOUNT</LinkedButton>}
+                    {button && <LinkedButton buttonStyle='btn--navigation' buttonSize='btn--medium' linkTo='/sign-up'>{authenticated ? 'ACCOUNT' : 'SIGN IN'}</LinkedButton>}
                 </div>
             </nav>
         

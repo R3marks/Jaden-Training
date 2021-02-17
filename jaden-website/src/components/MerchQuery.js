@@ -77,7 +77,7 @@ function MerchQuery(props) {
                     <span>{merch.name}</span>
                     <span>£{merch.price}</span>
                 </div>
-                <ActionButton buttonStyle="btn--buy" buttonSize="btn--medium" onClick={addToCartById} disabled={loadAddToCart ? true : false}>ADD TO CART</ActionButton>
+                <ActionButton buttonStyle="btn--buy" buttonSize="btn--medium" onClick={addToCartById} disabled={loadAddToCart}>ADD TO CART</ActionButton>
             </div> 
         ))
     )
