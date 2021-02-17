@@ -122,7 +122,6 @@ function CartQuery() {
     }
 
     // Queries need to be handled better. It doesnt make sense to re-render everytime you change the quantity
-    console.log(data)
     if (loading) return <h1 className="empty-cart">Loading...</h1>;
     if (error) return <h1 className="empty-cart">{errorMessage}</h1>
     if (data.allCart && data.allCart.cartItems.length === 0) return <h1 className="empty-cart">Your cart is empty</h1>
@@ -144,8 +143,8 @@ function CartQuery() {
                         <ActionButton buttonStyle="btn--size" buttonSize="btn--square" select={sizeArray[2]} onClick={() => selectSize(2)}>L</ActionButton>
                     </div>
                     <div className="cart-quantity">
-                        <input type="number" value={product.quantity} onChange={changeQuantity} disabled={loadUpdateQuantity ? true : false}></input>
-                        <ActionButton buttonStyle="btn--buy" buttonSize="btn--medium" onClick={removeProductFromCart} disabled={loadRemoveFromCart ? true : false}>REMOVE</ActionButton>
+                        <input type="number" value={product.quantity} onChange={changeQuantity} disabled={loadUpdateQuantity}></input>
+                        <ActionButton buttonStyle="btn--buy" buttonSize="btn--medium" onClick={removeProductFromCart} disabled={loadRemoveFromCart}>REMOVE</ActionButton>
                     </div>
                     <span className="cart-price">£{(product.price * product.quantity).toFixed(2)}</span>
                 </div>
@@ -154,7 +153,7 @@ function CartQuery() {
         <div className="total-row">
             <span className="total-name">Total</span>
             <span className="total-price">£{data.allCart.total.toFixed(2)}</span>
-            <ActionButton buttonStyle="btn--buy" buttonSize="btn--large" onClick={purchaseMessage} disabled={loadPurchaseCart ? true : false}>PURCHASE</ActionButton>
+            <ActionButton buttonStyle="btn--buy" buttonSize="btn--large" onClick={purchaseMessage} disabled={loadPurchaseCart}>PURCHASE</ActionButton>
         </div>
         </>
     )
