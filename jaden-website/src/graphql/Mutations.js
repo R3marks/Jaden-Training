@@ -99,11 +99,14 @@ export const PURCHASE_CART = gql`
     mutation purchaseCart {
         purchaseCart {
             cart {
-                id
-                src 
-                name 
-                price 
-                quantity
+                cartItems {
+                    id
+                    src 
+                    name 
+                    price 
+                    quantity
+                }
+                total
             }
         }
     }

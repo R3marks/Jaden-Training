@@ -84,7 +84,7 @@ const Mutation = {
     addToCart: (parent, args, context) => addToCart(args, context),
     removeFromCart: (parent, args, context) => removeFromCart(args, context),
     updateCart: (parent, args, context) => updateCart(args, context),
-    purchaseCart: () => purchaseCart()
+    purchaseCart: (parent, args, context) => purchaseCart(context)
 }
 
 function userInfo(context) {
@@ -204,21 +204,47 @@ function addToCart(args, context) {
             var usersCart = user.cart
         }
         var merchById = db.merch.get(args.id)
-        db.cart.update({ 
-            id: usersCart.id,
-            user: {
-                id: user.id,
-                email: user.email
-            },
-            cartItems: [...usersCart.cartItems, {
-                id: merchById.id,
-                src: merchById.src, 
-                name: merchById.name, 
-                price: merchById.price, 
-                quantity: 1
-            }],
-            total: usersCart.total + merchById.price
+        var usersCartItems = usersCart.cartItems
+        let itemAlreadyInCart = false
+        usersCartItems.map(item => {
+            if (item.id === args.id) {
+                item.quantity += 1
+                itemAlreadyInCart = true
+            }
+            return item
         })
+        if (!itemAlreadyInCart) {
+            db.cart.update({ 
+                id: usersCart.id,
+                user: {
+                    id: user.id,
+                    email: user.email
+                },
+                cartItems: [...usersCartItems, {
+                    id: merchById.id,
+                    src: merchById.src, 
+                    name: merchById.name, 
+                    price: merchById.price, 
+                    quantity: 1
+                }],
+                total: usersCart.total + merchById.price
+            })
+        } else {
+            var newTotal = 0.00
+            usersCartItems.forEach(item => {
+                totalItemPrice = item.price * item.quantity
+                newTotal += totalItemPrice
+            })
+            db.cart.update({ 
+                id: usersCart.id,
+                user: {
+                    id: user.id,
+                    email: user.email
+                },
+                cartItems: usersCartItems,
+                total: newTotal
+            })
+        }
         var updatedCart = db.cart.get(usersCart.id)
         db.users.update({
             id: user.id,
@@ -244,12 +270,12 @@ function removeFromCart(args, context) {
             return new AuthenticationError('User has not logged in')
         }
         var user = db.users.get(context.user.sub)
-        var usersCartitems = user.cart.cartItems
-        var updatedCartItems = usersCartitems.filter(item => item.id !== args.id)
+        var usersCartItems = user.cart.cartItems
+        var updatedCartItems = usersCartItems.filter(item => item.id !== args.id)
         var newTotal = 0.00
         updatedCartItems.forEach(item => {
-            itemPrice = item.price * item.quantity
-            newTotal += itemPrice
+            totalItemPrice = item.price * item.quantity
+            newTotal += totalItemPrice
         })
         db.cart.update({
             id: user.cart.id,
@@ -285,8 +311,8 @@ function updateCart(args, context) {
             return new AuthenticationError('User has not logged in')
         }
         var user = db.users.get(context.user.sub)
-        var usersCartitems = user.cart.cartItems
-        var updatedCartItems = usersCartitems.map(item => {
+        var usersCartItems = user.cart.cartItems
+        var updatedCartItems = usersCartItems.map(item => {
             if (item.id === args.id) {
                 item.quantity = args.quantity
             }
@@ -294,8 +320,8 @@ function updateCart(args, context) {
         })
         var newTotal = 0.00
         updatedCartItems.forEach(item => {
-            itemPrice = item.price * item.quantity
-            newTotal += itemPrice
+            totalItemPrice = item.price * item.quantity
+            newTotal += totalItemPrice
         })
         db.cart.update({
             id: user.cart.id,
@@ -307,7 +333,6 @@ function updateCart(args, context) {
             total: newTotal
         })
         var cart = db.cart.get(user.cart.id)
-        console.log(cart)
         db.users.update({
             id: user.id,
             email: user.email,
@@ -321,31 +346,33 @@ function updateCart(args, context) {
             cart: cart
         }
         return result
-        // var cartEntry = db.cart.get(args.id)
-        // db.cart.update({ id: args.id, src: cartEntry.src, name: cartEntry.name, price: cartEntry.price, quantity: args.quantity })
-        // var cart = db.cart.list()
-        // var result = {
-        //     code: "200",
-        //     success: true,
-        //     message: `You have successfully changed the quantity of: ${args.id}, to ${args.quantity}`,
-        //     cart: cart
-        // }
-        // return result
     } catch (error) {
         return new ApolloError(`Could not update quantity of entry with ID: ${args.id} to ${args.quantity} because of error: ${error}`, 'DATABASE_COULD_NOT_UPDATE')
     }
 }
 
-function purchaseCart() {
+function purchaseCart(context) {
     try {
-        var cartToPurchase = db.cart.list()
-        var ids = cartToPurchase.map(cartEntry => {
-            return cartEntry.id
+        if (!context.user) {
+            return new AuthenticationError('User has not logged in')
+        }
+        var user = db.users.get(context.user.sub)
+        db.cart.update({
+            id: user.cart.id,
+            user: {
+                id: user.id,
+                email: user.id
+            },
+            cartItems: ***REMOVED***,
+            total: 0.00
         })
-        ids.forEach((id) => {
-            db.cart.delete(id) // iteration separated bc of notarealdb
+        var cart = db.cart.get(user.cart.id)
+        db.users.update({
+            id: user.id,
+            email: user.email,
+            password: user.password,
+            cart: cart
         })
-        var cart = db.cart.list()
         var result = {
             code: "200",
             success: true,
@@ -354,7 +381,7 @@ function purchaseCart() {
         }
         return result
     } catch (error) {
-        return new ApolloError(`Could not purchase items placed in your cart`, 'DATABASE_COULD_NOT_PURCHASE')
+        return new ApolloError(`Could not purchase items placed in your cart because of error: ${error}`, 'DATABASE_COULD_NOT_PURCHASE')
     }
 }
 

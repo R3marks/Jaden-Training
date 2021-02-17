@@ -9,7 +9,6 @@ export default function Merch () {
 
     const { isAuthenticated } = useContext(AuthContext)
     var result = isAuthenticated()
-    console.log(result)
 
     return (
         <>
