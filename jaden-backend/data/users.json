@@ -21,14 +21,34 @@
       },
       "cartItems": [
         {
-          "id": "2",
-          "src": "/Images - Jaden/ctv3_hoodie.png",
-          "name": "CTV3 HOODIE",
-          "price": 29.99,
-          "quantity": 1
+          "id": "1",
+          "src": "/Images - Jaden/ctv3_tshirt.png",
+          "name": "CTV3 T-SHIRT",
+          "price": 19.99,
+          "quantity": 3
+        },
+        {
+          "id": "4",
+          "src": "/Images - Jaden/twitter-icon.png",
+          "name": "TWITTER PIN",
+          "price": 0.99,
+          "quantity": 7
+        },
+        {
+          "id": "5",
+          "src": "/Images - Jaden/syre.jpg",
+          "name": "SYRE",
+          "price": 12.99,
+          "quantity": 3
         }
       ],
-      "total": 29.99
+      "total": 105.87
     }
+  },
+  {
+    "id": "S1DcDpqW_",
+    "email": "p@p.com",
+    "password": "$2a$10$Q5e6zQBoTt3DOpjy44WMk.TQx4Zd7cIrgaAZ56j.yApdy8rLA1JMy",
+    "cart": null
   }
 ]
