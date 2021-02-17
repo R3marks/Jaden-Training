@@ -61,7 +61,11 @@
 
 .cart-quantity input[type=number]::-webkit-inner-spin-button {
     margin-right: 0px;
-  }
+}
+
+.cart-quantity input:disabled {
+    color: grey;
+}
 
 .cart-price {
     display: flex;
