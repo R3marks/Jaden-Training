@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import './SignIn.css'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { SIGN_IN } from '../graphql/Mutations'
@@ -86,7 +87,6 @@ function SignIn() {
     }
 
     if (loadSignIn) return <h1>Signing In...</h1>
-    // if (errorSignIn && errorSignIn.networkError) return <h1> {errorMessage}</h1>
 
     return (
         <div className="form">

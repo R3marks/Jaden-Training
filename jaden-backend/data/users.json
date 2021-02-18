@@ -49,6 +49,14 @@
     "id": "S1DcDpqW_",
     "email": "p@p.com",
     "password": "$2a$10$Q5e6zQBoTt3DOpjy44WMk.TQx4Zd7cIrgaAZ56j.yApdy8rLA1JMy",
-    "cart": null
+    "cart": {
+      "id": "SkMJlX2Wu",
+      "user": {
+        "id": "S1DcDpqW_",
+        "email": "p@p.com"
+      },
+      "cartItems": [],
+      "total": 0
+    }
   }
 ]

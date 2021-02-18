@@ -54,12 +54,12 @@ function Navbar(color) {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link to='/sign-up' className='nav-links-mobile' onClick={closeMobileMenu}>
-                                ACCOUNT
+                            <Link to={authenticated ? '/profile' : '/sign-in'} className='nav-links-mobile' onClick={closeMobileMenu}>
+                                {authenticated ? 'ACCOUNT' : 'SIGN IN'}
                             </Link>
                         </li>
                     </ul>
-                    {button && <LinkedButton buttonStyle='btn--navigation' buttonSize='btn--medium' linkTo='/sign-up'>{authenticated ? 'ACCOUNT' : 'SIGN IN'}</LinkedButton>}
+                    {button && <LinkedButton buttonStyle='btn--navigation' buttonSize='btn--medium' linkTo={authenticated ? '/profile' : '/sign-in'}>{authenticated ? 'ACCOUNT' : 'SIGN IN'}</LinkedButton>}
                 </div>
             </nav>
         
