@@ -34,7 +34,7 @@ function MerchQuery(props) {
                         query: GET_CART,
                         data: { newCart }
                     })
-                }    
+                } 
             }
         })
     }
@@ -64,7 +64,7 @@ function MerchQuery(props) {
             <h1 className='unauth-message'>You'll need to sign in first before you can add merch to cart</h1>
             <div className='choice-buttons'>
                 <ActionButton buttonStyle='btn--buy' buttonSize='btn--large' onClick={() => setIsUserSignedIn(true)}>Keep Browsing</ActionButton>
-                <LinkedButton buttonStyle='btn--buy' buttonSize='btn--large' linkTo='/sign-up'>Sign In</LinkedButton>
+                <LinkedButton buttonStyle='btn--buy' buttonSize='btn--large' linkTo='/sign-in'>Sign In</LinkedButton>
             </div>
         </div>
     )
