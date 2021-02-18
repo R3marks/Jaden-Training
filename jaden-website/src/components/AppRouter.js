@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Footer from './Footer'; 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { AuthContext } from './AuthProvider'
 import useAppInit from './useAppInit'
 import Home from './pages/Home';
 import Tour from './pages/Tour';
 import Merch from './pages/Merch';
 import Story from './pages/Story';
-import SignUp from './pages/SignUp';
+import SignIn from './pages/SignIn';
+import Profile from './pages/Profile';
 
 function AppRouter() {
 
     var { loading } = useAppInit()
+    const { isAuthenticated } = useContext(AuthContext)
+    var authenticated = isAuthenticated()
 
     return (
         <Router>
@@ -22,7 +26,7 @@ function AppRouter() {
                 <Route path='/tour' exact component={Tour} />
                 <Route path='/merch' exact component={Merch} />
                 <Route path='/story' exact component={Story} />
-                <Route path='/sign-up' exact component={SignUp} />
+                <Route path={authenticated ? '/profile' : '/sign-in'} exact component={authenticated ? Profile : SignIn} />
             </Switch>)}
             <Footer />
         </Router>

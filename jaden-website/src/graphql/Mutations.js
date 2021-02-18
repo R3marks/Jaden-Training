@@ -6,6 +6,9 @@ export const USER_INFO = gql`
             user {
                 id
                 email
+                cart {
+                    total
+                }
             }
         }
     }
