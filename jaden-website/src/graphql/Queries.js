@@ -25,6 +25,10 @@ export const GET_MERCH = gql`
 export const GET_CART = gql`
     query {
         allCart {
+            user {
+                id
+                email
+            }
             cartItems {
                 id
                 src

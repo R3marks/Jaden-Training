@@ -89,13 +89,17 @@ const Mutation = {
 
 function userInfo(context) {
     if (context.user) {
+        var user = db.users.get(context.user.sub)
         return {
             code: 'AUTHENTICATED',
             success: true,
             message: 'User has an authenticated token stored locally within cookies',
             user: { 
                 id: context.user.sub,
-                email: context.user.email 
+                email: context.user.email,
+                cart: {
+                    total: user.cart ? user.cart.total : 0.00
+                }
             }
         }
     }
@@ -199,7 +203,7 @@ function addToCart(args, context) {
                 cartItems: ***REMOVED***,
                 total: 0.00 })
             var usersCart = db.cart.get(newCart)
-            db.users.update({id: user.id, email: user.email, password: user.password, cart: usersCart })
+            db.users.update({ id: user.id, email: user.email, password: user.password, cart: usersCart })
         } else {
             var usersCart = user.cart
         }
@@ -281,7 +285,7 @@ function removeFromCart(args, context) {
             id: user.cart.id,
             user: {
                 id: user.id,
-                email: user.id
+                email: user.email
             },
             cartItems: updatedCartItems,
             total: newTotal
@@ -327,7 +331,7 @@ function updateCart(args, context) {
             id: user.cart.id,
             user: {
                 id: user.id,
-                email: user.id
+                email: user.email
             },
             cartItems: updatedCartItems,
             total: newTotal
@@ -361,7 +365,7 @@ function purchaseCart(context) {
             id: user.cart.id,
             user: {
                 id: user.id,
-                email: user.id
+                email: user.email
             },
             cartItems: ***REMOVED***,
             total: 0.00
