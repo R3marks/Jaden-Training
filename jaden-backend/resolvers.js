@@ -84,7 +84,8 @@ const Mutation = {
     addToCart: (parent, args, context) => addToCart(args, context),
     removeFromCart: (parent, args, context) => removeFromCart(args, context),
     updateCart: (parent, args, context) => updateCart(args, context),
-    purchaseCart: (parent, args, context) => purchaseCart(context)
+    purchaseCart: (parent, args, context) => purchaseCart(context),
+    deleteUser: (parent, args, context) => deleteUser(context)
 }
 
 function userInfo(context) {
@@ -298,7 +299,7 @@ function removeFromCart(args, context) {
             cart: cart
         })
         var result = {
-            code: "200",
+            code: 'SUCCESSFULLY_REMOVED_FROM_CART',
             success: true,
             message: `You have successfully deleted the cart entry: ${args.id}`,
             cart: cart
@@ -344,7 +345,7 @@ function updateCart(args, context) {
             cart: cart
         })
         var result = {
-            code: "200",
+            code: "SUCCESSFULLY_UPDATED_CART",
             success: true,
             message: `You have successfully deleted the cart entry: ${args.id}`,
             cart: cart
@@ -378,7 +379,7 @@ function purchaseCart(context) {
             cart: cart
         })
         var result = {
-            code: "200",
+            code: "SUCCESSFULLY_PURCHASED_CART",
             success: true,
             message: `You have successfully purchased the items in your cart`,
             cart: cart
@@ -386,6 +387,27 @@ function purchaseCart(context) {
         return result
     } catch (error) {
         return new ApolloError(`Could not purchase items placed in your cart because of error: ${error}`, 'DATABASE_COULD_NOT_PURCHASE')
+    }
+}
+
+function deleteUser(context) {
+    try {
+        if (!context.user) {
+            return new AuthenticationError('User has not logged in')
+        }
+        var user = db.users.get(context.user.sub)
+        var usersCartId = user.cart.id
+        db.users.delete(user.id)
+        db.cart.delete(usersCartId)
+        var result = {
+            code: 'SUCCESSFULLY_DELETED_USER',
+            success: true,
+            message: 'You have successfully deleted your account',
+            user: null
+        }
+        return result
+    } catch (error) {
+        return new ApolloError(`Could not delete user because of error: ${error}`, 'DATABASE_COULD_NOT_DELETE_USER')
     }
 }
 
