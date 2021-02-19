@@ -114,3 +114,13 @@ export const PURCHASE_CART = gql`
         }
     }
 `
+
+export const DELETE_USER = gql`
+    mutation deleteUser {
+        deleteUser {
+            user {
+                id
+            }
+        }
+    }
+`

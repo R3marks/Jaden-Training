@@ -40,6 +40,7 @@ module.exports = gql`
         removeFromCart(id: ID!): UpdateCartMutationResponse
         updateCart(id: ID!, quantity: Int!): UpdateCartMutationResponse
         purchaseCart: UpdateCartMutationResponse
+        deleteUser: AuthPayload
     }
 
     interface MutationResponse {
