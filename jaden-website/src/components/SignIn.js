@@ -1,9 +1,13 @@
 import React, { useState, useContext } from 'react'
+import './SignIn.css'
+import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { SIGN_IN } from '../graphql/Mutations'
 import { AuthContext } from './AuthProvider'
 
 function SignIn() {
+
+    const history = useHistory()
 
     const [eyeIcon, setEyeIcon] = useState(false)
     const [passwordVisibility, setPasswordVisibility] = useState(false)
@@ -35,6 +39,7 @@ function SignIn() {
             }})
             console.log(result)
             authContext.setAuthInfo({ userData: result.data.signIn.user })
+            history.push('/')
         } catch (errors) {
             const {
                 graphQLErrors: [graphQLError],
@@ -82,7 +87,6 @@ function SignIn() {
     }
 
     if (loadSignIn) return <h1>Signing In...</h1>
-    // if (errorSignIn && errorSignIn.networkError) return <h1> {errorMessage}</h1>
 
     return (
         <div className="form">

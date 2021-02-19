@@ -6,6 +6,9 @@ export const USER_INFO = gql`
             user {
                 id
                 email
+                cart {
+                    total
+                }
             }
         }
     }
@@ -107,6 +110,16 @@ export const PURCHASE_CART = gql`
                     quantity
                 }
                 total
+            }
+        }
+    }
+`
+
+export const DELETE_USER = gql`
+    mutation deleteUser {
+        deleteUser {
+            user {
+                id
             }
         }
     }

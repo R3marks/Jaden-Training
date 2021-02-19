@@ -1,45 +1,9 @@
 [
   {
-    "id": "H1we74_bu",
-    "cartItems": [
-      {
-        "src": "/Images - Jaden/ctv3_tshirt.png",
-        "name": "CTV3 T-SHIRT",
-        "price": 19.99,
-        "quantity": 1
-      }
-    ],
-    "total": 19.99
-  },
-  {
-    "id": "rkyNZBKb_",
-    "cartItems": [
-      {
-        "src": "/Images - Jaden/erys.jpg",
-        "name": "ERYS",
-        "price": 13.99,
-        "quantity": 1
-      }
-    ],
-    "total": 13.99
-  },
-  {
-    "id": "rJ1SzrYW_",
-    "cartItems": [
-      {
-        "src": "/Images - Jaden/ctv3_hoodie.png",
-        "name": "CTV3 HOODIE",
-        "price": 29.99,
-        "quantity": 1
-      }
-    ],
-    "total": 29.99
-  },
-  {
     "id": "Sk7yBBYbO",
     "user": {
       "id": "r1aGMSt-u",
-      "email": "r1aGMSt-u"
+      "email": "t@t.com"
     },
     "cartItems": [
       {
@@ -47,7 +11,7 @@
         "src": "/Images - Jaden/ctv3_tshirt.png",
         "name": "CTV3 T-SHIRT",
         "price": 19.99,
-        "quantity": 3
+        "quantity": 2
       },
       {
         "id": "4",
@@ -64,6 +28,6 @@
         "quantity": 3
       }
     ],
-    "total": 105.87
+    "total": 85.88
   }
 ]

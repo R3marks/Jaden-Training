@@ -1,15 +1,5 @@
 [
   {
-    "id": "BJLyUbdxO",
-    "email": "test@tgest.com",
-    "password": "$2a$10$QKJhzkOE9ysewaUSxrTkV.1Z4MqkEBSYodZf60l.Ou.xFd3VOuRBi"
-  },
-  {
-    "id": "ryLbLcReu",
-    "email": "test@test.com",
-    "password": "$2a$10$MEKguuA8TKSgLSmYwzQoA.EgBFSxW3gSOwB/YqI5HcFPGEo9CXunO"
-  },
-  {
     "id": "r1aGMSt-u",
     "email": "t@t.com",
     "password": "$2a$10$wY6vFcXaOQogl3sKJJAshuOHqhsoP94OUCxMJPK1/FzHl9wuDLye6",
@@ -17,7 +7,7 @@
       "id": "Sk7yBBYbO",
       "user": {
         "id": "r1aGMSt-u",
-        "email": "r1aGMSt-u"
+        "email": "t@t.com"
       },
       "cartItems": [
         {
@@ -25,7 +15,7 @@
           "src": "/Images - Jaden/ctv3_tshirt.png",
           "name": "CTV3 T-SHIRT",
           "price": 19.99,
-          "quantity": 3
+          "quantity": 2
         },
         {
           "id": "4",
@@ -42,13 +32,7 @@
           "quantity": 3
         }
       ],
-      "total": 105.87
+      "total": 85.88
     }
-  },
-  {
-    "id": "S1DcDpqW_",
-    "email": "p@p.com",
-    "password": "$2a$10$Q5e6zQBoTt3DOpjy44WMk.TQx4Zd7cIrgaAZ56j.yApdy8rLA1JMy",
-    "cart": null
   }
 ]
