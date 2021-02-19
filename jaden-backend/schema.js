@@ -40,6 +40,7 @@ module.exports = gql`
         removeFromCart(id: ID!): UpdateCartMutationResponse
         updateCart(id: ID!, quantity: Int!): UpdateCartMutationResponse
         purchaseCart: UpdateCartMutationResponse
+        deleteUser: AuthPayload
     }
 
     interface MutationResponse {
@@ -84,7 +85,7 @@ module.exports = gql`
 
     type Cart {
         id: ID!
-        user: User
+        user: User # Remove user dependency
         cartItems: [CartItem]!
         total: Float!
     }

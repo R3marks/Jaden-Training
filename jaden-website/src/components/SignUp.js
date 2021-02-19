@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import './SignIn.css'
 import { useMutation } from '@apollo/client'
 import { SIGN_UP } from '../graphql/Mutations'
 import { AuthContext } from './AuthProvider'
@@ -116,7 +117,6 @@ function SignUp() {
     }
 
     if (loadSignIn) return <h1>Signing In...</h1>
-    // if (errorSignIn && errorSignIn.networkError) return <h1>{errorMessage}</h1>
 
     return (
         <div className="form">
