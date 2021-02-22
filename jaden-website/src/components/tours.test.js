@@ -4,7 +4,6 @@ import '@testing-library/jest-dom/extend-expect'
 import Tours from './Tours'
 import { SEARCH_TOURS } from '../graphql/Queries'
 import { MockedProvider } from '@apollo/client/testing'
-import TourQuery from './TourQuery'
 
 describe('<Tours />', () => {
     test('Should initially display loading', () => {
@@ -61,7 +60,7 @@ describe('<Tours />', () => {
         })
     })
 
-    test('Should produce an error', async () => {
+    test('Should produce a network error', async () => {
         const mocks = [{
                 request: {
                     query: SEARCH_TOURS,
