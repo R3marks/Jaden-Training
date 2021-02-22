@@ -11,7 +11,7 @@ function Tours() {
     })
 
     function newSearch(event) {
-        refetch({ searchTerm: event.target.value })
+        refetch({ searchTerm: event.target.value.toUpperCase() })
     }
 
     function checkTourQuery() {

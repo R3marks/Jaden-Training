@@ -5,19 +5,22 @@ import { GET_MERCH, GET_CART } from '../graphql/Queries'
 import { ADD_TO_CART } from '../graphql/Mutations'
 import ActionButton from './ActionButton'
 import { LinkedButton } from './LinkedButton'
+import UnknownError from './UnknownError'
 
 function MerchQuery(props) {
 
     const [isUserSignedIn, setIsUserSignedIn] = useState(true)
     const [errorMessage, setErrorMessage] = useState(null)
+    const [unknownError, setUnknownError] = useState(null)
 
     const { loading, error, data } = useQuery(GET_MERCH,
         { onError: (errors) => {
-            if (errors.message === 'Failed to fetch') {
-                setErrorMessage('Server Offline')
-            } else {
-                console.log(JSON.stringify(errors))
-            }
+            // if (errors.message === 'Failed to fetch') {
+            //     setErrorMessage('Server Offline')
+            // } else {
+            //     console.log(JSON.stringify(errors))
+            // }
+            setUnknownError(errors)
         }
     })
 
@@ -50,14 +53,16 @@ function MerchQuery(props) {
             if (errors.message === 'User has not logged in') {
                 setIsUserSignedIn(false)
             } else {
-                console.log(errors)
+                console.log(JSON.stringify(errors))
             }
         }
         props.scrollBoxMerch.current.scrollTop = prevScrollTop
     }
 
     if (loading) return <h1>Loading...</h1>;
-    if (error) return <h1>{errorMessage}</h1>
+    if (unknownError) return <UnknownError errors={unknownError} />
+    if (error && !unknownError) return <h1>Error</h1>
+    if (errorMessage) return <h1>{errorMessage}</h1>
 
     if (!isUserSignedIn) return (
         <div>
@@ -77,7 +82,7 @@ function MerchQuery(props) {
                     <span>{merch.name}</span>
                     <span>£{merch.price}</span>
                 </div>
-                <ActionButton buttonStyle="btn--buy" buttonSize="btn--medium" onClick={addToCartById} disabled={loadAddToCart}>ADD TO CART</ActionButton>
+                <ActionButton dataTestId={`addToCart-${merch.id}`} buttonStyle="btn--buy" buttonSize="btn--medium" onClick={addToCartById} disabled={loadAddToCart}>ADD TO CART</ActionButton>
             </div> 
         ))
     )
