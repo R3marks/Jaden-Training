@@ -34,5 +34,19 @@
       ],
       "total": 85.88
     }
+  },
+  {
+    "id": "Bk5aYhGzd",
+    "email": "p@p.com",
+    "password": "$2a$10$9Nqqa1sK3oqTTEOjQswfJ.qnGYM7rCQJJz6crBxjCGmjLlp8wGD9e",
+    "cart": {
+      "id": "r1PHepMzO",
+      "user": {
+        "id": "Bk5aYhGzd",
+        "email": "p@p.com"
+      },
+      "cartItems": [],
+      "total": 0
+    }
   }
 ]

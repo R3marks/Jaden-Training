@@ -70,6 +70,17 @@ function getAllCart(context) {
             return new AuthenticationError('User has not logged in')
         }
         var user = db.users.get(context.user.sub)
+        console.log(user)
+        if (!user.cart) {
+            return {
+                user: {
+                    id: user.id,
+                    email: user.email
+                },
+                cartItems: [],
+                total: 0.00
+            }
+        }
         return user.cart
     } catch (error) {
         return new ApolloError(`Could not retrieve cart from database due to ${error}`, 'DATABASE_ERROR')

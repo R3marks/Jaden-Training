@@ -7,8 +7,9 @@ import { ADD_TO_CART } from '../graphql/Mutations'
 import { MockedProvider } from '@apollo/client/testing'
 import MerchSection from './MerchSection'
 import { BrowserRouter } from 'react-router-dom'
+import { GraphQLError } from 'graphql'
 
-describe('<MerchQuery />', () => {
+describe('<MerchSection />', () => {
     test('Should initially display loading', () => {
         const mocks = [{
                 request: {
@@ -32,6 +33,7 @@ describe('<MerchQuery />', () => {
         )
         expect(screen.getByText(/Loading.../i)).toBeInTheDocument()
     })
+    
     test('Should display returned data from query', async () => {
         const mocks = [{
             request: {
@@ -61,7 +63,7 @@ describe('<MerchQuery />', () => {
         })
     })
 
-    test('Should produce a network error when fetching merch', async () => {
+    test('Should produce a known network error when fetching merch', async () => {
         const mocks = [{
                 request: {
                     query: GET_MERCH
@@ -75,6 +77,47 @@ describe('<MerchQuery />', () => {
         )
         await waitFor(() => {
             expect(screen.getByText(/Server Offline/i)).toBeInTheDocument()
+        })
+    })
+
+    test('Should produce an unknown network error when fetching merch', async () => {
+        const mocks = [{
+                request: {
+                    query: GET_MERCH
+                },
+                error: 'Displaying Network Error'
+        }]
+        render (
+            <MockedProvider mocks={mocks} addTypename={false}>
+                <MerchSection />
+            </MockedProvider>
+        )
+        await waitFor(() => {
+            expect(screen.getByText(/UNKNOWN ERROR/i)).toBeInTheDocument()
+        })
+        UserEvent.click(screen.getByTestId('Network Error'))
+        await waitFor(() => {
+            expect(screen.getByText(/Displaying Network Error/)).toBeInTheDocument()
+        })
+    })
+
+    test('Should produce an unknown GraphQL error when fetching merch', async () => {
+        const mocks = [{
+                request: {
+                    query: GET_MERCH
+                },
+                result: {
+                    errors: [new GraphQLError('Displaying GraphQL Error')]
+                }
+        }]
+        render (
+            <MockedProvider mocks={mocks} addTypename={false}>
+                <MerchSection />
+            </MockedProvider>
+        )
+        await waitFor(() => {
+            expect(screen.getByText(/UNKNOWN ERROR/i)).toBeInTheDocument()
+            expect(screen.getByText(/Displaying GraphQL Error/)).toBeInTheDocument()
         })
     })
 
@@ -130,7 +173,7 @@ describe('<MerchQuery />', () => {
         })
     })
 
-    test('Should direct the user to log on, if an unauthenticated error message is returned ', async () => {
+    test('Should direct the user to log on, if an unauthenticated error message is returned when adding to cart', async () => {
         const mocks = [{
             request: {
                 query: GET_MERCH
@@ -170,7 +213,7 @@ describe('<MerchQuery />', () => {
         })
     })
 
-    test('Should direct the user to log on, if an unauthenticated error message is returned ', async () => {
+    test('Should show an unknown network error, when trying to add to cart', async () => {
         const mocks = [{
             request: {
                 query: GET_MERCH
@@ -192,7 +235,7 @@ describe('<MerchQuery />', () => {
                     idProvided: '1'
                 }
             },
-            error: new Error('Network Error')
+            error: 'Displaying Network Error'
         }]
         render (
             <MockedProvider mocks={mocks} addTypename={false}>
@@ -206,7 +249,54 @@ describe('<MerchQuery />', () => {
         })
         UserEvent.click(screen.getByTestId('addToCart-1'))
         await waitFor(() => {
-            expect(screen.getByText(/You'll need to sign in first before you can add merch to cart/i)).toBeInTheDocument()
+            expect(screen.getByText(/UNKNOWN ERROR/i)).toBeInTheDocument()
+        })
+        UserEvent.click(screen.getByTestId('Network Error'))
+        await waitFor(() => {
+            expect(screen.getByText(/Displaying Network Error/i)).toBeInTheDocument()
+        })
+    })
+
+    test('Should show an unknown GraphQL error, when trying to add to cart', async () => {
+        const mocks = [{
+            request: {
+                query: GET_MERCH
+            },
+            result: {
+                data: {
+                    allMerch: [{
+                        id: '1',
+                        src: 'merch.jpg',
+                        name: 'TEST MERCH',
+                        price: 99.99
+                    }]
+                }
+            }
+        }, {
+            request: {
+                query: ADD_TO_CART,
+                variables: {
+                    idProvided: '1'
+                }
+            },
+            result: {
+                errors: [new GraphQLError('Displaying GraphQL Error')]
+            }
+        }]
+        render (
+            <MockedProvider mocks={mocks} addTypename={false}>
+                <BrowserRouter>
+                    <MerchSection />
+                </BrowserRouter>
+            </MockedProvider>
+        )
+        await waitFor(() => {
+            expect(screen.getByText(/TEST MERCH/i)).toBeInTheDocument()
+        })
+        UserEvent.click(screen.getByTestId('addToCart-1'))
+        await waitFor(() => {
+            expect(screen.getByText(/UNKNOWN ERROR/i)).toBeInTheDocument()
+            expect(screen.getByText(/Displaying GraphQL Error/i)).toBeInTheDocument()
         })
     })
 })

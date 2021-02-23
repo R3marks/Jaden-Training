@@ -10,17 +10,13 @@ import UnknownError from './UnknownError'
 function MerchQuery(props) {
 
     const [isUserSignedIn, setIsUserSignedIn] = useState(true)
-    const [errorMessage, setErrorMessage] = useState(null)
     const [unknownError, setUnknownError] = useState(null)
 
     const { loading, error, data } = useQuery(GET_MERCH,
         { onError: (errors) => {
-            // if (errors.message === 'Failed to fetch') {
-            //     setErrorMessage('Server Offline')
-            // } else {
-            //     console.log(JSON.stringify(errors))
-            // }
-            setUnknownError(errors)
+            if (errors.message !== 'Failed to fetch') {
+                setUnknownError(errors)
+            }
         }
     })
 
@@ -53,7 +49,7 @@ function MerchQuery(props) {
             if (errors.message === 'User has not logged in') {
                 setIsUserSignedIn(false)
             } else {
-                console.log(JSON.stringify(errors))
+                setUnknownError(errors)
             }
         }
         props.scrollBoxMerch.current.scrollTop = prevScrollTop
@@ -61,8 +57,7 @@ function MerchQuery(props) {
 
     if (loading) return <h1>Loading...</h1>;
     if (unknownError) return <UnknownError errors={unknownError} />
-    if (error && !unknownError) return <h1>Error</h1>
-    if (errorMessage) return <h1>{errorMessage}</h1>
+    if (error && !unknownError) return <h1>Server Offline</h1>
 
     if (!isUserSignedIn) return (
         <div>
