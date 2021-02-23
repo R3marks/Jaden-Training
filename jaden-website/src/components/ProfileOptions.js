@@ -14,9 +14,11 @@ function ProfileOptions() {
 
     const client = useApolloClient()
 
-    const { data } = useQuery(GET_CART, {
+    const { data, loading, error } = useQuery(GET_CART, {
         fetchPolicy: 'no-cache'
     })
+    console.log(JSON.stringify(data))
+
     const [signOutUser, { loading: loadSignOut }] = useMutation(SIGN_OUT)
     const [deleteUser, { loading: loadDeleteUser}] = useMutation(DELETE_USER)
 
@@ -45,6 +47,9 @@ function ProfileOptions() {
             console.log(JSON.stringify(errors))
         }
     }
+
+    if (loading) return <h1>Loading...</h1>
+    if (error) return <h1>{JSON.stringify(error)}</h1>
 
     return (
         <div className='profile-background'>
