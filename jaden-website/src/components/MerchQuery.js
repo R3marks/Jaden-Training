@@ -41,6 +41,7 @@ function MerchQuery(props) {
     async function addToCartById(event) {
         var prevScrollTop = event.target.parentElement.parentElement.scrollTop
         var merchId = event.target.parentElement.getAttribute('data-key')
+        props.scrollBoxMerch.current.scrollTop = prevScrollTop
         try {
             await addToCart({ variables: {
                 idProvided: merchId
@@ -48,11 +49,10 @@ function MerchQuery(props) {
         } catch (errors) {
             if (errors.message === 'User has not logged in') {
                 setIsUserSignedIn(false)
-            } else {
+            } else if (errors.message !== 'Failed to fetch') {
                 setUnknownError(errors)
             }
         }
-        props.scrollBoxMerch.current.scrollTop = prevScrollTop
     }
 
     if (loading) return <h1>Loading...</h1>;
