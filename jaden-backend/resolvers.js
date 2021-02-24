@@ -70,7 +70,6 @@ function getAllCart(context) {
             return new AuthenticationError('User has not logged in')
         }
         var user = db.users.get(context.user.sub)
-        console.log(user)
         if (!user.cart) {
             return {
                 user: {
