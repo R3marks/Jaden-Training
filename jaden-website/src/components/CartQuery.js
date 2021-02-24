@@ -83,50 +83,51 @@ function CartQuery() {
     async function removeProductFromCart(event) {
         var prevScrollTop = event.target.parentElement.parentElement.parentElement.scrollTop
         var cartId = event.target.parentElement.parentElement.getAttribute('data-key')
+        scrollBoxCart.current.scrollTop = prevScrollTop
         try {
             await removeFromCart({ variables: {
                 idProvided: cartId
             }})
         } catch (errors) {
-            setUnknownError(errors)
+            if (errors.message !== 'Failed to fetch') {
+                setUnknownError(errors)
+            }
         }
-        scrollBoxCart.current.scrollTop = prevScrollTop
     }
 
-    function changeQuantity(event) {
+    async function changeQuantity(event) {
         var input = event.target
         var id = event.target.parentElement.parentElement.getAttribute('data-key')
-        console.log(id)
         if (isNaN(input.value) || input.value <= 0) {
             input.value = 1
         } else { 
             input.value = Math.round(input.value)
         }
         try {
-            updateQuantity({ variables: {
+            await updateQuantity({ variables: {
                 idProvided: id, newQuantity: parseInt(input.value)
             }})
         } catch (errors) {
-            setUnknownError(errors)
+            if (errors.message !== 'Failed to fetch') {
+                setUnknownError(errors)  
+            }
         }
     }
 
-    function purchaseMessage() {
+    async function purchaseMessage() {
         try {
-            purchaseCart()
+            await purchaseCart()
             alert("Purchase Completed")
         } catch (errors) {
             setUnknownError(errors)
         }
     }
-    console.log(data)
+
     // Queries need to be handled better. It doesnt make sense to re-render everytime you change the quantity
     if (loading) return <h1 className="empty-cart">Loading...</h1>;
     if (unknownError) return <UnknownError errors={unknownError} />
-    if (error && !unknownError) return <h1 className="empty-cart">Server Offline {JSON.stringify(error)}</h1>
-    // if (data.allCart && data.allCart.cartItems.length === 0) return <h1 className="empty-cart">Your cart is empty</h1>
+    if (error && !unknownError) return <h1 className="empty-cart">Server Offline</h1>
     if (!data.allCart || data?.allCart?.cartItems?.length === 0) return <h1 className="empty-cart">Your cart is empty</h1>
-
 
     return (
         <>
@@ -144,7 +145,7 @@ function CartQuery() {
                         <ActionButton buttonStyle="btn--size" buttonSize="btn--square" select={sizeArray[2]} onClick={() => selectSize(2)}>L</ActionButton>
                     </div>
                     <div className="cart-quantity">
-                        <input type="number" value={product.quantity} onChange={changeQuantity} disabled={loadUpdateQuantity}></input>
+                        <input data-testid={`updateQuantity-${product.id}`} type="number" value={product.quantity} onChange={changeQuantity} disabled={loadUpdateQuantity}></input>
                         <ActionButton dataTestId={`removeFromCart-${product.id}`} buttonStyle="btn--buy" buttonSize="btn--medium" onClick={removeProductFromCart} disabled={loadRemoveFromCart}>REMOVE</ActionButton>
                     </div>
                     <span className="cart-price">£{(product.price * product.quantity).toFixed(2)}</span>
@@ -154,7 +155,7 @@ function CartQuery() {
         <div className="total-row">
             <span className="total-name">Total</span>
             <span className="total-price">£{data.allCart.total.toFixed(2)}</span>
-            <ActionButton buttonStyle="btn--buy" buttonSize="btn--large" onClick={purchaseMessage} disabled={loadPurchaseCart}>PURCHASE</ActionButton>
+            <ActionButton dataTestId={`purchaseCart`} buttonStyle="btn--buy" buttonSize="btn--large" onClick={purchaseMessage} disabled={loadPurchaseCart}>PURCHASE</ActionButton>
         </div>
         </>
     )
