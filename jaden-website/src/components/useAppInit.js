@@ -11,7 +11,6 @@ function useAppInit() {
         async function handleSession() {
             try {
                 var result = await getUserInfo()
-                console.log(result)
                 setAuthInfo({ userData: result.data.userInfo.user })
             } catch (errors) {
                 console.log(errors)
