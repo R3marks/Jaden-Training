@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { SIGN_IN } from '../graphql/Mutations'
 import { AuthContext } from './AuthProvider'
+import UnknownError from './UnknownError'
 
 function SignIn() {
 
@@ -13,12 +14,13 @@ function SignIn() {
     const [passwordVisibility, setPasswordVisibility] = useState(false)
     const [email, setEmail] = useState('')
     const [errorMessage, setErrorMessage] = useState(null)
+    const [unknownError, setUnknownError] = useState(null)
     const [validEmail, setValidEmail] = useState(true)
     const [validPassword, setValidPassword] = useState(true)
 
     const authContext = useContext(AuthContext)
 
-    const [signIn, { loading: loadSignIn, error: errorSignIn }] = useMutation(SIGN_IN)
+    const [signIn, { loading: loadSignIn }] = useMutation(SIGN_IN)
 
     function togglePasswordVisibility() {
         setEyeIcon(!eyeIcon)
@@ -37,7 +39,6 @@ function SignIn() {
             var result = await signIn({ variables: {
                 credentials: credentials 
             }})
-            console.log(result)
             authContext.setAuthInfo({ userData: result.data.signIn.user })
             history.push('/')
         } catch (errors) {
@@ -48,7 +49,7 @@ function SignIn() {
             } = errors
             if (message === 'Failed to fetch') {
                 setErrorMessage('Server Offline')
-            } else if (graphQLError) {
+            } else if (graphQLError?.extensions?.invalidArgs) {
                 const {
                     message,
                     extensions: {
@@ -61,7 +62,7 @@ function SignIn() {
                     setValidPassword(false)
                 }
                 setErrorMessage(message)
-            } else if (networkError) {
+            } else if (networkError?.result?.errors[0]?.extensions?.exception?.fieldName) {
                 const {
                     result: {
                         errors: [{
@@ -81,12 +82,13 @@ function SignIn() {
                 }
                 setErrorMessage(message)
             } else {
-                console.log(JSON.stringify(errors))
+                setUnknownError(errors)
             }
         }
     }
 
     if (loadSignIn) return <h1>Signing In...</h1>
+    if (unknownError) return <UnknownError errors={unknownError} />
 
     return (
         <div className="form">
@@ -94,18 +96,18 @@ function SignIn() {
                 <label className="form-headers">Email</label>
                 <div className="input-rows">
                     <i className="fas fa-user" />
-                    <input value={email} onChange={(event) => setEmail(event.target.value)} type="text" className={validEmail ? 'field' : 'field field-invalid-server'} onClick={() => setValidEmail(true)} />
+                    <input data-testid='signInEmail' value={email} onChange={(event) => setEmail(event.target.value)} type="text" className={validEmail ? 'field' : 'field field-invalid-server'} onClick={() => setValidEmail(true)} />
                 </div>
                 <label className="form-headers">Password</label>
                 <div className="input-rows">
                     <i className="fas fa-lock" />
-                    <input type={passwordVisibility ? 'text' : 'password'} className={validPassword ? 'field' : 'field field-invalid-server'} onClick={() => setValidPassword(true)} />
+                    <input data-testid='signInPassword' type={passwordVisibility ? 'text' : 'password'} className={validPassword ? 'field' : 'field field-invalid-server'} onClick={() => setValidPassword(true)} />
                     <i className={eyeIcon ? 'fas fa-eye' : 'fas fa-eye-slash'} onClick={togglePasswordVisibility} />
                 </div>
                 <div className="error-holder">
                     {errorMessage && <span className="error-message">{errorMessage}</span>}
                 </div>
-                <input className="sign-in" type="submit" value="Sign In" />
+                <input data-testid='signIn' className="sign-in" type="submit" value="SIGN IN" />
             </form>
         </div>
     )
