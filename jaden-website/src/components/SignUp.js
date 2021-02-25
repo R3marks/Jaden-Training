@@ -1,24 +1,29 @@
 import React, { useState, useContext } from 'react'
 import './SignIn.css'
+import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { SIGN_UP } from '../graphql/Mutations'
 import { AuthContext } from './AuthProvider'
+import UnknownError from './UnknownError'
 
 function SignUp() {
 
     var emailRegex = new RegExp(/\S+@\S+\.\S+/)
 
+    const history = useHistory()
+
     const [eyeIcon, setEyeIcon] = useState(false)
     const [passwordVisibility, setPasswordVisibility] = useState(false)
     const [email, setEmail] = useState('')
     const [errorMessage, setErrorMessage] = useState(null)
+    const [unknownError, setUnknownError] = useState(null)
     const [validEmail, setValidEmail] = useState('field')
     const [validPassword, setValidPassword] = useState('field')
     const [passwordsMatch, setPasswordsMatch] = useState(true)
 
     const authContext = useContext(AuthContext)
 
-    const [signUp, { loading: loadSignIn, error: errorSignIn }] = useMutation(SIGN_UP)
+    const [signUp, { loading: loadSignIn }] = useMutation(SIGN_UP)
 
     function togglePasswordVisibility() {
         setEyeIcon(!eyeIcon)
@@ -66,31 +71,28 @@ function SignUp() {
                 var result = await signUp({ variables: {
                     credentials: credentials 
                 }})
-                console.log(result)
                 authContext.setAuthInfo({ userData: result.data.signUp.user })
-                console.log(authContext)
+                history.push('/')
             } catch (errors) {
                 const {
                     graphQLErrors: [graphQLError],
                     networkError,
                     message
                 } = errors
-                console.log(graphQLError)
                 if (message === 'Failed to fetch') {
                     setErrorMessage('Server Offline')
-                } else if (graphQLError) {
+                } else if (graphQLError?.extensions?.invalidArgs) {
                     const {
                         message,
                         extensions: {
                             invalidArgs
                         } 
                     } = graphQLError
-                    console.log(errors)
                     if (invalidArgs === 'Email') {
                         setValidEmail('field field-invalid-server')
                         setErrorMessage(message)
                     }
-                } else if (networkError) {
+                } else if (networkError?.result?.errors[0]?.extensions?.exception?.fieldName) {
                     const {
                         result: {
                             errors: [{
@@ -110,13 +112,14 @@ function SignUp() {
                     }
                     setErrorMessage(message)
                 } else {
-                    console.log(errors)
+                    setUnknownError(errors)
                 }
             }
         }
     }
 
     if (loadSignIn) return <h1>Signing In...</h1>
+    if (unknownError) return <UnknownError errors={unknownError} />
 
     return (
         <div className="form">
@@ -124,24 +127,24 @@ function SignUp() {
                 <label className="form-headers">Email</label>
                 <div className="input-rows">
                     <i className="fas fa-user" />
-                    <input type="text" value={email} onChange={(event) => checkValidityOfEmail(event)} onClick={() => setValidEmail('field')} className={validEmail} />
+                    <input data-testid='signUpEmail' type="text" value={email} onChange={(event) => checkValidityOfEmail(event)} onClick={() => setValidEmail('field')} className={validEmail} />
                 </div>
                 <label className="form-headers">New Password</label>
                 <div className="input-rows">
                     <i className="fas fa-lock" />
-                    <input type={passwordVisibility ? 'text' : 'password'} className={validPassword} onChange={(event) => checkValidityOfPassword(event)} onClick={() => setValidPassword('field')} />
+                    <input data-testid='signUpPassword' type={passwordVisibility ? 'text' : 'password'} className={validPassword} onChange={(event) => checkValidityOfPassword(event)} onClick={() => setValidPassword('field')} />
                     <i className={eyeIcon ? 'fas fa-eye' : 'fas fa-eye-slash'} onClick={togglePasswordVisibility} />
                 </div>
                 <label className="form-headers">Retype Password</label>
                 <div className="input-rows">
                     <i className="fas fa-lock" />
-                    <input type={passwordVisibility ? 'text' : 'password'} onClick={() => setPasswordsMatch(true)} className={passwordsMatch ? 'field' : 'field field-invalid-client'} />
+                    <input data-testid='signUpRetypedPassword' type={passwordVisibility ? 'text' : 'password'} onClick={() => setPasswordsMatch(true)} className={passwordsMatch ? 'field' : 'field field-invalid-client'} />
                     <i className={eyeIcon ? 'fas fa-eye' : 'fas fa-eye-slash'} onClick={togglePasswordVisibility} />
                 </div>
                 <div className="error-holder">
                     {errorMessage && <span className="error-message">{errorMessage}</span>}
                 </div>
-                <input className="sign-in" type="submit" value="Sign Up" />
+                <input data-testid='signUp' className="sign-in" type="submit" value="SIGN UP" />
             </form>
         </div>
     )

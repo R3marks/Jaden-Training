@@ -38,7 +38,7 @@ function ProfileOptions() {
             setAuthInfo({ userData: null })
             history.push('/')
         } catch (errors) {
-            console.log(JSON.stringify(errors))
+            setUnknownError(errors)
         }
     }
 
@@ -49,7 +49,7 @@ function ProfileOptions() {
             setAuthInfo({ userData: null })
             history.push('/')
         } catch (errors) {
-            console.log(JSON.stringify(errors))
+            setUnknownError(errors)
         }
     }
 
@@ -69,7 +69,7 @@ function ProfileOptions() {
                         <div className="profile-row">
                             <i className="fas fa-at" />
                             <h2 className="profile-info">{data ? data.allCart.user.email : 'hmm'}</h2>
-                            <ActionButton buttonSize='btn--medium' buttonStyle='btn--buy' onClick={handleDeleteUser} disabled={loadDeleteUser}>DELETE PROFILE</ActionButton>
+                            <ActionButton dataTestId='deleteProfile' buttonSize='btn--medium' buttonStyle='btn--buy' onClick={handleDeleteUser} disabled={loadDeleteUser}>DELETE PROFILE</ActionButton>
                         </div>
                         <h1 className="profile-subsection-header">Cart</h1>
                         <div className="profile-row">
