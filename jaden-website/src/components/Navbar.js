@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { LinkedButton } from './LinkedButton';
 import './Navbar.css'
 import { AuthContext } from './AuthProvider'
 
@@ -10,24 +9,9 @@ function Navbar(color) {
     const authenticated = isAuthenticated()
 
     const [click, setClick] = useState(false);
-    const [button, setButton] = useState(true);
 
     const handleClick = () => setClick(!click);
     const closeMobileMenu = () => setClick(false);
-
-    const showButton = () => {
-        if( window.innerWidth <= 768) {
-            setButton(false);
-        } else {
-            setButton(true);
-        }
-    }
-
-    useEffect(() => {
-        showButton();
-    }, ***REMOVED***);
-
-    window.addEventListener('resize', showButton);
 
     return (
         <>
@@ -54,12 +38,11 @@ function Navbar(color) {
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link to={authenticated ? '/profile' : '/sign-in'} className='nav-links-mobile' onClick={closeMobileMenu}>
+                            <Link data-testid='Account' to={authenticated ? '/profile' : '/sign-in'} className='nav-links-mobile' onClick={closeMobileMenu}>
                                 {authenticated ? 'ACCOUNT' : 'SIGN IN'}
                             </Link>
                         </li>
                     </ul>
-                    {button && <LinkedButton dataTestId='Account' buttonStyle='btn--navigation' buttonSize='btn--medium' linkTo={authenticated ? '/profile' : '/sign-in'}>{authenticated ? 'ACCOUNT' : 'SIGN IN'}</LinkedButton>}
                 </div>
             </nav>
         </>

@@ -323,7 +323,7 @@ describe('<CartSection />', () => {
         await waitFor(() => {
             expect(mutationCalled).toBe(true)
             expect(screen.getByText('TEST MERCH')).toBeInTheDocument()
-            expect(screen.getByText('£299.97')).toBeInTheDocument()
+            expect(screen.getAllByText('£299.97')).toHaveLength(2)
         })
     })
 

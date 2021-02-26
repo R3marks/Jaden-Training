@@ -7,7 +7,6 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    /* box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2); */
     object-fit: contain;
     margin-top: -100px;
 }
@@ -55,4 +54,24 @@
     height: 475px;
     right: 0;
     margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+
+    .auth-wrapper {
+        width: 85vw;
+    }
+
+    .auth-headers {
+        margin-top: 150px;
+    }
+
+    .auth-header {
+        font-size: 42px;
+    }
+
+    .auth-section {
+        margin-bottom: 100px;
+    }
+
 }
