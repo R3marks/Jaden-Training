@@ -3,7 +3,6 @@ import './Tours.css'
 import TourQuery from './TourQuery'
 import { useQuery } from '@apollo/client'
 import { SEARCH_TOURS } from '../graphql/Queries'
-import { onError } from "@apollo/client/link/error";
 
 function Tours() {
 
@@ -12,7 +11,7 @@ function Tours() {
     })
 
     function newSearch(event) {
-        refetch({ searchTerm: event.target.value })
+        refetch({ searchTerm: event.target.value.toUpperCase() })
     }
 
     function checkTourQuery() {
@@ -22,16 +21,6 @@ function Tours() {
             return <TourQuery data={data} loading={loading} error={error} networkStatus={networkStatus} />
         }
     }
-
-    onError(({ graphQLErrors, networkError }) => {
-        if (graphQLErrors)
-            graphQLErrors.map(({ message, locations, path }) =>
-            console.log(
-                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-            ),
-        );
-        if (networkError) console.log(`[Network error]: ${networkError}`);
-    });
 
     return (
         <div className="tour-background">
