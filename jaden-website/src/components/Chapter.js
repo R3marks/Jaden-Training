@@ -5,7 +5,7 @@ function Chapter() {
     return (
         <div className="story-background">
             <div className="story-wrapper">
-                <h1 className="story-header">Story</h1>
+                <h1 className="story-header">STORY</h1>
                 <p className="story-text">
                     We could have been never endless
                     Just let the past be the past

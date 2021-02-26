@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import ActionButton from './ActionButton';
 import './Video.css';
 
@@ -22,10 +22,12 @@ function Video() {
                 <div className="video-player">
                     <iframe title="Music Video" width="560" height="349" src={video} frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen="0"></iframe>  
                 </div>
-                <ActionButton buttonStyle="btn--cycle" buttonSize="btn--circle" select={videoArray[0]} onClick={() => cycleVideo(0)}></ActionButton>
-                <ActionButton buttonStyle="btn--cycle" buttonSize="btn--circle" select={videoArray[1]} onClick={() => cycleVideo(1)}></ActionButton>
-                <ActionButton buttonStyle="btn--cycle" buttonSize="btn--circle" select={videoArray[2]} onClick={() => cycleVideo(2)}></ActionButton>
-                <ActionButton buttonStyle="btn--cycle" buttonSize="btn--circle" select={videoArray[3]} onClick={() => cycleVideo(3)}></ActionButton>
+                <div className="video-select-buttons">
+                    <ActionButton buttonStyle="btn--cycle" buttonSize="btn--circle" select={videoArray[0]} onClick={() => cycleVideo(0)}></ActionButton>
+                    <ActionButton buttonStyle="btn--cycle" buttonSize="btn--circle" select={videoArray[1]} onClick={() => cycleVideo(1)}></ActionButton>
+                    <ActionButton buttonStyle="btn--cycle" buttonSize="btn--circle" select={videoArray[2]} onClick={() => cycleVideo(2)}></ActionButton>
+                    <ActionButton buttonStyle="btn--cycle" buttonSize="btn--circle" select={videoArray[3]} onClick={() => cycleVideo(3)}></ActionButton>  
+                </div>
             </div>
         </div>
     );

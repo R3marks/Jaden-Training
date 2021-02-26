@@ -35,7 +35,15 @@
     letter-spacing: 0.5px;
 }
 
+.unauth-box {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    min-width: 250px;
+}
+
 .unauth-message {
+    font-size: 32px;
     margin: 100px auto;
     text-shadow: -1.5px 2px plum;
 }
@@ -44,4 +52,36 @@
     display: flex;
     justify-content: space-around;
     margin: 10px;
+}
+
+@media screen and (max-width: 768px) {
+
+    .merch-product {
+        max-width: 450px;
+        min-width: 0px;
+    }
+
+    .merch-image {
+        max-width: 150px;
+    }
+
+    .merch-info {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .unauth-message {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 10px;
+        font-size: 24px;
+        text-align: center;
+    }
+
+    .choice-buttons {
+        flex-direction: column;
+        height: 150px;
+    }
+
 }

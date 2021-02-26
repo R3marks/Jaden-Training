@@ -15,7 +15,6 @@
     display: flex;
     flex-direction: column;
     width: 25%;
-    /* width: 24%; */
 }
 
 .cart-image {
@@ -129,4 +128,94 @@
 /* Handle on hover */
 .scroll-box-cart::-webkit-scrollbar-thumb:hover {
     background: #7f9dda; 
+}
+
+.mobile {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+
+    .mobile {
+        display: flex
+    }
+
+    .desktop {
+        display: none !important;
+    }
+
+    .scroll-box-cart {
+        margin: 30px 15px;
+    }
+
+    .cart-products {
+        flex-direction: column;
+        margin: 0;
+        margin-bottom: 30px;
+    }
+
+    .cart-product,
+    .cart-size,
+    .cart-quantity,
+    .cart-price {
+        width: 100%;
+    }
+
+    .product-name-and-price {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .cart-name {
+        padding: 20px 0;
+        font-size: 24px;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        align-self: none;
+        margin: 0;
+    }
+
+    .cart-price {
+        padding: 20px 0;
+        display: flex;
+        width: 100%;
+        align-self: none;
+        margin: 0;
+    }
+
+    .cart-size {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        padding: 0 20%;
+        min-width: 200px;
+        max-width: 350px;
+    }
+
+    .cart-quantity {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        padding: 0 20%;
+    }
+
+    .mobile-remove {
+        margin: 0px;
+    }
+
+    .total-row {
+        flex-wrap: wrap;
+        margin: 0px 25px 30px 25px;
+    }
+
+    .total-name {
+        font-size: 20px;
+    }
+
+    .total-price {
+        font-size: 20px;
+        margin-right: 0;
+    }
+
 }
