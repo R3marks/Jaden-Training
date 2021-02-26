@@ -1,7 +1,6 @@
 import React from 'react';
 import './Footer.css';
 import { Link } from 'react-router-dom';
-import { LinkedButton } from './LinkedButton';
 
 function Footer() {
     return (
@@ -12,18 +11,18 @@ function Footer() {
                         <Link to="/" className="social-logo">JADEN</Link>
                     </div>
                     <div className="social-icons">
-                        <Link className="social-icon-link facebook" to="/" target="_blank" aria-label="Facebook">
+                        <a className="social-icon-link facebook" href="https://www.facebook.com/officialjaden/" target="_blank" rel="noreferrer" aria-label="Facebook">
                             <i className="fab fa-facebook-f" />
-                        </Link>
-                        <Link className="social-icon-link instagram" to="/" target="_blank" aria-label="Instagram">
+                        </a>
+                        <a className="social-icon-link instagram" href="https://www.instagram.com/c.syresmith/" target="_blank" rel="noreferrer" aria-label="Instagram">
                             <i className="fab fa-instagram" />
-                        </Link>
-                        <Link className="social-icon-link twitter" to="/" target="_blank" aria-label="Twitter">
+                        </a>
+                        <a className="social-icon-link twitter" href="https://twitter.com/jaden" target="_blank" rel="noreferrer" aria-label="Twitter">
                             <i className="fab fa-twitter" />
-                        </Link>
-                        <Link className="social-icon-link youtube" to="/" target="_blank" aria-label="YouTube">
+                        </a>
+                        <a className="social-icon-link youtube" href="https://www.youtube.com/channel/UC-w7D3GsJecTHA8Sjcyn6sQ" target="_blank" rel="noreferrer" aria-label="YouTube">
                             <i className="fab fa-youtube" />
-                        </Link>
+                        </a>
                     </div>
                 </div>
             </section>

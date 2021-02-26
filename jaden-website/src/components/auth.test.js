@@ -2,11 +2,9 @@ import React from 'react'
 import { render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import UserEvent from '@testing-library/user-event'
-import { GET_CART } from '../graphql/Queries'
 import { USER_INFO, SIGN_IN, SIGN_UP } from '../graphql/Mutations'
 import { MockedProvider } from '@apollo/client/testing'
 import { GraphQLError } from 'graphql'
-import ProfileOptions from './ProfileOptions'
 import AuthProvider from './AuthProvider'
 import AppRouter from './AppRouter'
 
@@ -73,14 +71,14 @@ describe('<ProfileOptions />', () => {
         })
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
-            expect(screen.getAllByText('SIGN IN')).toHaveLength(4)
+            expect(screen.getAllByText('SIGN IN')).toHaveLength(3)
         })
         UserEvent.type(screen.getByTestId('signInEmail'), 'test@test.com')        
         UserEvent.type(screen.getByTestId('signInPassword'), 'password')
         UserEvent.click(screen.getByTestId('signIn'))
         await waitFor(() => {
             expect(screen.getByText('CTV3 OUT NOW')).toBeInTheDocument()
-            expect(screen.getAllByText('ACCOUNT')).toHaveLength(2)
+            expect(screen.getAllByText('ACCOUNT')).toHaveLength(1)
         })
     })
 
@@ -131,7 +129,7 @@ describe('<ProfileOptions />', () => {
         })
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
-            expect(screen.getAllByText('SIGN IN')).toHaveLength(4)
+            expect(screen.getAllByText('SIGN IN')).toHaveLength(3)
         })
         UserEvent.type(screen.getByTestId('signInEmail'), 'test')        
         UserEvent.type(screen.getByTestId('signInPassword'), 'password')
@@ -188,7 +186,7 @@ describe('<ProfileOptions />', () => {
         })
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
-            expect(screen.getAllByText('SIGN IN')).toHaveLength(4)
+            expect(screen.getAllByText('SIGN IN')).toHaveLength(3)
         })
         UserEvent.type(screen.getByTestId('signInEmail'), 'test@test.com')        
         UserEvent.type(screen.getByTestId('signInPassword'), 'passwor')
@@ -241,7 +239,7 @@ describe('<ProfileOptions />', () => {
         })
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
-            expect(screen.getAllByText('SIGN IN')).toHaveLength(4)
+            expect(screen.getAllByText('SIGN IN')).toHaveLength(3)
         })
         UserEvent.type(screen.getByTestId('signInEmail'), 'test')        
         UserEvent.type(screen.getByTestId('signInPassword'), 'password')
@@ -294,7 +292,7 @@ describe('<ProfileOptions />', () => {
         })
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
-            expect(screen.getAllByText('SIGN IN')).toHaveLength(4)
+            expect(screen.getAllByText('SIGN IN')).toHaveLength(3)
         })
         UserEvent.type(screen.getByTestId('signInEmail'), 'test@test.com')        
         UserEvent.type(screen.getByTestId('signInPassword'), 'passwordd')
@@ -340,7 +338,7 @@ describe('<ProfileOptions />', () => {
         })
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
-            expect(screen.getAllByText('SIGN IN')).toHaveLength(4)
+            expect(screen.getAllByText('SIGN IN')).toHaveLength(3)
         })
         UserEvent.type(screen.getByTestId('signInEmail'), 'test@test.com')        
         UserEvent.type(screen.getByTestId('signInPassword'), 'password')
@@ -386,7 +384,7 @@ describe('<ProfileOptions />', () => {
         })
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
-            expect(screen.getAllByText('SIGN IN')).toHaveLength(4)
+            expect(screen.getAllByText('SIGN IN')).toHaveLength(3)
         })
         UserEvent.type(screen.getByTestId('signInEmail'), 'test@test.com')        
         UserEvent.type(screen.getByTestId('signInPassword'), 'password')
@@ -438,7 +436,7 @@ describe('<ProfileOptions />', () => {
         })
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
-            expect(screen.getAllByText('SIGN IN')).toHaveLength(4)
+            expect(screen.getAllByText('SIGN IN')).toHaveLength(3)
         })
         UserEvent.type(screen.getByTestId('signInEmail'), 'test@test.com')        
         UserEvent.type(screen.getByTestId('signInPassword'), 'password')
@@ -521,7 +519,7 @@ describe('<ProfileOptions />', () => {
         UserEvent.click(screen.getByTestId('signUp'))
         await waitFor(() => {
             expect(screen.getByText('CTV3 OUT NOW')).toBeInTheDocument()
-            expect(screen.getAllByText('ACCOUNT')).toHaveLength(2)
+            expect(screen.getAllByText('ACCOUNT')).toHaveLength(1)
         })
     })
 
