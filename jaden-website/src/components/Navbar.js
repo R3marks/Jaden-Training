@@ -59,10 +59,9 @@ function Navbar(color) {
                             </Link>
                         </li>
                     </ul>
-                    {button && <LinkedButton buttonStyle='btn--navigation' buttonSize='btn--medium' linkTo={authenticated ? '/profile' : '/sign-in'}>{authenticated ? 'ACCOUNT' : 'SIGN IN'}</LinkedButton>}
+                    {button && <LinkedButton dataTestId='Account' buttonStyle='btn--navigation' buttonSize='btn--medium' linkTo={authenticated ? '/profile' : '/sign-in'}>{authenticated ? 'ACCOUNT' : 'SIGN IN'}</LinkedButton>}
                 </div>
             </nav>
-        
         </>
     )
 }

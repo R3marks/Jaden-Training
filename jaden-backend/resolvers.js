@@ -1,29 +1,28 @@
 const { ApolloError, AuthenticationError, UserInputError } = require('apollo-server')
 const db = require('./db')
 const AuthUtils = require('./auth')
-const { users, merch } = require('./db')
 
 const Query = {
-    tour: (parent, args) => getTourByID(parent, args),
-    tours: () => getAllTours(),
-    searchTour: (parent, args) => searchTours(parent, args),
-    allMerch: () => getAllMerch(),
-    allCart: (parent, args, context) => getAllCart(context)
+    tour: (parent, args) => tour(args),
+    tours: () => tours(),
+    searchTour: (parent, args) => searchTour(args),
+    allMerch: () => allMerch(),
+    allCart: (parent, args, context) => allCart(context)
 }
 
-function getTourByID(parent, args) {
+function tour(args) {
     try {
-    var result = db.tours.get(args.id)
-    if (!result) {
-        return new ApolloError(`Could not find Tour with ID: ${args.id}`, "DATABASE_ENTRY_NOT_FOUND")
-    }
-    return result
+        var result = db.tours.get(args.id)
+        if (!result) {
+            return new ApolloError(`Could not find Tour with ID: ${args.id}`, "DATABASE_ENTRY_NOT_FOUND")
+        }
+        return result
     } catch (error) {
         return new ApolloError('Could not get tour by ID in database', 'DATABASE_ERROR')
     }
 }
 
-function getAllTours() {
+function tours() {
     try {
         var result = db.tours.list()
         if (!result) {
@@ -35,7 +34,7 @@ function getAllTours() {
     }
 }
 
-function searchTours(parent, args) {
+function searchTour(args) {
     try {
         let results = new Set
 
@@ -52,24 +51,34 @@ function searchTours(parent, args) {
     }
 }
 
-function getAllMerch() {
+function allMerch() {
     try {
         var result = db.merch.list()
         if (!result) {
-            return new ApolloError('Could not find all Tours', 'DATABASE_TABLE_NOT_FOUND')
+            return new ApolloError('Could not find all Merch', 'DATABASE_TABLE_NOT_FOUND')
         }
         return result
     } catch (error) {
-        return new ApolloError('Could not get all tours from database', 'DATABASE_ERROR')
+        return new ApolloError('Could not get all Merch from database', 'DATABASE_ERROR')
     }
 }
 
-function getAllCart(context) {
+function allCart(context) {
     try {
         if (!context.user) {
             return new AuthenticationError('User has not logged in')
         }
         var user = db.users.get(context.user.sub)
+        if (!user.cart) {
+            return {
+                user: {
+                    id: user.id,
+                    email: user.email
+                },
+                cartItems: [],
+                total: 0.00
+            }
+        }
         return user.cart
     } catch (error) {
         return new ApolloError(`Could not retrieve cart from database due to ${error}`, 'DATABASE_ERROR')
@@ -90,18 +99,22 @@ const Mutation = {
 
 function userInfo(context) {
     if (context.user) {
-        var user = db.users.get(context.user.sub)
-        return {
-            code: 'AUTHENTICATED',
-            success: true,
-            message: 'User has an authenticated token stored locally within cookies',
-            user: { 
-                id: context.user.sub,
-                email: context.user.email,
-                cart: {
-                    total: user.cart ? user.cart.total : 0.00
+        try {
+            var user = db.users.get(context.user.sub)
+            return {
+                code: 'AUTHENTICATED',
+                success: true,
+                message: 'User has an authenticated token stored locally within cookies',
+                user: { 
+                    id: context.user.sub,
+                    email: context.user.email,
+                    cart: {
+                        total: user.cart ? user.cart.total : 0.00
+                    }
                 }
             }
+        } catch (error) {
+            return new ApolloError('Could not retrieve user\'s info', 'DATABASE_CANT_FIND_USER')
         }
     }
     return {         
@@ -115,7 +128,7 @@ function userInfo(context) {
 function signUp(args, context) {
     try {
         let existingUser = false
-        var users = db.users.list() // check email does not exist
+        var users = db.users.list()
         users.forEach(user => {
             if (user.email === args.credentials.email) {
                 return existingUser = true
@@ -149,7 +162,7 @@ function signUp(args, context) {
 function signIn(args, context) {
     try {
         let existingUser
-        var users = db.users.list() // check email exists
+        var users = db.users.list()
         users.forEach(user => {
             if (user.email === args.credentials.email) {
                 return existingUser = user
@@ -202,7 +215,8 @@ function addToCart(args, context) {
                     email: user.email
                 }, 
                 cartItems: [],
-                total: 0.00 })
+                total: 0.00 
+            })
             var usersCart = db.cart.get(newCart)
             db.users.update({ id: user.id, email: user.email, password: user.password, cart: usersCart })
         } else {
@@ -347,7 +361,7 @@ function updateCart(args, context) {
         var result = {
             code: "SUCCESSFULLY_UPDATED_CART",
             success: true,
-            message: `You have successfully deleted the cart entry: ${args.id}`,
+            message: `You have successfully updated cart entry: ${args.id}`,
             cart: cart
         }
         return result
