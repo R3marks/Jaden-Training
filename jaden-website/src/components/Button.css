@@ -43,6 +43,21 @@
     background: linear-gradient(180deg, rgba(0, 77, 232, 0.301) 0%, rgba(133, 231, 255, 0.301) 105.32%);
 }
 
+.btn--minimal {
+    background: linear-gradient(180deg, rgba(0, 77, 232, 0) 0%, rgba(133, 231, 255, 0) 105.32%);
+    border-bottom: 2px solid black;
+    transition: 0.9s linear;
+}
+
+.btn--minimal:hover {
+    background: linear-gradient(180deg, rgba(0, 77, 232, 0.1) 0%, rgba(133, 231, 255, 1) 105.32%);
+    transition: 0.9s linear;
+}
+
+.btn--minimal:focus {
+    background: linear-gradient(180deg, rgba(0, 77, 232, 0.1) 0%, rgba(133, 231, 255, 1) 105.32%);
+}
+
 .btn--size {
     background: #ABABAB;
     border: 2px solid #000000;
