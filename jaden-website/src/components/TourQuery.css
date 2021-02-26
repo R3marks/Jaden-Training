@@ -84,3 +84,25 @@
 .scroll-box-tickets::-webkit-scrollbar-thumb:hover {
     background: #7f9dda; 
 }
+
+@media screen and (max-width: 768px) {
+
+    .tour-item {
+        flex-direction: column;
+        margin-top: 0px;
+    }
+
+    .tour-info {
+        width: 100%;
+        align-self: flex-end;
+        margin-bottom: 5px;
+    }
+
+    .tour-date,
+    .tour-city,
+    .tour-arena {
+        font-size: 20px;
+        padding-right: 0px;
+    }
+
+}
