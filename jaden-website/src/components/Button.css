@@ -4,6 +4,7 @@
     outline: none;
     border: none;
     cursor: pointer;
+    max-width: 200px;
 }
 
 /* - - - - - Button Styles - - - - - */
@@ -96,13 +97,17 @@
 .btn--navigation:hover {
     transition: all 0.3s ease-out;
     transform: scale(1.1)
-    /* background: #2b5f61;
-    color: #E68FB1;
-    transition: 250ms; */
 }
 
 /* - - - - - Button States - - - - - */
 
 .btn--select {
     background: #FCFCFC;
+}
+
+@media screen and (max-width: 768px) {
+    .btn--square {
+        padding: 8px 16px;
+        margin: 1px;
+    }
 }
