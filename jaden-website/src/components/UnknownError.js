@@ -19,7 +19,7 @@ function UnknownError(props) {
             </div>
             <div className="unknown-error-box">
                 {errorType ? <pre className="unknown-error-print">{JSON.stringify(props.errors.networkError, undefined, 2)}</pre>
-                : <pre className="unknown-error-print">{props.errors.graphQLErrors.map(graphQLError => {
+                : <pre className="unknown-error-print">{props.errors.graphQLErrors.forEach(graphQLError => {
                     JSON.stringify(graphQLError, undefined, 2)
                 })}</pre>}
             </div>

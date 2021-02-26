@@ -9,7 +9,7 @@ import UnknownError from './UnknownError'
 function CartQuery() {
 
     const [unknownError, setUnknownError] = useState(null)
-    const [sizeArray, setSizeArray] = useState(['', 'btn--select', ''])
+    const [sizeArray, setSizeArray] = useState(['', 'btn--select', ''])  
     const scrollBoxCart = useRef(null)
 
     const { loading, error, data } = useQuery(GET_CART, 
@@ -137,7 +137,10 @@ function CartQuery() {
                 key={index} data-key={product.id}>
                     <div className="cart-product">
                         <img className="cart-image" alt="Cart" src={product.src}></img>
-                        <span className="cart-name">{product.name}</span>
+                        <div className='product-name-and-price mobile'>
+                            <span className="cart-name">{product.name}</span>
+                            <span className="cart-price mobile">£{(product.price * product.quantity).toFixed(2)}</span>
+                        </div>
                     </div>
                     <div className="cart-size">
                         <ActionButton buttonStyle="btn--size" buttonSize="btn--square" select={sizeArray[0]} onClick={() => selectSize(0)}>S</ActionButton>
@@ -148,7 +151,7 @@ function CartQuery() {
                         <input data-testid={`updateQuantity-${product.id}`} type="number" value={product.quantity} onChange={changeQuantity} disabled={loadUpdateQuantity}></input>
                         <ActionButton dataTestId={`removeFromCart-${product.id}`} buttonStyle="btn--buy" buttonSize="btn--medium" onClick={removeProductFromCart} disabled={loadRemoveFromCart}>REMOVE</ActionButton>
                     </div>
-                    <span className="cart-price">£{(product.price * product.quantity).toFixed(2)}</span>
+                    <span className="cart-price desktop">£{(product.price * product.quantity).toFixed(2)}</span>
                 </div>
             ))}
         </div>    
