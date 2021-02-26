@@ -83,3 +83,29 @@
 .scroll-box-merch::-webkit-scrollbar-thumb:hover {
     background: #7f9dda; 
 }
+
+@media screen and (max-width: 768px) {
+
+    .merch-background {
+        background: url('../Images - Jaden/background-phone-2.jpg')
+    }
+
+    .merch-wrapper {
+        width: 85vw;
+    }
+
+    .merch-header {
+        font-size: 42px;
+        margin-top: 150px;
+        align-self: center;
+    }
+
+    .merch-section {
+        margin-bottom: 100px;
+    }
+
+    .scroll-box-merch {
+        margin: 30px 15px;
+    }
+
+}
