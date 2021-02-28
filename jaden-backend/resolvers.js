@@ -140,7 +140,8 @@ function signUp(args, context) {
             })
         }
         var hash = AuthUtils.hashPassword(args.credentials.password)
-        var user = db.users.create({ email: args.credentials.email, password: hash, cart: null })
+        var userId = db.users.create({ email: args.credentials.email, password: hash, cart: null })
+        var user = db.users.get(userId)
         var token = AuthUtils.createToken(user)
         context.res.cookie('token', token, {
             httpOnly: true
@@ -150,8 +151,8 @@ function signUp(args, context) {
             success: true,
             message: `User with email: ${args.credentials.email} successfully signed up`,
             user: {
-                id: user,
-                email: args.credentials.email
+                id: userId,
+                email: user.email
             }
         }
     } catch (error) {
@@ -208,7 +209,7 @@ function addToCart(args, context) {
             return new AuthenticationError('User has not logged in')
         }
         var user = db.users.get(context.user.sub)
-        if (user.cart === null) {
+        if (!user.cart) {
             var newCart = db.cart.create({ 
                 user: { 
                     id: user.id,
@@ -410,9 +411,11 @@ function deleteUser(context) {
             return new AuthenticationError('User has not logged in')
         }
         var user = db.users.get(context.user.sub)
-        var usersCartId = user.cart.id
         db.users.delete(user.id)
-        db.cart.delete(usersCartId)
+        if (user.cart) {
+            var usersCartId = user.cart.id
+            db.cart.delete(usersCartId)
+        }
         var result = {
             code: 'SUCCESSFULLY_DELETED_USER',
             success: true,

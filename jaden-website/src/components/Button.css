@@ -92,6 +92,7 @@
 .btn--large {
     padding: 12px 26px;
     font-size: 32px;
+    margin: 10px;
 }
   
 .btn--navigation:hover {
