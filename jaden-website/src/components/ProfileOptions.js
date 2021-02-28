@@ -54,7 +54,6 @@ function ProfileOptions() {
     }
 
     if (loading) return <h1>Loading...</h1>
-    if (unknownError) return <UnknownError errors={unknownError} />
     if (error && !unknownError) return <h1>Server Offline</h1>
 
     return (
@@ -64,7 +63,8 @@ function ProfileOptions() {
                     <h1 className='profile-header'>PROFILE</h1>
                 </div>
                 <div className="profile-section">
-                    <div className="profile-section-wrapper">
+                    {unknownError ? ( <UnknownError errors={unknownError} /> ) :
+                    ( <div className="profile-section-wrapper">
                         <h1 className="profile-subsection-header">Email Address</h1>
                         <div className="profile-row">
                             <i className="fas fa-at" />
@@ -78,7 +78,7 @@ function ProfileOptions() {
                             <ActionButton buttonSize='btn--medium' buttonStyle='btn--buy' onClick={handleGoToCart}>GO TO CART</ActionButton>
                         </div>
                         <ActionButton dataTestId='signOut' buttonSize='btn--large' buttonStyle='btn--buy' onClick={handleSignOut} disabled={loadSignOut}>SIGN OUT</ActionButton>
-                    </div>
+                    </div> )}
                 </div>
             </div>
         </div>

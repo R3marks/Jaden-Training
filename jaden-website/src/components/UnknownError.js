@@ -5,6 +5,7 @@ import ActionButton from './ActionButton'
 function UnknownError(props) {
 
     const [errorType, setErrorType] = useState(false)
+    console.log(JSON.stringify(props.errors.graphQLErrors))
 
     return (
         <div className="unknown-error-section">
@@ -19,8 +20,8 @@ function UnknownError(props) {
             </div>
             <div className="unknown-error-box">
                 {errorType ? <pre className="unknown-error-print">{JSON.stringify(props.errors.networkError, undefined, 2)}</pre>
-                : <pre className="unknown-error-print">{props.errors.graphQLErrors.forEach(graphQLError => {
-                    JSON.stringify(graphQLError, undefined, 2)
+                : <pre className="unknown-error-print">{props.errors.graphQLErrors.map(graphQLError => {
+                    return JSON.stringify(graphQLError, undefined, 2)
                 })}</pre>}
             </div>
         </div>
