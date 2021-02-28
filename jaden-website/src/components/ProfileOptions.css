@@ -98,11 +98,13 @@
 
     .profile-section {
         margin-bottom: 100px;
+        display: flex;
+        justify-content: center;
     }
 
     .profile-row {
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         flex-wrap: wrap;
         margin: 10px 0;
     }
