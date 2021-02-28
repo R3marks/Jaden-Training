@@ -15,7 +15,7 @@
           "src": "/Images - Jaden/ctv3_tshirt.png",
           "name": "CTV3 T-SHIRT",
           "price": 19.99,
-          "quantity": 2
+          "quantity": 3
         },
         {
           "id": "4",
@@ -32,7 +32,7 @@
           "quantity": 3
         }
       ],
-      "total": 85.88
+      "total": 105.87
     }
   },
   {
@@ -44,6 +44,20 @@
       "user": {
         "id": "Bk5aYhGzd",
         "email": "p@p.com"
+      },
+      "cartItems": [],
+      "total": 0
+    }
+  },
+  {
+    "id": "H1ed4ftM_",
+    "email": "sandra.langrick@ntlworld.com",
+    "password": "$2a$10$XuRoZ9tZvVrmvsysFt9T.eJv9rDs0L.YfmKikwIg2YiVp0I746adW",
+    "cart": {
+      "id": "BkznmPtzu",
+      "user": {
+        "id": "H1ed4ftM_",
+        "email": "sandra.langrick@ntlworld.com"
       },
       "cartItems": [],
       "total": 0
