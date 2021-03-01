@@ -67,8 +67,12 @@ function ProfileOptions() {
                     ( <div className="profile-section-wrapper">
                         <h1 className="profile-subsection-header">Email Address</h1>
                         <div className="profile-row">
-                            <i className="fas fa-at" />
-                            <h2 className="profile-info">{data ? data.allCart.user.email : 'hmm'}</h2>
+                            <div className="mobile-format-email">
+                                <i className="fas fa-at" />
+                                <h2 className="profile-info">{data ? data.allCart.user.email : 'hmm'}</h2>
+                            </div>
+                            <i className="fas fa-at desktop" />
+                            <h2 className="profile-info desktop">{data ? data.allCart.user.email : 'hmm'}</h2>
                             <ActionButton dataTestId='deleteProfile' buttonSize='btn--medium' buttonStyle='btn--buy' onClick={handleDeleteUser} disabled={loadDeleteUser}>DELETE PROFILE</ActionButton>
                         </div>
                         <h1 className="profile-subsection-header">Cart</h1>

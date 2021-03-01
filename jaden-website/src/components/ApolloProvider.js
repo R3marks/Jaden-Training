@@ -7,7 +7,7 @@ import { from } from 'apollo-link';
 function ApolloProvider({ children }) {
 
 	const link = new HttpLink({
-		uri: process.env.BACKEND_URL || '/graphql',
+		uri: 'http://localhost:9000/graphql',
 		credentials: "include"
 	})
 
