@@ -5,7 +5,7 @@ import UserEvent from '@testing-library/user-event'
 import { USER_INFO, SIGN_IN, SIGN_UP } from '../graphql/Mutations'
 import { MockedProvider } from '@apollo/client/testing'
 import { GraphQLError } from 'graphql'
-import AuthProvider from './AuthProvider'
+import AuthProvider from '../api/AuthProvider'
 import AppRouter from './AppRouter'
 
 describe('<ProfileOptions />', () => {

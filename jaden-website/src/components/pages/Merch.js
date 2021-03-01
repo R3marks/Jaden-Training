@@ -3,7 +3,7 @@ import '../../App.css';
 import Navbar from '../Navbar'
 import MerchSection from '../MerchSection'
 import CartSection from '../CartSection'
-import { AuthContext } from '../AuthProvider';
+import { AuthContext } from '../../api/AuthProvider';
 
 export default function Merch () {
 
