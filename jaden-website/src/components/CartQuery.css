@@ -97,10 +97,7 @@
 }
 
 .empty-cart {
-    display: flex;
-    justify-content: center;
-    margin: 0 auto;
-    margin-bottom: 200px;
+    margin: auto 0;
     font-size: 32px;
     letter-spacing: 0.5px;
 }
