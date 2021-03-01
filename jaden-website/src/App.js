@@ -1,6 +1,6 @@
 import React from 'react';
-import AuthProvider from './components/AuthProvider'
-import ApolloProvider from './components/ApolloProvider'
+import AuthProvider from './api/AuthProvider'
+import ApolloProvider from './api/ApolloProvider'
 import AppRouter from './components/AppRouter'
 
 

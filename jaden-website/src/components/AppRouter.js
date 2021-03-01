@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import Footer from './Footer'; 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { AuthContext } from './AuthProvider'
+import { AuthContext } from '../api/AuthProvider'
 import useAppInit from './useAppInit'
 import Home from './pages/Home';
 import Tour from './pages/Tour';

@@ -7,7 +7,7 @@ import { USER_INFO, SIGN_OUT, DELETE_USER } from '../graphql/Mutations'
 import { MockedProvider } from '@apollo/client/testing'
 import { GraphQLError } from 'graphql'
 import ProfileOptions from './ProfileOptions'
-import AuthProvider from './AuthProvider'
+import AuthProvider from '../api/AuthProvider'
 import AppRouter from './AppRouter'
 
 describe('<ProfileOptions />', () => {
