@@ -7,7 +7,7 @@ import { from } from 'apollo-link';
 function ApolloProvider({ children }) {
 
 	const link = new HttpLink({
-		uri: 'http://localhost:9000/graphql',
+		uri: '/graphql',
 		credentials: "include"
 	})
 
@@ -24,8 +24,6 @@ function ApolloProvider({ children }) {
 	const client = new ApolloClient({
 		cache: new InMemoryCache(),
 		link: from([errorLink, link])
-		// uri: 'http://localhost:9000/graphql',
-		// credentials: "include"
     })
     
     return (
