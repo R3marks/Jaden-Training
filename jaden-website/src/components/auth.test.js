@@ -443,7 +443,7 @@ describe('<ProfileOptions />', () => {
         UserEvent.click(screen.getByTestId('signIn'))
         await waitFor(() => {
             expect(screen.getByText(/UNKNOWN ERROR/i)).toBeInTheDocument()
-            expect(screen.getByText(/Displaying GraphQL Error/i)).toBeInTheDocument()
+            expect(screen.getAllByText(/Displaying GraphQL Error/i)).toHaveLength(2)
         })
     })
 
@@ -941,7 +941,7 @@ describe('<ProfileOptions />', () => {
         UserEvent.click(screen.getByTestId('signUp'))
         await waitFor(() => {
             expect(screen.getByText(/UNKNOWN ERROR/i)).toBeInTheDocument()
-            expect(screen.getByText(/Displaying GraphQL Error/i)).toBeInTheDocument()
+            expect(screen.getAllByText(/Displaying GraphQL Error/i)).toHaveLength(2)
         })
     })
 

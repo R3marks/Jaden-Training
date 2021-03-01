@@ -117,7 +117,7 @@ describe('<MerchSection />', () => {
         )
         await waitFor(() => {
             expect(screen.getByText(/UNKNOWN ERROR/i)).toBeInTheDocument()
-            expect(screen.getByText(/Displaying GraphQL Error/)).toBeInTheDocument()
+            expect(screen.getAllByText(/Displaying GraphQL Error/)).toHaveLength(2)
         })
     })
 
@@ -296,7 +296,7 @@ describe('<MerchSection />', () => {
         UserEvent.click(screen.getByTestId('addToCart-1'))
         await waitFor(() => {
             expect(screen.getByText(/UNKNOWN ERROR/i)).toBeInTheDocument()
-            expect(screen.getByText(/Displaying GraphQL Error/i)).toBeInTheDocument()
+            expect(screen.getAllByText(/Displaying GraphQL Error/i)).toHaveLength(2)
         })
     })
 })
