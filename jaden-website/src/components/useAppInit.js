@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { useMutation } from '@apollo/client'
-import { AuthContext } from './AuthProvider'
+import { AuthContext } from '../api/AuthProvider'
 import { USER_INFO } from '../graphql/Mutations'
 
 function useAppInit() {
