@@ -1,15 +1,20 @@
 FROM node:10 AS ui-build
 WORKDIR /usr/src/app
-COPY my-app/ ./my-app/
-RUN cd my-app && npm install && npm run build
+COPY jaden-website/ ./jaden-website/
+RUN cd jaden-website && npm install && npm run build
 
 FROM node:10 AS server-build
 WORKDIR /root/
-COPY --from=ui-build /usr/src/app/my-app/build ./my-app/build
-COPY api/package*.json ./api/
-RUN cd api && npm install
-COPY api/server.js ./api/
+COPY --from=ui-build /usr/src/app/jaden-website/build ./jaden-backend/public
+# COPY jaden-backend/package*.json ./jaden-backend/
+COPY . .
+RUN cd jaden-backend && npm install
+# COPY jaden-backend/server.js ./jaden-backend/
+COPY . . 
 
-EXPOSE 3080
+EXPOSE 80
+EXPOSE 9000
 
-CMD ["node", "./api/server.js"]
+WORKDIR /root/jaden-backend/
+CMD ["npm", "start"]
+# CMD ["node", "./jaden-backend/server.js"]

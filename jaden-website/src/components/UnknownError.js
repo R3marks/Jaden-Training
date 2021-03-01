@@ -5,7 +5,6 @@ import ActionButton from './ActionButton'
 function UnknownError(props) {
 
     const [errorType, setErrorType] = useState(false)
-    console.log(JSON.stringify(props.errors.graphQLErrors))
 
     return (
         <div className="unknown-error-section">
