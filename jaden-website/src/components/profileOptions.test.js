@@ -78,7 +78,7 @@ describe('<ProfileOptions />', () => {
             </MockedProvider>
         )
         await waitFor(() => {
-            expect(screen.getByText('test@test.com')).toBeInTheDocument()
+            expect(screen.getAllByText('test@test.com')).toHaveLength(2)
             expect(screen.getByText('£299.97')).toBeInTheDocument()
         })
     })
@@ -143,7 +143,7 @@ describe('<ProfileOptions />', () => {
         )
         await waitFor(() => {
             expect(screen.getByText(/UNKNOWN ERROR/i)).toBeInTheDocument()
-            expect(screen.getByText(/Displaying GraphQL Error/i)).toBeInTheDocument()
+            expect(screen.getAllByText(/Displaying GraphQL Error/i)).toHaveLength(2)
         })
     })
 
@@ -224,7 +224,7 @@ describe('<ProfileOptions />', () => {
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
             expect(screen.getByText('PROFILE')).toBeInTheDocument()
-            expect(screen.getByText('test@test.com')).toBeInTheDocument()
+            expect(screen.getAllByText('test@test.com')).toHaveLength(2)
             expect(screen.getByText('£299.97')).toBeInTheDocument()
         })
         UserEvent.click(screen.getByTestId('signOut'))
@@ -293,7 +293,7 @@ describe('<ProfileOptions />', () => {
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
             expect(screen.getByText('PROFILE')).toBeInTheDocument()
-            expect(screen.getByText('test@test.com')).toBeInTheDocument()
+            expect(screen.getAllByText('test@test.com')).toHaveLength(2)
             expect(screen.getByText('£299.97')).toBeInTheDocument()
         })
         UserEvent.click(screen.getByTestId('signOut'))
@@ -367,13 +367,13 @@ describe('<ProfileOptions />', () => {
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
             expect(screen.getByText('PROFILE')).toBeInTheDocument()
-            expect(screen.getByText('test@test.com')).toBeInTheDocument()
+            expect(screen.getAllByText('test@test.com')).toHaveLength(2)
             expect(screen.getByText('£299.97')).toBeInTheDocument()
         })
         UserEvent.click(screen.getByTestId('signOut'))
         await waitFor(() => {
             expect(screen.getByText(/UNKNOWN ERROR/i)).toBeInTheDocument()
-            expect(screen.getByText(/Displaying GraphQL Error/i)).toBeInTheDocument()
+            expect(screen.getAllByText(/Displaying GraphQL Error/i)).toHaveLength(2)
         })
     })
 
@@ -453,7 +453,7 @@ describe('<ProfileOptions />', () => {
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
             expect(screen.getByText('PROFILE')).toBeInTheDocument()
-            expect(screen.getByText('test@test.com')).toBeInTheDocument()
+            expect(screen.getAllByText('test@test.com')).toHaveLength(2)
             expect(screen.getByText('£299.97')).toBeInTheDocument()
         })
         UserEvent.click(screen.getByTestId('deleteProfile'))
@@ -522,7 +522,7 @@ describe('<ProfileOptions />', () => {
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
             expect(screen.getByText('PROFILE')).toBeInTheDocument()
-            expect(screen.getByText('test@test.com')).toBeInTheDocument()
+            expect(screen.getAllByText('test@test.com')).toHaveLength(2)
             expect(screen.getByText('£299.97')).toBeInTheDocument()
         })
         UserEvent.click(screen.getByTestId('deleteProfile'))
@@ -596,13 +596,13 @@ describe('<ProfileOptions />', () => {
         UserEvent.click(screen.getByTestId('Account'))
         await waitFor(() => {
             expect(screen.getByText('PROFILE')).toBeInTheDocument()
-            expect(screen.getByText('test@test.com')).toBeInTheDocument()
+            expect(screen.getAllByText('test@test.com')).toHaveLength(2)
             expect(screen.getByText('£299.97')).toBeInTheDocument()
         })
         UserEvent.click(screen.getByTestId('deleteProfile'))
         await waitFor(() => {
             expect(screen.getByText(/UNKNOWN ERROR/i)).toBeInTheDocument()
-            expect(screen.getByText(/Displaying GraphQL Error/i)).toBeInTheDocument()
+            expect(screen.getAllByText(/Displaying GraphQL Error/i)).toHaveLength(2)
         })
     })
 

@@ -414,6 +414,7 @@ describe('signUp', () => {
             }
         }
         const mockReturnListOfUsers = [{ email: 'testing@test.com' }]
+        const mockReturnNewUser = { id: '1', email: 'test@test.com' }
         const expectedResult = {
             code: "SUCCESSFUL_SIGN_UP",
             success: true,
@@ -426,6 +427,7 @@ describe('signUp', () => {
         db.users.list.mockReturnValue(mockReturnListOfUsers)
         AuthUtils.hashPassword.mockReturnValue('hashedPassword')
         db.users.create.mockReturnValue('1')
+        db.users.get.mockReturnValue(mockReturnNewUser)
         AuthUtils.createToken.mockReturnValue('token')
         const result = resolvers.Mutation.signUp(null, args, context)
         expect(result).toStrictEqual(expectedResult)

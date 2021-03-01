@@ -1,0 +1,9 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    image: react-node-image
+    container_name: react-node-ui
+    ports:
+      - '9000:9000'
+      - '80:80'
