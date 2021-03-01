@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import './ProfileOptions.css'
 import { useHistory } from 'react-router-dom'
-import { AuthContext } from './AuthProvider'
+import { AuthContext } from '../api/AuthProvider'
 import ActionButton from './ActionButton'
 import { useApolloClient, useQuery, useMutation } from '@apollo/client'
 import { GET_CART } from '../graphql/Queries'
@@ -78,7 +78,7 @@ function ProfileOptions() {
                         <h1 className="profile-subsection-header">Cart</h1>
                         <div className="profile-row">
                             <i className="fas fa-shopping-cart" />
-                            <h2 className="profile-info">£{data ? data.allCart.total : 0.00}</h2>
+                            <h2 className="profile-info">£{data ? data.allCart.total.toFixed(2) : 0.00}</h2>
                             <ActionButton buttonSize='btn--medium' buttonStyle='btn--buy' onClick={handleGoToCart}>GO TO CART</ActionButton>
                         </div>
                         <ActionButton dataTestId='signOut' buttonSize='btn--large' buttonStyle='btn--buy' onClick={handleSignOut} disabled={loadSignOut}>SIGN OUT</ActionButton>

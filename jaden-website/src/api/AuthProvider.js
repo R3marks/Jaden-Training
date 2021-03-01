@@ -9,8 +9,6 @@ function AuthProvider({ children }) {
         userData: null
     })
 
-    // const isAuthenticated = () => authInfo.userData !== undefined 
-
     function isAuthenticated() {
         if (authInfo.userData !== null) {
             return true

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Navbar.css'
-import { AuthContext } from './AuthProvider'
+import { AuthContext } from '../api/AuthProvider'
 
 function Navbar(color) {
 

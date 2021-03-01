@@ -3,7 +3,7 @@ import './SignIn.css'
 import { useHistory } from 'react-router-dom'
 import { useMutation } from '@apollo/client'
 import { SIGN_IN } from '../graphql/Mutations'
-import { AuthContext } from './AuthProvider'
+import { AuthContext } from '../api/AuthProvider'
 import UnknownError from './UnknownError'
 
 function SignIn() {
