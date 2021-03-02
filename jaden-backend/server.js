@@ -51,10 +51,11 @@ const apolloServer = new ApolloServer({
 // Apollo server has its own cors implementation and therefore you need to turn it off if you have cors set up already
 apolloServer.applyMiddleware({ app, path: '/graphql', cors: false })
 
+// The public folder is only used in a production environment. For development, comment out the below app.use and app.get
 app.use(express.static('public'))
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
 })
 
-app.listen({ port: process.env.PORT || 9000 }, () => console.log(`🚀 Server ready on port 9000`))
+app.listen({ port: process.env.PORT || 9000 }, () => console.log(`🚀 Server ready on port ${process.env.PORT}`))
