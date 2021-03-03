@@ -52,13 +52,13 @@ The website can also be hosted in production locally, and then deployed using a 
 You'll need to have Node JS installed to run the server.
 
 ### Setup
-To host the website locally, you'll need to build the react application and place the build folder inside the server's directory. The `jaden-website/package.json` file already has config to do this for you.
+To host the website locally, you'll need to build the react application and place the build folder inside the server's directory. The `jaden-frontend/package.json` file already has config to do this for you.
 ```JSON
 "build": "react-scripts build && move build ../jaden-backend/public",
 ```
-In the `jaden-website` directory, you can then build the react app.
+In the `jaden-frontend` directory, you can then build the react app.
 ```bash
-{FOLDER}\Jaden-Website\jaden-website> npm run build
+{FOLDER}\Jaden-Website\jaden-frontend> npm run build
 ```
 From here, you can then start the server, which will look for the new `jaden-backend/public` folder.
 ```bash
@@ -71,7 +71,7 @@ To have people *outside* of your network access the website, you can push the pr
 ## Devlopment
 To continue developing the website, run the react app and server separately. You will need react to point to the server, and will therefore need to change where the Apollo Provider points to by changing the `uri` of the `HttpLink`
 ```js
-// Jaden-Training\jaden-website\src\api\ApolloProvider.js
+// Jaden-Training\jaden-frontend\src\api\ApolloProvider.js
 	const link = new HttpLink({
 		uri: 'http://localhost:9000/graphql',
         credentials: "include"
@@ -80,7 +80,7 @@ To continue developing the website, run the react app and server separately. You
 To prevent errors showing on the server, you can also comment out certain lines in `jaden-backend/server.js` that reference the `public` build folder. However, this is optional and won't break the server.  
 Start the React app
 ```bash
-{FOLDER}\Jaden-Website\jaden-website> npm start
+{FOLDER}\Jaden-Website\jaden-frontend> npm start
 ```
 and then the server in development
 ```bash
@@ -88,7 +88,7 @@ and then the server in development
 ```
 
 ## Tests
-To run the current set of unit tests for both the front end and the backend, perform the `npm test` command in both the `jaden-website/` and `jaden-backend` directories. These tests only check the functionality of the Apollo queries, and do not test any other front end or back end logic.
+To run the current set of unit tests for both the front end and the backend, perform the `npm test` command in both the `jaden-frontend/` and `jaden-backend/` directories. These tests only check the functionality of the Apollo queries, and do not test any other front end or back end logic.
 
 ## Credits
 Free resources that helped me create the website:  
