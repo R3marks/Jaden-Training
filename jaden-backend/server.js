@@ -1,18 +1,11 @@
 require('dotenv')
-const fs = require('fs')
-const { ApolloServer, gql } = require('apollo-server-express');
-const ConstraintDirective = require('apollo-server-constraint-directive')
-const { makeExecutableSchema } = require('apollo-server')
-const bodyParser = require('body-parser')
+const { ApolloServer } = require('apollo-server-express');
+const ConstraintDirective = require('apollo-server-constraint-directive') // This package isnt optimised and will break your Apollo Playground schema. Implementing input validation can be more easily achieved using custom directives.
 const cors = require('cors')
 const express = require('express')
-const expressJwt = require('express-jwt')
-const jwt = require('jsonwebtoken')
-const db = require('./db')
 const auth = require('./auth')
 const cookieParser = require('cookie-parser')
-
-const jwtSecret = Buffer.from('cGFzc3dvcmQ=', 'base64')
+const path = require('path')
 
 var corsOptions = {
     origin: 'http://localhost:3000',
@@ -21,46 +14,12 @@ var corsOptions = {
 
 const app = express()
 app.use(cors(corsOptions), cookieParser())
-// app.use(cors(), bodyParser.json(), expressJwt({
-//     secret: jwtSecret,
-//     credentialsRequired: false
-// }))
-
-// app.post('/login', (req, res) => {
-//   const { email, password} = req.body
-//   const user = db.users.list().find((user) => user.email === email)
-//   if (!(user && user.password === password)) {
-//     res.sendStatus(401)
-//     return
-//   }
-//   const token = jet.sign({ sub: user.id }, jwtSecret)
-//   res.send({ token })
-// })
 
 const typeDefs = require('./schema')
 
 const resolvers = require('./resolvers')
 
-const schemaDirectives = {
-    constraint: ConstraintDirective,
-  };
-
-const schema = makeExecutableSchema({
-    typeDefs,
-    resolvers,
-    schemaDirectives,
-    // context: ({ req, res }) => {
-    //     let user = null
-    //     if (req.cookies.token) {
-    //         const payload = auth.verifyToken(req.cookies.token)
-    //         user = payload
-    //     }
-    //     return { user, res }
-    // }
-})
-
 const apolloServer = new ApolloServer({ 
-    // schema,
     typeDefs,
     resolvers,
     schemaDirectives: { constraint: ConstraintDirective },
@@ -78,17 +37,18 @@ const apolloServer = new ApolloServer({
             var validationError = err.extensions.exception.stacktrace[0].split(': ')
             err.message = validationError[1].charAt(0).toUpperCase() + validationError[1].slice(1)
         }
-        // What used to work
-        // if (err.extensions.code === 'GRAPHQL_VALIDATION_FAILED') {
-        //     var validationError = err.extensions.exception.stacktrace[0].split(': ')
-        //     if (validationError[0] === 'CustomDirectiveError')
-        //     var newErrorMessage = validationError[1]
-        //     err.message = newErrorMessage.charAt(0).toUpperCase() + newErrorMessage.slice(1)
-        // }
         return err
     }
  })
 
 // Apollo server has its own cors implementation and therefore you need to turn it off if you have cors set up already
 apolloServer.applyMiddleware({ app, path: '/graphql', cors: false })
-app.listen({ port: process.env.PORT || 9000 }, () => console.log(`🚀 Server ready on port 9000`))
+
+// The public folder is only used in a production environment. For development, comment out the below app.use and app.get
+app.use(express.static('public'))
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+})
+
+app.listen({ port: process.env.PORT || 9000 }, () => console.log(`🚀 Server ready on port ${process.env.PORT}`))

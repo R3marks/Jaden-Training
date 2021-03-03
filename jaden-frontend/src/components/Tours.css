@@ -1,0 +1,112 @@
+/* ************** TOURS ************** */
+
+.tour-background {
+    background: url('../Images - Jaden/tour-background.webp') center center/cover no-repeat;
+    min-height: 100vh;
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    object-fit: contain;
+    margin-top: -100px;
+}
+
+.tour-wrapper {
+    width: 80vw;
+    max-width: 1200px;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+
+.tours-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+    font-size: 82px;
+    font-weight: normal;
+    text-shadow: -9px 18px 9px rgba(0, 0, 0, 0.25);
+}
+
+.tours-section {
+    display: flex;
+    flex-direction: column;
+    background: rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 800px;
+    height: 415px;
+    right: 0;
+    margin: 0 0 0 auto;
+}
+
+.search {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 2px solid black;
+    margin: 20px 0px 0px 20px;
+    width: 30%;
+}
+
+.fa-search {
+    align-self: center;
+    margin-right: 10px;
+    color: #223B6E;
+    font-size: 28px;
+    text-shadow: -1px 1px 1px rgba(241, 88, 216, 0.5);
+}
+
+.search-field {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: black;
+}
+
+.search-field::placeholder {
+    color: black;
+}
+
+.search-field:focus {
+    outline: none;
+}
+
+.scroll-box-tickets {
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    margin: 30px;
+}
+
+@media screen and (max-width: 768px) {
+
+    .tour-background {
+        background: url('../Images - Jaden/background-phone.jpg') center center/cover no-repeat;
+    }
+
+    .tours-header {
+        font-size: 42px;
+        margin-top: 150px;
+        justify-content: center;
+    }
+
+    .tour-wrapper {
+        width: 85vw;
+    }
+
+    .tours-section {
+        width: 100%;
+        margin-bottom: 400px;
+        backdrop-filter: blur(4px);
+    }
+
+    .search {
+        width: 80%;
+    }
+
+    .scroll-box-tickets {
+        margin: 30px 15px;
+    }
+
+}
