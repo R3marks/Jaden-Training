@@ -9,6 +9,10 @@ This project is an example website I have created for Jaden Smith. The purpose o
  - Jest
 
 ## Demonstration
+![test](https://github.com/R3marks/Jaden-Website/blob/deployment/Images%20-%20Jaden/about-background.jpg?raw=true)
+
+## Preface
+This is my first public repository, and one used primarily to learn web design for myself. The code will be filled with lots of bad practices, mistakes, and generally inefficient ways to go about programming something. However, all this sets a foundation to build upon and grow, and hopefully one or two things can help others who are also stuck, on how to program a specific feature or overcome a certain problem.
 
 ## Getting Started - Docker
 The easiest way to locally host this website is using Docker. This will allow you to host the website locally in a docker container, however, other devices on your same network wont be able to access the docker container
