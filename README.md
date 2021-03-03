@@ -9,7 +9,13 @@ This project is an example website I have created for Jaden Smith. The purpose o
  - Jest
 
 ## Demonstration
-![test](https://github.com/R3marks/Jaden-Website/blob/deployment/Images%20-%20Jaden/about-background.jpg?raw=true)
+![Home Page](https://github.com/R3marks/Jaden-Website/blob/deployment/Images%20-%20Jaden/Home-Page.png?raw=true)
+![Tours Page](https://github.com/R3marks/Jaden-Website/blob/deployment/Images%20-%20Jaden/Tours-Page.png?raw=true)
+![Merch Page](https://github.com/R3marks/Jaden-Website/blob/deployment/Images%20-%20Jaden/Merch-Page.png?raw=true)
+![Cart Page](https://github.com/R3marks/Jaden-Website/blob/deployment/Images%20-%20Jaden/Cart-Page.png?raw=true)
+![Story Page](https://github.com/R3marks/Jaden-Website/blob/deployment/Images%20-%20Jaden/Story-Page.png?raw=true)
+![Sign In Page](https://github.com/R3marks/Jaden-Website/blob/deployment/Images%20-%20Jaden/Sign-In-Page.png?raw=true)
+![Profile Page](https://github.com/R3marks/Jaden-Website/blob/deployment/Images%20-%20Jaden/Profile-Page.png?raw=true)
 
 ## Preface
 This is my first public repository, and one used primarily to learn web design for myself. The code will be filled with lots of bad practices, mistakes, and generally inefficient ways to go about programming something. However, all this sets a foundation to build upon and grow, and hopefully one or two things can help others who are also stuck, on how to program a specific feature or overcome a certain problem.
@@ -18,7 +24,7 @@ This is my first public repository, and one used primarily to learn web design f
 The easiest way to locally host this website is using Docker. This will allow you to host the website locally in a docker container, however, other devices on your same network wont be able to access the docker container
 
 ### Prerequisites
-Install Docker Desktop for Windows. This will allow you to use docker compose to build the website image as well as starting and stopping it. The documentation for installing Docker Windows for windows can be found [here](https://docs.docker.com/docker-for-windows/install/).
+Install Docker Desktop for Windows. This will allow you to use docker compose to build the website image as well as starting and stopping it. The documentation for installing Docker Desktop for Windows can be found [here](https://docs.docker.com/docker-for-windows/install/).
 
 Once installed you'll need to right click on the docker icon in the taskbar and switch to using Linux containers for this to work. This will prompt you to download the [Linux kernel update package](https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package).
 
@@ -71,7 +77,7 @@ To continue developing the website, run the react app and server separately. You
         credentials: "include"
     })
 ```
-To prevent errors showing on the server, you can also comment out certain lines in `jaden-backend/server.js` that reference the `public` build folder.
+To prevent errors showing on the server, you can also comment out certain lines in `jaden-backend/server.js` that reference the `public` build folder. However, this is optional and won't break the server.  
 Start the React app
 ```bash
 {FOLDER}\Jaden-Website\jaden-website> npm start
@@ -83,3 +89,15 @@ and then the server in development
 
 ## Tests
 To run the current set of unit tests for both the front end and the backend, perform the `npm test` command in both the `jaden-website/` and `jaden-backend` directories. These tests only check the functionality of the Apollo queries, and do not test any other front end or back end logic.
+
+## Credits
+Free resources that helped me create the website:  
+ - [WebDevSimplified](https://www.youtube.com/channel/UCFbNIlppjAuEX4znoulh0Cw)
+ - [Mirko Nasato](https://www.youtube.com/watch?v=lKlXdmG0aKQ)
+ - [Apollo Docs](https://www.apollographql.com/docs/)
+
+Subscription resources that helped me create the website:
+ - [PluralSight](https://app.pluralsight.com/paths/skill/building-graphql-apis-with-apollo)
+
+## License
+MIT © [R3marks]()
