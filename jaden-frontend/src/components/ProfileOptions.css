@@ -1,0 +1,155 @@
+.profile-background {
+    background: url('../Images - Jaden/merch-background-phone.jpg') center center/cover no-repeat;
+    min-height: 100vh;
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    object-fit: contain;
+    margin-top: -100px;
+}
+
+.profile-wrapper {
+    width: 80vw;
+    max-width: 1200px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0 auto;
+}
+
+.profile-headers {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 60px;
+    max-width: 800px;
+}
+
+.profile-header {
+    margin-bottom: 20px;
+    font-size: 82px;
+    font-weight: normal;
+    text-shadow: -9px 18px 9px rgba(0, 0, 0, 0.25);
+}
+
+.profile-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    background: rgba(255, 255, 255, 0.35);
+    filter: drop-shadow(-9px 18px 4px rgba(0, 0, 0, 0.25));
+    backdrop-filter: blur(4px);
+    width: 100%;
+    max-width: 800px;
+    height: 475px;
+    right: 0;
+    margin: 0 auto;
+}
+
+.profile-section-wrapper {
+    margin: 30px;
+    width: 90%;
+}
+
+.profile-subsection-header {
+    width: 170px;
+    border-bottom: 3px solid black;
+}
+
+.profile-row {
+    display: grid;
+    grid-template-columns: 60px auto 200px;
+    margin: 30px 0;
+    align-content: flex-start;
+}
+
+.fa-at, 
+.fa-shopping-cart {
+    margin: auto 0;
+    font-size: 28px;
+}
+
+.fa-at {
+    padding-top: 10px;
+}
+
+.profile-info {
+    margin: auto 0;
+    font-size: 32px;
+}
+
+.mobile-format-email {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+
+    .profile-wrapper {
+        width: 85vw;
+    }
+
+    .desktop {
+        display: none;
+    }
+
+    .profile-headers {
+        margin-top: 150px;
+        justify-content: center;
+        align-self: center;
+    }
+
+    .profile-header {
+        font-size: 42px;
+    }
+
+    .profile-section {
+        margin-bottom: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .profile-section-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .profile-subsection-header {
+        align-self: center;
+        margin: 0 auto;
+    }
+
+    .profile-row {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 10px 0;
+    }
+
+    .mobile-format-email {
+        display: flex;
+        overflow: auto;
+    }
+
+    .fa-at, 
+    .fa-shopping-cart,
+    .profile-info {
+        margin-right: 20px;
+    }
+
+    .profile-info {
+        display: flex;
+        flex-shrink: 2;
+        overflow: auto;
+    }
+
+    .btn-mobile {
+        display: flex;
+        max-width: 100px;
+    }
+
+}
