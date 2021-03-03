@@ -298,7 +298,7 @@ describe('allCart', () => {
                 id: '1',
                 email: 'test@test.com'
             },
-            cartItems: ***REMOVED***,
+            cartItems: [],
             total: 0.00
         }
         db.users.get.mockReturnValue(mockReturn)
@@ -619,7 +619,7 @@ describe('addToCart', () => {
                 id: '1',
                 email: 'test@test.com'
             }, 
-            cartItems: ***REMOVED***,
+            cartItems: [],
             total: 0.00 
         }
         const mockReturnMerch = {
@@ -825,7 +825,7 @@ describe('removeFromCart', () => {
                 id: '1',
                 email: 'test@test.com'
             },
-            cartItems: ***REMOVED***,
+            cartItems: [],
             total: 0.00
         }
         const expectedResult = {
@@ -968,7 +968,7 @@ describe('purchaseCart', () => {
                 id: '1',
                 email: 'test@test.com'
             },
-            cartItems: ***REMOVED***,
+            cartItems: [],
             total: 0.00
         }
         const expectedResult = {

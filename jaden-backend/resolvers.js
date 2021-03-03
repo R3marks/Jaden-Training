@@ -75,7 +75,7 @@ function allCart(context) {
                     id: user.id,
                     email: user.email
                 },
-                cartItems: ***REMOVED***,
+                cartItems: [],
                 total: 0.00
             }
         }
@@ -215,7 +215,7 @@ function addToCart(args, context) {
                     id: user.id,
                     email: user.email
                 }, 
-                cartItems: ***REMOVED***,
+                cartItems: [],
                 total: 0.00 
             })
             var usersCart = db.cart.get(newCart)
@@ -383,7 +383,7 @@ function purchaseCart(context) {
                 id: user.id,
                 email: user.email
             },
-            cartItems: ***REMOVED***,
+            cartItems: [],
             total: 0.00
         })
         var cart = db.cart.get(user.cart.id)

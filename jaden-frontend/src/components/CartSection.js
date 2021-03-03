@@ -16,7 +16,7 @@ function CartSection() {
 
     useEffect(() => {
         resizeCart();
-    }, ***REMOVED***);
+    }, []);
 
     window.addEventListener('resize', resizeCart);
 

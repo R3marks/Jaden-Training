@@ -23,7 +23,7 @@ function MerchQuery(props) {
 
     useEffect(() => {
         resizeButton();
-    }, ***REMOVED***);
+    }, []);
 
     window.addEventListener('resize', resizeButton);
 

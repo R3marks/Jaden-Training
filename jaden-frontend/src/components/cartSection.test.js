@@ -195,7 +195,7 @@ describe('<CartSection />', () => {
                 return {
                     data: {
                         removeFromCart: {
-                            cartItems: ***REMOVED***,
+                            cartItems: [],
                             total: 0.00
                         }
                     }
@@ -212,7 +212,7 @@ describe('<CartSection />', () => {
                             id: '1',
                             email: 'test@test.com'
                         },
-                        cartItems: ***REMOVED***,
+                        cartItems: [],
                         total: 0.00
                     }
                 }
@@ -841,7 +841,7 @@ describe('<CartSection />', () => {
                 return {
                     data: {
                         purchaseCart: {
-                            cartItems: ***REMOVED***,
+                            cartItems: [],
                             total: 0.00
                         }
                     }
@@ -858,7 +858,7 @@ describe('<CartSection />', () => {
                             id: '1',
                             email: 'test@test.com'
                         },
-                        cartItems: ***REMOVED***,
+                        cartItems: [],
                         total: 0.00
                     }
                 }
