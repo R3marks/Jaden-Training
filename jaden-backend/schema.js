@@ -85,7 +85,7 @@ module.exports = gql`
 
     type Cart {
         id: ID!
-        user: User # Remove user dependency
+        user: User
         cartItems: [CartItem]!
         total: Float!
     }
