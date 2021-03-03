@@ -77,7 +77,8 @@ To continue developing the website, run the react app and server separately. You
         credentials: "include"
     })
 ```
-To prevent errors showing on the server, you can also comment out certain lines in `jaden-backend/server.js` that reference the `public` build folder. However, this is optional and won't break the server.  
+To prevent errors showing on the server, you can also comment out certain lines in `jaden-backend/server.js` that reference the `public` build folder. However, this is optional and won't break the server. 
+
 Start the React app
 ```bash
 {FOLDER}\Jaden-Website\jaden-frontend> npm start
@@ -88,7 +89,7 @@ and then the server in development
 ```
 
 ## Tests
-To run the current set of unit tests for both the front end and the backend, perform the `npm test` command in both the `jaden-frontend/` and `jaden-backend/` directories. These tests only check the functionality of the Apollo queries, and do not test any other front end or back end logic.
+To run the current set of unit tests for both the frontend and the backend, perform the `npm test` command in both the `jaden-frontend/` and `jaden-backend/` directories. These tests only check the functionality of the Apollo queries, and do not test any other front end or back end logic.
 
 ## Credits
 Free resources that helped me create the website:  
