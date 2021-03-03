@@ -1,5 +1,5 @@
 .git
 .gitignore
-jaden-website/node_modules
+jaden-frontend/node_modules
 jaden-backend/node_modules
 jaden-backend/.env
