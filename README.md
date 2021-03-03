@@ -52,7 +52,7 @@ The website can also be hosted in production locally, and then deployed using a 
 You'll need to have Node JS installed to run the server.
 
 ### Setup
-To host the website locally, you'll need to build the react application and place the build folder inside the server's directory. The `jaden-frontend/package.json` file already has config to do this for you.
+To host the website locally, you'll need to build the react application and place the build folder inside the server's directory. This can be achieved by modifying the `jaden-frontend/package.json` file.  
 ```JSON
 "build": "react-scripts build && move build ../jaden-backend/public",
 ```
