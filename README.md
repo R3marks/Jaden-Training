@@ -56,6 +56,9 @@ To host the website locally, you'll need to build the react application and plac
 ```JSON
 "build": "react-scripts build && move build ../jaden-backend/public",
 ```
+
+Before building either the frontend or backend, make sure to install the repositories packages in each directory with `npm install`
+
 In the `jaden-frontend` directory, you can then build the react app.
 ```bash
 {FOLDER}\Jaden-Website\jaden-frontend> npm run build
