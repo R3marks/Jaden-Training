@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    image: react-node-image
+    container_name: react-node-ui
+    environment: 
+      - PORT=9001
+      - SECRET=yesyesquitesecret
+    ports:
+      - '9000:9001'
+      - '80:80'
